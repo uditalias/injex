@@ -253,12 +253,33 @@ Default: `/**/*.js`
 ## Decorators
 
 ### `@define()`
+- Defines a class as a module using the camel cased version of the class name, or with a name argument passed to the decorator (`@define("myModule")`)
 
 ### `@singleton()`
+- Set a module as a singleton, the same instance will return on each `@inject()` or `get()`.
 
 ### `@init()`
+- Define an init method for a module. This method will be called in the bootstrap phase. The method can return a Promise.
 
 ### `@inject()`
+- Injects a module as a dependency into another module. You can use the module name or its type. For example:
+```typescript
+@define()
+class Mail {
+	...
+}
+
+@define()
+@singleton()
+class MailManager {
+
+	// Inject a factory method using the module type
+	@inject(Mail) craeteMail: (message: string) => Mail;
+
+	// Inject a factory method using the module name
+	@inject("mail") craeteMail: (message: string) => Mail;
+}
+```
 
 ## Public container methods
 
