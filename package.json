@@ -22,6 +22,10 @@
       "pre-push": "npm run lint"
     }
   },
+  "files": [
+    "lib",
+    "typings"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uditalias/injex.git"
