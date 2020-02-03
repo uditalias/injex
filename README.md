@@ -37,9 +37,8 @@ import * as path from "path";
 	const container = await Injex.create({
 		rootDirs: [
 
-			// 2. Define the root directories,
-			//    where your modules exists.
-			path,resolve(__dirname, "./src")
+			// 2. Define the root directories, where your modules exists.
+			path.resolve(__dirname, "./src")
 		]
 	})
 	
