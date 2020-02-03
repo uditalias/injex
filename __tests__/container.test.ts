@@ -1,15 +1,15 @@
-import { Container, DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError } from "../src";
+import { Injex, DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError } from "../src";
 import * as path from "path";
 import { MailManager } from "./__mocks__/general/mailManager";
 import { MailService } from "./__mocks__/general/mailService";
 import { Mail } from "./__mocks__/general/mail";
 
-describe("Container", () => {
+describe("InjexContainer", () => {
 
-	let container: Container;
+	let container: Injex;
 
 	beforeEach(async () => {
-		container = Container.create({
+		container = Injex.create({
 			rootDirs: [
 				path.resolve(__dirname, "__mocks__/general")
 			],
@@ -21,7 +21,7 @@ describe("Container", () => {
 
 	it("should create container", () => {
 		expect(container).toBeDefined();
-		expect(container).toBeInstanceOf(Container);
+		expect(container).toBeInstanceOf(Injex);
 	});
 
 	it("should get object", () => {
@@ -108,7 +108,7 @@ describe("Container", () => {
 	it("should throw error on @init method error", async () => {
 
 		let error;
-		container = Container.create({
+		container = Injex.create({
 			rootDirs: [
 				path.resolve(__dirname, "__mocks__/willThrow")
 			],
@@ -127,7 +127,7 @@ describe("Container", () => {
 	it("should throw error when module dependency not found", async () => {
 
 		let error;
-		container = Container.create({
+		container = Injex.create({
 			rootDirs: [
 				path.resolve(__dirname, "__mocks__/willThrow")
 			],
@@ -155,7 +155,7 @@ describe("Container", () => {
 	it("should skip module registration when already exists", async () => {
 
 		let error;
-		container = Container.create({
+		container = Injex.create({
 			rootDirs: [
 				path.resolve(__dirname, "__mocks__/willThrow")
 			],

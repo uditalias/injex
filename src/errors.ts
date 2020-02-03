@@ -1,3 +1,5 @@
+// tslint:disable max-classes-per-file
+
 export class ModuleDependencyNotFoundError extends Error {
 	constructor(moduleName: string, dependencyName: string) {
 		super(

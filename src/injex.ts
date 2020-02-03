@@ -15,15 +15,15 @@ function defaults(config: Partial<IContainerConfig>): IContainerConfig {
 	};
 }
 
-export default class Container {
+export default class InjexContainer {
 
 	private moduleRegistry: Map<string, any>;
 	private modules: Map<string, IModule>;
 
-	public static create(config: IContainerConfig): Container {
+	public static create(config: IContainerConfig): InjexContainer {
 		config = defaults(config);
 
-		return new Container(
+		return new InjexContainer(
 			config,
 			new Logger(config.logLevel, config.logNamespace)
 		);
@@ -36,7 +36,7 @@ export default class Container {
 		this.logger.debug("Container created with config", this.config);
 	}
 
-	public async bootstrap(): Promise<Container> {
+	public async bootstrap(): Promise<InjexContainer> {
 		this.loadProjectFiles();
 
 		this.createModules();
@@ -173,11 +173,11 @@ export default class Container {
 
 	/**
 	 * Manually add object as a module
-	 * 
+	 *
 	 * @param obj - Object to add
 	 * @param name - Name of the object
 	 */
-	public addObject(obj: any, name: string): Container {
+	public addObject(obj: any, name: string): InjexContainer {
 
 		this.throwIfModuleExists(name);
 

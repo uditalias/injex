@@ -10,10 +10,10 @@ export enum LogLevel {
 /**
  * Decorates a logger method, once it get's called,
  * check if it allowed and invoke it.
- * 
+ *
  * @param level - The highest log level to allow
  */
-function logLevel(level: LogLevel) {
+function filterLogLevel(level: LogLevel) {
 	return function (target, name, propertyDescriptor) {
 		const originalFn = propertyDescriptor.value;
 
@@ -41,29 +41,29 @@ export class Logger {
 		return this;
 	}
 
-	@logLevel(LogLevel.Info)
+	@filterLogLevel(LogLevel.Info)
 	public info(...args) {
 		this.invokeLogMethos("info", args, Colors.FgCyan);
 	}
 
-	@logLevel(LogLevel.Debug)
+	@filterLogLevel(LogLevel.Debug)
 	public debug(...args) {
 		this.invokeLogMethos("debug", args, Colors.FgGreen);
 	}
 
-	@logLevel(LogLevel.Warn)
+	@filterLogLevel(LogLevel.Warn)
 	public warn(...args) {
 		this.invokeLogMethos("warn", args, Colors.FgYellow);
 	}
 
-	@logLevel(LogLevel.Error)
+	@filterLogLevel(LogLevel.Error)
 	public error(...args) {
 		this.invokeLogMethos("error", args, Colors.FgRed);
 	}
 
 	private invokeLogMethos(method: LogMethod, args: any[], color: string) {
 		args = [
-			`\x1b[2m${(new Date).toLocaleTimeString()}\x1b[0m ${color}[${method.toUpperCase()}]\x1b[0m ${this.namespace}:`,
+			`\x1b[2m${(new Date()).toLocaleTimeString()}\x1b[0m ${color}[${method.toUpperCase()}]\x1b[0m ${this.namespace}:`,
 			...Array.from(args)
 		];
 

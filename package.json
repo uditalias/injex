@@ -7,10 +7,11 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:watch": "npm run tsc -- --watch",
-    "lint": "tslint --project=tsconfig.json",
+    "lint": "tslint -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
+    "clean": "rimraf lib/ typings/",
     "release": "release-it",
-    "build": "npm run tsc && npm run test:cov",
+    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
     "postinstall": "npm run tsc",
     "test": "jest",
     "test:cov": "jest --coverage",
@@ -45,5 +46,8 @@
     "ts-jest": "^25.1.0",
     "tslint": "^6.0.0",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.1"
   }
 }
