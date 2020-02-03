@@ -276,5 +276,7 @@ Default: `/**/*.js`
 ### `removeObject<T>([name])`
 - Removes an object by its name.
 
+---
+
 ## Having an issue? A feature idea? Want to contribute?
-Feel free to open an [issue](https://github.com/uditalias/injex/issues/new)  or create a [pull request](https://github.com/uditalias/injex/compare).
+Feel free to open an [issue](https://github.com/uditalias/injex/issues/new)  or create a [pull request](https://github.com/uditalias/injex/compare)
