@@ -2,7 +2,5 @@
 .vscode
 .idea
 node_modules
-lib
-typings
 coverage
 *.log
