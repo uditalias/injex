@@ -8,6 +8,11 @@ _Simple dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
+## Core concepts
+
+Injex has only one core concept, to define, inject and manager module dependencies.
+
+
 ## Install
 
 Install Injex using NPM or Yarn:
@@ -15,19 +20,21 @@ Install Injex using NPM or Yarn:
 ```bash
 npm install --save injex
 ```
-
+Or
 ```bash
 yarn add injex
 ```
 
 ## How it works
 
-Injex create dependency tree between your modules in a  simple way, using TypeScript decorators you can define, configure and inject modules into the container.
+Injex create dependency tree between your modules in a simple way, using TypeScript decorators you can define, configure and inject modules into other modules as dependencies.
 
-## Getting Started
+## A quick start
 
 Lets start by creating an Injex container to manage our modules and dependencies, once created and bootstraped, you don't need to interact with it any more, everything will just work.
 
+
+### Creating new Injex container
 ```typescript
 // index.ts
 
@@ -51,12 +58,11 @@ import * as path from "path";
 })();
 ```
 
-* For more Container configurations see the docs.
-
 We created Injex container (1) with the `./src` as our project root directory (2), the bootstrap method, once invoked, finds all the modules, creates the dependency tree and injects dependencies to the relevant modules.
   
 Lets take a look how a module is defined and configured with it's dependencies via a simple example.
 
+### Defining a module
 ```typescript
 // src/mail.ts
 
@@ -70,6 +76,7 @@ export class Mail {
 
 This is it, Injex defined the module and now we can inject it to other modules or get it directly from Injex, but first thing first, lets use the container to get the Mail module.
 
+### Using the container to get a defined module
 ```typescript
 // 1
 const mailFactory = container.get<Mail>("mail");
@@ -89,6 +96,7 @@ Second, we invoke the `mailFactory` method with arguments (the 'hello, world!' s
 
 Now lets inject this factory method into a module without the container, lets define more modules.
 
+### Using Singleton and Init decorators
 ```typescript
 // src/mailService.ts
 
@@ -109,11 +117,8 @@ export class MailService implements IMailService {
 	}
 
 	public send(mail: Mail) {
-
 		console.log("Sending message: " + mail.message);
-
 	}
-
 }
 ```
 
@@ -121,7 +126,7 @@ The `MailService` defined as singleton with the `@singleton()` decorator. Notice
 
 Now lets take a look how we can inject the MailService as a module dependency.
 
-
+### Connecting all the dots with the Inject decorator
 ```typescript
 // src/mailManager.ts
 
