@@ -1,9 +1,9 @@
 # INJEX
 _Simple dependency-injection container for Node JS apps_
 
+[![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
-[![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
 
 ## Install
 
@@ -89,6 +89,8 @@ Now lets inject this factory method into a module without the container, lets de
 ```typescript
 // src/mailService.ts
 
+import { define, singleton, init } from "injex";
+
 interface IMailService {
 	send(mail: Mail): void;
 }
@@ -96,6 +98,12 @@ interface IMailService {
 @define()
 @singleton()
 export class MailService implements IMailService {
+
+	@init()
+	public initialize() {
+		console.log("Connecting to SMPT server...");
+		...
+	}
 
 	public send(mail: Mail) {
 
@@ -106,8 +114,15 @@ export class MailService implements IMailService {
 }
 ```
 
+The `MailService` defined as singleton with the `@singleton()` decorator. Notice the use of the `@init()` decorator above the `initialize` method, this method will be invoked when the MailService is created by Injex. You can return a `Promise` or use `async/await` in order to support asyncronious initialization.
+
+Now lets take a look how we can inject the MailService as a module dependency.
+
+
 ```typescript
 // src/mailManager.ts
+
+import { define, singleton } from "injex";
 
 @define()
 @singleton()
@@ -125,8 +140,13 @@ export class MailManager {
 }
 ```
 
+As the `MailService`, the `MailManager` is also defined as a singleton module, the `@inject()` decorator injects the `mailService` and the `createMail` factory method as the MailManager dependencies.
+
+
 ```typescript
 // index.ts
+
+// ... after container bootstrap ...
 
 const mailManager = container.get<MailManager>("mailManager");
 
