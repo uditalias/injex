@@ -8,6 +8,7 @@ before_script:
 
 script:
   - npm run test:cov
+  - codecov -f coverage/*.json
 
 after_success:
 
