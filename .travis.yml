@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - 12
+
+before_script:
+  - npm run tsc
+
+script:
+  - npm run test:cov
+
+after_success:
+
+notifications:
+  email:
+    - udi.talias@gmail.com

@@ -1,0 +1,49 @@
+{
+  "name": "injex",
+  "version": "1.0.0",
+  "description": "Simple dependency-injection container for Node JS apps",
+  "main": "./lib/index.js",
+  "types": "./typings/index.d.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:watch": "npm run tsc -- --watch",
+    "lint": "tslint --project=tsconfig.json",
+    "lint:fix": "npm run lint -- --fix",
+    "release": "release-it",
+    "build": "npm run tsc && npm run test:cov",
+    "postinstall": "npm run tsc",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "npm t -- --watch --color --env=jsdom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uditalias/injex.git"
+  },
+  "keywords": [
+    "dependency-injection-container",
+    "dependency",
+    "container",
+    "inject",
+    "ioc"
+  ],
+  "author": {
+    "name": "Udi Talias",
+    "email": "udi.talias@gmail.com",
+    "url": "https://github.com/uditalias"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uditalias/injex/issues"
+  },
+  "homepage": "https://github.com/uditalias/injex#readme",
+  "devDependencies": {
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.7.0",
+    "jest": "^25.1.0",
+    "release-it": "^12.4.3",
+    "ts-jest": "^25.1.0",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
+  }
+}
