@@ -10,7 +10,7 @@ _Simple dependency-injection container for Node JS apps_
 
 ## Core concepts
 
-Injex has only one core concept, to define, inject and manager module dependencies.
+Injex has only one core concept, to define, inject and manage module dependencies.
 
 
 ## Install
