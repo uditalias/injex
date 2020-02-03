@@ -233,7 +233,7 @@ Default: `[process.cwd()]`
 
 `logLevel?: LogLevel;`  
 - Set Injex's logger level  
-Possible options are:
+Possible value:
 `LogLevel.Error`,
 `LogLevel.Warn`,
 `LogLevel.Info`,
