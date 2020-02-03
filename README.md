@@ -1,4 +1,4 @@
-<img src="assets/logo.png" />
+<img src="assets/logo.png" width="142" />
 
 _Simple dependency-injection container for Node JS apps_
 
@@ -28,6 +28,10 @@ yarn add injex
 ## How it works
 
 Injex create dependency tree between your modules in a simple way, using TypeScript decorators you can define, configure and inject modules into other modules as dependencies.
+
+## Requirements
+
+ In order to use Injex, your project should use TypeScript with `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).
 
 ## A quick start
 
@@ -162,9 +166,107 @@ mailManager.sendMessage("The answer to the question of life, the universe and ev
 
 // Prints out:
 // Sending message: The answer to the question of life, the universe and everything!
-
 ```
 
-## Where to go next?
+## Manually add or remove object
 
-Stay tuned for the full docs.
+Sometimes you want to add objects to the container manually, you can use the `addObject` container method like so:
+
+```typescript
+
+const car = {
+	model: "Ford",
+	type: "Mustang",
+	color: "Black"
+};
+
+container.addObject(car, "myCar");
+
+expect(container.get("myCar")).toStrictEqual(car);
+
+container.bootstrap();
+```
+
+Now you can inject "myCar" into other modules using the `@inject()` decorator.
+
+```typescript
+@define()
+@singleton()
+class CarService {
+
+	@inject() private myCar: ICar;
+
+	@init()
+	public initialize() {
+		console.log(myCar.type); // Mustang
+	}
+
+}
+```
+
+To remove an object, use the `removeObject` container method:
+
+```typescript
+container.removeObject("myCar");
+
+expect(container.get("myCar")).toBeUndefined();
+```
+
+## Container creation config
+
+When creating new Injex container, you can use the following configurations:
+
+```typescript
+const container = await Injex.create({
+	rootDirs: [
+		process.cwd()
+	],
+	logLevel: LogLevel.Error,
+	logNamespace: "Container",
+	globPattern: "/**/*.js"
+})
+```
+
+`rootDirs?: string[];`  
+- Specify list of root directories to be used when resolving modules.  
+Default: `[process.cwd()]`
+
+`logLevel?: LogLevel;`  
+- Set Injex's logger level  
+Posible options are:
+`LogLevel.Error`,
+`LogLevel.Warn`,
+`LogLevel.Info`,
+`LogLevel.Debug`  
+Default: `LogLevel.Error`
+
+`logNamespace?: string;`
+- Set Injex's log namespace. The namespace will be included in each log.  
+Defualt: `Container`
+
+`globPattern?: string;`
+- When resolving modules on `rootDirs`, this glob will be used to find the project files.  
+Default: `/**/*.js`
+
+## Decorators
+
+### `@define()`
+
+### `@singleton()`
+
+### `@init()`
+
+### `@inject()`
+
+## Public container methods
+
+### `bootstrap()`
+
+### `get<T>([name])`
+
+### `addObject<T>([object, name])`
+
+### `removeObject<T>([name])`
+
+## Having an issue? A feature idea?
+fill free to open an [issue](https://github.com/uditalias/injex/issues/new)  or a [pull request](https://github.com/uditalias/injex/compare).

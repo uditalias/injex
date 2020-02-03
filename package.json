@@ -17,6 +17,11 @@
     "test:cov": "jest --coverage",
     "test:watch": "npm t -- --watch --color --env=jsdom"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uditalias/injex.git"
@@ -39,15 +44,14 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.7.0",
-    "jest": "^25.1.0",
-    "release-it": "^12.4.3",
-    "ts-jest": "^25.1.0",
-    "tslint": "^6.0.0",
-    "typescript": "^3.7.5"
-  },
-  "dependencies": {
-    "rimraf": "^3.0.1"
+    "@types/jest": "25.1.1",
+    "@types/node": "13.7.0",
+    "husky": "4.2.1",
+    "jest": "25.1.0",
+    "release-it": "12.4.3",
+    "rimraf": "3.0.1",
+    "ts-jest": "25.2.0",
+    "tslint": "6.0.0",
+    "typescript": "3.7.5"
   }
 }

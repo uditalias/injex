@@ -8,7 +8,9 @@ import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFou
 function defaults(config: Partial<IContainerConfig>): IContainerConfig {
 	return {
 		logLevel: LogLevel.Error,
-		rootDirs: [],
+		rootDirs: [
+			process.cwd()
+		],
 		logNamespace: "Container",
 		globPattern: "/**/*.js",
 		...config
@@ -172,7 +174,7 @@ export default class InjexContainer {
 	}
 
 	/**
-	 * Manually add object as a module
+	 * Manually add object to the container
 	 *
 	 * @param obj - Object to add
 	 * @param name - Name of the object
@@ -184,6 +186,18 @@ export default class InjexContainer {
 		const metadata = { singleton: true, item: obj, name };
 
 		this.modules.set(name, { module: obj, metadata });
+
+		return this;
+	}
+
+	/**
+	 * Remove object from container
+	 *
+	 * @param name - Name of the object
+	 */
+	public removeObject(name: string): InjexContainer {
+		this.modules.delete(name);
+		this.moduleRegistry.delete(name);
 
 		return this;
 	}

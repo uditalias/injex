@@ -67,6 +67,20 @@ describe("InjexContainer", () => {
 		expect(container.get("myCar")).toStrictEqual(car);
 	});
 
+	it("should removeObject from the container", () => {
+
+		let mailService = container.get<MailService>("mailService");
+
+		expect(mailService).toBeDefined();
+		expect(mailService).toBeInstanceOf(MailService);
+
+		container.removeObject("mailService");
+
+		mailService = container.get<MailService>("mailService");
+
+		expect(mailService).toBeUndefined();
+	});
+
 	it("should get factory method", async () => {
 
 		const mailFactory = container.get<(message: string) => Mail>("mail");
