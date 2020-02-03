@@ -278,5 +278,9 @@ Default: `/**/*.js`
 
 ---
 
+[![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
+[![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
+[![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
+
 ## Having an issue? A feature idea? Want to contribute?
 Feel free to open an [issue](https://github.com/uditalias/injex/issues/new)  or create a [pull request](https://github.com/uditalias/injex/compare)
