@@ -1,4 +1,7 @@
-# INJEX
+<img src="assets/logo.png" />
+
+#
+
 _Simple dependency-injection container for Node JS apps_
 
 [![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
