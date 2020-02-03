@@ -227,11 +227,11 @@ const container = await Injex.create({
 });
 ```
 
-`rootDirs?: string[];`  
+`rootDirs: string[];`  
 - Specify list of root directories to be used when resolving modules.  
 Default: `[process.cwd()]`
 
-`logLevel?: LogLevel;`  
+`logLevel: LogLevel;`  
 - Set Injex's logger level  
 Possible value:
 `LogLevel.Error`,
@@ -240,13 +240,15 @@ Possible value:
 `LogLevel.Debug`  
 Default: `LogLevel.Error`
 
-`logNamespace?: string;`
+`logNamespace: string;`
 - Set Injex's log namespace. The namespace will be included in each log.  
 Defualt: `Container`
 
-`globPattern?: string;`
+`globPattern: string;`
 - When resolving modules on `rootDirs`, this glob will be used to find the project files.  
 Default: `/**/*.js`
+
+**All the container options are optional**
 
 ## Decorators
 
