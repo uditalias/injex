@@ -156,3 +156,7 @@ mailManager.sendMessage("The answer to the question of life, the universe and ev
 // Sending message: The answer to the question of life, the universe and everything!
 
 ```
+
+## Where to go next?
+
+Stay tuned for the full docs.
