@@ -79,7 +79,9 @@ expect(mail.message).toBe("hello, world!");
 ```
 
 Whats going on? well, it's very simple, first we make access to our Injex container using the `container.get` method and requesting the "mail" module (1), this will return a factory method to create a new `Mail` instance.  
+
 You may ask why we request "*_mail_*" and not "*_Mail_*"? By default, Injex's `@define()` decorator will use a camel cased version of the class name, if you want to use something else, just pass it to `@define()` as the first argument like this: `@define("Mail")`  
+
 Second, we invoke the `mailFactory` method with arguments (the 'hello, world!' strign literal), those gets passed to the `Mail` constructor and we get a new `Mail` instance.  
 
 Now lets inject this factory method into a module without the container, lets define more modules.
