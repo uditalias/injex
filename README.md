@@ -263,12 +263,18 @@ Default: `/**/*.js`
 ## Public container methods
 
 ### `bootstrap()`
+- Bootstraps the container, creates singletons, factory methods and injects dependencies.  
+**Note** that this method may throw `DuplicateDefinitionError` if there are module duplications or `InitializeMuduleError` if there is an error in one of the `@init` methods.
 
 ### `get<T>([name])`
+- Lookup and retrieve a module by it's name. Returns `undefined` if the module is not exist.
 
 ### `addObject<T>([object, name])`
+- Add an object to the container with the given name.  
+**Note** that this method will throw an `DuplicateDefinitionError` if the module is already defined.
 
 ### `removeObject<T>([name])`
+- Removes an object by its name.
 
-## Having an issue? A feature idea?
-fill free to open an [issue](https://github.com/uditalias/injex/issues/new)  or a [pull request](https://github.com/uditalias/injex/compare).
+## Having an issue? A feature idea? Want to contribute?
+Feel free to open an [issue](https://github.com/uditalias/injex/issues/new)  or create a [pull request](https://github.com/uditalias/injex/compare).
