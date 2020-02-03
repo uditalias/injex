@@ -13,6 +13,10 @@ Install Injex using NPM or Yarn:
 npm install --save injex
 ```
 
+```bash
+yarn add injex
+```
+
 ## How it works
 
 Injex create dependency tree between your modules in a  simple way, using TypeScript decorators you can define, configure and inject modules into the container.
