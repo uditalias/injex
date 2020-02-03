@@ -1,6 +1,6 @@
 {
   "name": "injex",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "Simple dependency-injection container for Node JS apps",
   "main": "./lib/index.js",
   "types": "./typings/index.d.ts",
