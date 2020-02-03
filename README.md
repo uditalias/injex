@@ -224,7 +224,7 @@ const container = await Injex.create({
 	logLevel: LogLevel.Error,
 	logNamespace: "Container",
 	globPattern: "/**/*.js"
-})
+});
 ```
 
 `rootDirs?: string[];`  
@@ -233,7 +233,7 @@ Default: `[process.cwd()]`
 
 `logLevel?: LogLevel;`  
 - Set Injex's logger level  
-Posible options are:
+Possible options are:
 `LogLevel.Error`,
 `LogLevel.Warn`,
 `LogLevel.Info`,
