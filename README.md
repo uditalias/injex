@@ -1,4 +1,4 @@
-<img src="assets/logo.png" width="142" />
+<img src="assets/logo.png" width="228" />
 
 _Simple dependency-injection container for Node JS apps_
 
