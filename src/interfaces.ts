@@ -23,4 +23,9 @@ export interface IDefinitionMetadata {
 	singleton?: boolean;
 	dependencies?: IDependency[];
 	initMethod?: string;
+	bootstrap?: boolean;
+}
+
+export interface IBootstrap {
+	run(): Promise<void> | void;
 }

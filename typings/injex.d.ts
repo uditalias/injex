@@ -4,6 +4,7 @@ export default class InjexContainer {
     private logger;
     private moduleRegistry;
     private modules;
+    private bootstrapModuleName;
     static create(config: IContainerConfig): InjexContainer;
     private constructor();
     bootstrap(): Promise<InjexContainer>;

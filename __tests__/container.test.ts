@@ -3,6 +3,8 @@ import * as path from "path";
 import { MailManager } from "./__mocks__/general/mailManager";
 import { MailService } from "./__mocks__/general/mailService";
 import { Mail } from "./__mocks__/general/mail";
+import { bootstrapSymbol } from "../src/constants";
+import { IBootstrap } from "../src/interfaces";
 
 describe("InjexContainer", () => {
 
@@ -183,6 +185,14 @@ describe("InjexContainer", () => {
 		}
 
 		expect(error).toBeInstanceOf(DuplicateDefinitionError);
+
+	});
+
+	it("should run bootstrap module run method", () => {
+
+		const bootstrapClass = container.get<IBootstrap & { didRun: boolean; }>(bootstrapSymbol);
+
+		expect(bootstrapClass.didRun).toBeTruthy();
 
 	});
 });

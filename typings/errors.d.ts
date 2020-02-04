@@ -7,3 +7,6 @@ export declare class InitializeMuduleError extends Error {
 export declare class DuplicateDefinitionError extends Error {
     constructor(moduleName: string);
 }
+export declare class MultipleBootstrapModulesFound extends Error {
+    constructor(bootstrapModuleName: string, nextBootstrapModuleName: string);
+}

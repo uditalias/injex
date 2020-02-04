@@ -8,7 +8,7 @@ _Simple dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
-## Core concepts
+## Core concept
 
 Injex has only one core concept, to define, inject and manage module dependencies.
 
@@ -31,7 +31,9 @@ Injex create dependency tree between your modules in a simple way, using TypeScr
 
 ## Requirements
 
- In order to use Injex, your project should use TypeScript with `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).
+ In order to use Injex, your project should use TypeScript with `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
+
+Each defined module should be exported from it's file so Injex can find and register it.
 
 ## A quick start
 
@@ -192,7 +194,7 @@ Now you can inject "myCar" into other modules using the `@inject()` decorator.
 ```typescript
 @define()
 @singleton()
-class CarService {
+export class CarService {
 
 	@inject() private myCar: ICar;
 
@@ -261,6 +263,23 @@ Default: `/**/*.js`
 ### `@init()`
 - Define an init method for a module. This method will be called in the bootstrap phase. The method can return a Promise.
 
+### `@bootstrap()`
+- A class with this decorator will invoke it's `run` method at the end of the bootstrap container phase. You don't need to use the @define() or @singleton() decorators when you use the @bootstrap() decorator, since it will automatically will be defined as a singleton module. For Example:
+```typescript
+@bootstrap()
+export class ProjectBootstrapModule implements IBootstrap {
+
+	@inject() private mailManager: MailManager;
+
+	public async run(): Promise<void> {
+		await this.someAsyncTask();
+
+		this.mailManager.sendMessage("Bootstrap complete.");
+	}
+}
+```
+Note that the `run` method can return a `Promise` for async bootstrap.
+
 ### `@inject()`
 - Injects a module as a dependency into another module. You can use the module name or its type. For example:
 ```typescript
@@ -271,7 +290,7 @@ class Mail {
 
 @define()
 @singleton()
-class MailManager {
+export class MailManager {
 
 	// Inject a factory method using the module type
 	@inject(Mail) craeteMail: (message: string) => Mail;

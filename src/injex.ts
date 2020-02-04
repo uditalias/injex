@@ -1,5 +1,5 @@
-import { IModule, IContainerConfig, IDefinitionMetadata } from "./interfaces";
-import { EMPTY_ARGS, UNDEFINED } from "./constants";
+import { IModule, IContainerConfig, IDefinitionMetadata, IBootstrap } from "./interfaces";
+import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
 import { getMetadata, hasMetadata } from "./utils/metadata";
 import { Logger, LogLevel } from "./utils/logger";
@@ -45,6 +45,12 @@ export default class InjexContainer {
 
 		await this.initializeModules();
 
+		const bootstrapModule = this.get<IBootstrap>(bootstrapSymbol);
+
+		if (bootstrapModule) {
+			await bootstrapModule.run();
+		}
+
 		return this;
 	}
 
@@ -60,6 +66,7 @@ export default class InjexContainer {
 
 			// require each file and register its module exports.
 			.forEach((filePath) => {
+
 				const moduleExports = require(filePath);
 
 				for (const key of Reflect.ownKeys(moduleExports)) {
