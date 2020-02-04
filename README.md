@@ -4,7 +4,7 @@ _Simple dependency-injection container for Node JS apps_
 
 ---
 
-[![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
+[![npm version](https://badge.fury.io/js/injex.svg)](https://badge.fury.io/js/injex)
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
@@ -299,7 +299,7 @@ class MailManager {
 
 ---
 
-[![npm version](https://badge.fury.io/js/uditalias%2Finjex.svg)](https://badge.fury.io/js/uditalias%2Finjex)
+[![npm version](https://badge.fury.io/js/injex.svg)](https://badge.fury.io/js/injex)
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
