@@ -1,5 +1,4 @@
-<img src="assets/logo.png" width="228" />
-<img src="http://badge.langauge.io/uditalias/injex?threshold=1&scale=0.6">
+<img src="assets/logo.png" width="228" /> <img src="http://badge.langauge.io/uditalias/injex">
 
 _Simple dependency-injection container for Node JS apps_
 
