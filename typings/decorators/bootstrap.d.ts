@@ -1,1 +1,1 @@
-export declare function bootstrap(): (target: any) => void;
+export declare function bootstrap(): (targetConstructor: any) => void;

@@ -1,1 +1,1 @@
-export declare function init(): (target: any, methodName: string) => void;
+export declare function init(): (targetPrototype: any, methodName: string) => void;

@@ -1,4 +1,5 @@
 import { LogLevel } from "./utils/logger";
+import { ModuleName } from "./utils/metadata";
 
 export interface IModule {
 	metadata: IDefinitionMetadata;
@@ -19,7 +20,7 @@ export interface IContainerConfig {
 
 export interface IDefinitionMetadata {
 	item: any;
-	name?: string;
+	name?: ModuleName;
 	singleton?: boolean;
 	dependencies?: IDependency[];
 	initMethod?: string;

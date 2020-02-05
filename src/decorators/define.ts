@@ -6,8 +6,8 @@ function getDependencyName(item: any, name?: string): string {
 }
 
 export function define(name?: string) {
-	return function (target) {
-		setMetadata(target.prototype, "item", target);
-		setMetadata(target.prototype, "name", getDependencyName(target, name));
+	return function (targetConstructor) {
+		setMetadata(targetConstructor, "item", targetConstructor);
+		setMetadata(targetConstructor, "name", getDependencyName(targetConstructor, name));
 	}
 }

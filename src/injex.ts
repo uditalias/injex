@@ -1,7 +1,7 @@
 import { IModule, IContainerConfig, IDefinitionMetadata, IBootstrap } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
-import { getMetadata, hasMetadata } from "./utils/metadata";
+import { getMetadata, hasMetadata, ModuleName } from "./utils/metadata";
 import { Logger, LogLevel } from "./utils/logger";
 import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError } from "./errors";
 
@@ -19,8 +19,8 @@ function defaults(config: Partial<IContainerConfig>): IContainerConfig {
 
 export default class InjexContainer {
 
-	private moduleRegistry: Map<string, any>;
-	private modules: Map<string, IModule>;
+	private moduleRegistry: Map<ModuleName, any>;
+	private modules: Map<ModuleName, IModule>;
 
 	public static create(config: IContainerConfig): InjexContainer {
 		config = defaults(config);
@@ -39,6 +39,7 @@ export default class InjexContainer {
 	}
 
 	public async bootstrap(): Promise<InjexContainer> {
+
 		this.loadProjectFiles();
 
 		this.createModules();
@@ -61,7 +62,7 @@ export default class InjexContainer {
 			// find all js files in the root directories
 			.map((dir) => getAllFilesInDir(dir, this.config.globPattern))
 
-			// flat into single files array
+			// flat into single array of files
 			.reduce((allFiles: string[], files: string[]) => allFiles.concat(files), [])
 
 			// require each file and register its module exports.
@@ -77,13 +78,13 @@ export default class InjexContainer {
 			});
 	}
 
-	private throwIfAlreadyDefined(name: string) {
+	private throwIfAlreadyDefined(name: ModuleName) {
 		if (this.moduleRegistry.has(name)) {
 			throw new DuplicateDefinitionError(name);
 		}
 	}
 
-	private throwIfModuleExists(name: string) {
+	private throwIfModuleExists(name: ModuleName) {
 		if (this.modules.has(name)) {
 			throw new DuplicateDefinitionError(name);
 		}
@@ -94,7 +95,7 @@ export default class InjexContainer {
 
 		this.moduleRegistry.forEach((item) => {
 
-			const metadata = getMetadata(item.prototype);
+			const metadata = getMetadata(item);
 
 			this.throwIfModuleExists(metadata.name);
 
@@ -154,14 +155,13 @@ export default class InjexContainer {
 
 			if (this.modules.has(value)) {
 				dependency = this.modules.get(value).module;
-			} else {
-				if (!value.prototype) {
-					throw new ModuleDependencyNotFoundError(metadata.name, value);
-				}
-
-				metadata = getMetadata(value.prototype);
-
+			} else if (value instanceof Function) {
+				metadata = getMetadata(value);
 				dependency = this.modules.get(metadata.name).module;
+			}
+
+			if (!dependency) {
+				throw new ModuleDependencyNotFoundError(metadata.name, value);
 			}
 
 			module[label] = dependency;
@@ -169,11 +169,11 @@ export default class InjexContainer {
 	}
 
 	private register(item: any) {
-		if (!item || !hasMetadata(item.prototype)) {
+		if (!item || !hasMetadata(item)) {
 			return;
 		}
 
-		const metadata = getMetadata(item.prototype);
+		const metadata = getMetadata(item);
 
 		this.throwIfAlreadyDefined(metadata.name);
 

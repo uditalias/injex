@@ -264,7 +264,7 @@ Default: `/**/*.js`
 - Define an init method for a module. This method will be called in the bootstrap phase. The method can return a Promise.
 
 ### `@bootstrap()`
-- A class with this decorator will invoke it's `run` method at the end of the bootstrap container phase. You don't need to use the @define() or @singleton() decorators when you use the @bootstrap() decorator, since it will automatically will be defined as a singleton module. For Example:
+- A class with this decorator will invoke it's `run` method at the end of the bootstrap container phase, after all modules initialized. You don't need to use @define() or @singleton() decorators when you use @bootstrap(), since the bootstrap decorator automatically defined as a singleton module. For Example:
 ```typescript
 @bootstrap()
 export class ProjectBootstrapModule implements IBootstrap {

@@ -195,4 +195,24 @@ describe("InjexContainer", () => {
 		expect(bootstrapClass.didRun).toBeTruthy();
 
 	});
+
+	it("should throw error when two modules defined with the bootstrap decorator", async () => {
+
+		let error;
+		try {
+			container = Injex.create({
+				rootDirs: [
+					path.resolve(__dirname, "__mocks__/willThrow")
+				],
+				globPattern: "/**/*Bootstrap.ts"
+			});
+
+			await container.bootstrap();
+
+		} catch (e) {
+			error = e;
+		}
+
+		expect(error).toBeInstanceOf(DuplicateDefinitionError);
+	});
 });

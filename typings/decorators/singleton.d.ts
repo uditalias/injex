@@ -1,1 +1,1 @@
-export declare function singleton(): (target: any) => void;
+export declare function singleton(): (targetConstructor: any) => void;

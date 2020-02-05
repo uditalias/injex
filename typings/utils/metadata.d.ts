@@ -1,4 +1,5 @@
 import { IDefinitionMetadata } from "../interfaces";
+export declare type ModuleName = string | symbol;
 export declare function ensureMetadata(target: any): IDefinitionMetadata;
 export declare function setMetadata(target: any, key: keyof IDefinitionMetadata, value: any): void;
 export declare function getMetadata(target: any): IDefinitionMetadata;

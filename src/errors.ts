@@ -1,7 +1,12 @@
+import { ModuleName } from "./utils/metadata";
+
 // tslint:disable max-classes-per-file
 
 export class ModuleDependencyNotFoundError extends Error {
-	constructor(moduleName: string, dependencyName: string) {
+	constructor(moduleName: ModuleName, dependencyName: ModuleName) {
+		moduleName = moduleName.toString();
+		dependencyName = dependencyName.toString();
+
 		super(
 			`Dependency '${dependencyName}' was not found for module '${moduleName}'.`
 		);
@@ -9,7 +14,9 @@ export class ModuleDependencyNotFoundError extends Error {
 }
 
 export class InitializeMuduleError extends Error {
-	constructor(moduleName: string) {
+	constructor(moduleName: ModuleName) {
+		moduleName = moduleName.toString();
+
 		super(
 			`Failed to initialize module '${moduleName}'.`
 		);
@@ -17,7 +24,9 @@ export class InitializeMuduleError extends Error {
 }
 
 export class DuplicateDefinitionError extends Error {
-	constructor(moduleName: string) {
+	constructor(moduleName: ModuleName) {
+		moduleName = moduleName.toString();
+
 		super(
 			`Module '${moduleName}' already defined.`
 		);

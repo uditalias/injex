@@ -4,6 +4,6 @@ import { define, singleton, inject } from "../../../src";
 @singleton()
 export class UnknownService {
 
-	@inject() private atlantis: any;
+	@inject() private atlantisLocation: any;
 
 }

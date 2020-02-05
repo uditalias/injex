@@ -1,1 +1,1 @@
-export declare function define(name?: string): (target: any) => void;
+export declare function define(name?: string): (targetConstructor: any) => void;
