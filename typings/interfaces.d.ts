@@ -41,5 +41,6 @@ export interface IInjextHooks {
     afterCreateModules: SyncHook;
     beforeModuleRequire: SyncHook<string>;
     afterModuleRequire: SyncHook<string, any>;
-    berforeCreateInstance: SyncHook<Function, any[]>;
+    berforeCreateInstance: SyncHook<Constructor, any[]>;
 }
+export declare type Constructor<T = any> = new () => T;

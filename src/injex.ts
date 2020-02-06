@@ -1,4 +1,4 @@
-import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjextHooks } from "./interfaces";
+import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjextHooks, Constructor } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
 import { getMetadata, hasMetadata } from "./utils/metadata";
@@ -71,7 +71,7 @@ export default class InjexContainer {
 		this.hooks.afterCreateModules = new SyncHook();
 		this.hooks.beforeModuleRequire = new SyncHook<string>(["filePath"]);
 		this.hooks.afterModuleRequire = new SyncHook<string, any>(["filePath", "module"]);
-		this.hooks.berforeCreateInstance = new SyncHook<Function, any[]>(["construct", "args"]);
+		this.hooks.berforeCreateInstance = new SyncHook<Constructor, any[]>(["construct", "args"]);
 	}
 
 	private loadProjectFiles() {
@@ -143,7 +143,7 @@ export default class InjexContainer {
 		this.hooks.afterCreateModules.call();
 	}
 
-	private createModuleFactoryMethod(construct: Function, metadata: IDefinitionMetadata): (...args) => Promise<void> {
+	private createModuleFactoryMethod(construct: Constructor, metadata: IDefinitionMetadata): (...args) => Promise<void> {
 		const self = this;
 
 		return async function factory(...args): Promise<void> {
