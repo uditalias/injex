@@ -12,7 +12,6 @@
     "clean": "rimraf lib/ typings/",
     "release": "npm run build && release-it --no-git.requireCleanWorkingDir",
     "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
-    "prepublishOnly": "npm run build",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:watch": "npm t -- --watch --color --env=jsdom"
