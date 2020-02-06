@@ -10,7 +10,7 @@ import createConfig from "./createConfig";
 export default class InjexContainer {
 
 	private moduleRegistry: Map<ModuleName, any>;
-	private modules: Map<ModuleName, IModule>;
+	private modules: Map<ModuleName | Constructor, IModule>;
 	public hooks: IInjextHooks;
 
 	public static create(config: IContainerConfig): InjexContainer {
@@ -24,17 +24,17 @@ export default class InjexContainer {
 	}
 
 	private constructor(private config: IContainerConfig, public logger: Logger) {
-		this.moduleRegistry = new Map<string, any>();
-		this.modules = new Map<string, IModule>();
+		this.moduleRegistry = new Map<ModuleName, any>();
+		this.modules = new Map<ModuleName | Constructor, IModule>();
 
 		this.createHooks();
-
-		this.initPlugins();
 
 		this.logger.debug("Container created with config", this.config);
 	}
 
 	public async bootstrap(): Promise<InjexContainer> {
+
+		await this.initPlugins();
 
 		this.loadProjectFiles();
 
@@ -56,10 +56,17 @@ export default class InjexContainer {
 			return;
 		}
 
+		const applyPluginPromises: Promise<void>[] = [];
+
 		for (const plugin of this.config.plugins) {
 			this.throwIfInvalidPlugin(plugin);
-			plugin.apply(this);
+
+			applyPluginPromises.push(
+				plugin.apply(this)
+			);
 		}
+
+		return Promise.all(applyPluginPromises);
 	}
 
 	private createHooks() {
@@ -224,7 +231,7 @@ export default class InjexContainer {
 	 * @param obj - Object to add
 	 * @param name - Name of the object
 	 */
-	public addObject(obj: any, name: string): InjexContainer {
+	public addObject(obj: any, name: ModuleName): InjexContainer {
 
 		this.throwIfModuleExists(name);
 
@@ -240,14 +247,14 @@ export default class InjexContainer {
 	 *
 	 * @param name - Name of the object
 	 */
-	public removeObject(name: string): InjexContainer {
+	public removeObject(name: ModuleName): InjexContainer {
 		this.modules.delete(name);
 		this.moduleRegistry.delete(name);
 
 		return this;
 	}
 
-	public get<T = any>(itemNameOrType: any): T {
+	public get<T = any>(itemNameOrType: ModuleName | Constructor): T {
 		if (!this.modules.has(itemNameOrType)) {
 			return UNDEFINED;
 		}

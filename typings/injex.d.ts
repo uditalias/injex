@@ -1,4 +1,4 @@
-import { IContainerConfig, IInjextHooks } from "./interfaces";
+import { ModuleName, IContainerConfig, IInjextHooks, Constructor } from "./interfaces";
 import { Logger } from "./utils/logger";
 export default class InjexContainer {
     private config;
@@ -28,12 +28,12 @@ export default class InjexContainer {
      * @param obj - Object to add
      * @param name - Name of the object
      */
-    addObject(obj: any, name: string): InjexContainer;
+    addObject(obj: any, name: ModuleName): InjexContainer;
     /**
      * Remove object from container
      *
      * @param name - Name of the object
      */
-    removeObject(name: string): InjexContainer;
-    get<T = any>(itemNameOrType: any): T;
+    removeObject(name: ModuleName): InjexContainer;
+    get<T = any>(itemNameOrType: ModuleName | Constructor): T;
 }

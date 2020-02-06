@@ -1,7 +1,6 @@
+// tslint:disable max-classes-per-file
 import { ModuleName } from "./interfaces";
 import { getPluginName } from "./utils/utils";
-
-// tslint:disable max-classes-per-file
 
 export class ModuleDependencyNotFoundError extends Error {
 	constructor(moduleName: ModuleName, dependencyName: ModuleName) {

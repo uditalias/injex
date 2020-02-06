@@ -4,7 +4,7 @@ import { getMetadata } from "../utils/metadata";
 import { Colors } from "../utils/colors";
 
 export default class HooksLoggerPlugin implements IInjexPlugin {
-	public apply(container: Injex): void {
+	public async apply(container: Injex): Promise<void> {
 		container
 			.hooks
 			.berforeCreateInstance

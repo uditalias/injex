@@ -29,7 +29,7 @@ export interface IBootstrap {
     run(): Promise<void> | void;
 }
 export interface IInjexPlugin {
-    apply(container: Injex): void;
+    apply(container: Injex): Promise<void>;
 }
 export interface IDictionary<T = any> {
     [index: string]: T;

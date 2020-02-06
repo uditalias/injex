@@ -1,6 +1,6 @@
 {
   "name": "injex",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple dependency-injection container for Node JS apps",
   "main": "./lib/index.js",
   "types": "./typings/index.d.ts",
@@ -10,7 +10,7 @@
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "clean": "rimraf lib/ typings/",
-    "release": "release-it",
+    "release": "npm run build && release-it --no-git.requireCleanWorkingDir",
     "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
     "prepublishOnly": "npm run build",
     "test": "jest",

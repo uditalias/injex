@@ -36,7 +36,7 @@ export interface IBootstrap {
 }
 
 export interface IInjexPlugin {
-	apply(container: Injex): void;
+	apply(container: Injex): Promise<void>;
 }
 
 export interface IDictionary<T = any> {
@@ -54,4 +54,4 @@ export interface IInjextHooks {
 }
 
 
-export type Constructor<T = any> = new() => T;
+export type Constructor<T = any> = new () => T;

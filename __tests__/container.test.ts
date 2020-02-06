@@ -241,11 +241,12 @@ describe("InjexContainer", () => {
 		expect(infoArgs.join(" ")).toContain("HooksLoggerPlugin Creating instance: ");
 	});
 
-	it("should throw error when plugin is not valid", () => {
+	it("should throw error when plugin is not valid", async () => {
 
+		let error;
 		class FakePlugin { }
 
-		expect(() => {
+		try {
 			container = Injex.create({
 				rootDirs: [
 					path.resolve(__dirname, "__mocks__/general")
@@ -256,6 +257,13 @@ describe("InjexContainer", () => {
 					new FakePlugin() as IInjexPlugin
 				]
 			});
-		}).toThrowError(errors.InvalidPluginError);
+
+			await container.bootstrap();
+
+		} catch (e) {
+			error = e;
+		}
+
+		expect(error).toBeInstanceOf(errors.InvalidPluginError);
 	});
 });
