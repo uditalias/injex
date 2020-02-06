@@ -1,3 +1,4 @@
+export * from "./interfaces";
 export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
 export { singleton } from "./decorators/singleton";

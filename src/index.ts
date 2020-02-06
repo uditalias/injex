@@ -1,3 +1,6 @@
+// interfaces
+export * from "./interfaces";
+
 // decorators
 export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
@@ -13,7 +16,12 @@ export const plugins = {
 };
 
 // errors
-import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
+import {
+	DuplicateDefinitionError,
+	InitializeMuduleError,
+	ModuleDependencyNotFoundError,
+	InvalidPluginError,
+} from "./errors";
 
 export const errors = {
 	DuplicateDefinitionError,
