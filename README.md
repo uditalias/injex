@@ -224,7 +224,7 @@ const container = await Injex.create({
 		process.cwd()
 	],
 	logLevel: LogLevel.Error,
-	logNamespace: "Container",
+	logNamespace: "Injex",
 	globPattern: "/**/*.js"
 });
 ```
@@ -244,7 +244,7 @@ Default: `LogLevel.Error`
 
 `logNamespace: string;`
 - Set Injex's log namespace. The namespace will be included in each log.  
-Defualt: `Container`
+Defualt: `Injex`
 
 `globPattern: string;`
 - When resolving modules on `rootDirs`, this glob will be used to find the project files.  

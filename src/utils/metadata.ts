@@ -2,8 +2,6 @@ import { IDefinitionMetadata } from "../interfaces";
 
 const metadataSymbol = Symbol("metadata");
 
-export type ModuleName = string | symbol;
-
 export function ensureMetadata(target): IDefinitionMetadata {
 	target[metadataSymbol] = target[metadataSymbol] || {};
 

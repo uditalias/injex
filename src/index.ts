@@ -1,4 +1,3 @@
-
 // decorators
 export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
@@ -6,7 +5,23 @@ export { singleton } from "./decorators/singleton";
 export { init } from "./decorators/init";
 export { bootstrap } from "./decorators/bootstrap";
 
+// plugins
+import HooksLoggerPlugin from "./plugins/HooksLoggerPlugin";
+
+export const plugins = {
+	HooksLoggerPlugin,
+};
+
+// errors
+import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
+
+export const errors = {
+	DuplicateDefinitionError,
+	InitializeMuduleError,
+	ModuleDependencyNotFoundError,
+	InvalidPluginError,
+};
+
 export { LogLevel } from "./utils/logger";
-export { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError } from "./errors";
 
 export { default as Injex } from "./injex";

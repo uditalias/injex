@@ -1,34 +1,34 @@
-import { ModuleName } from "./utils/metadata";
+import { ModuleName } from "./interfaces";
+import { getPluginName } from "./utils/utils";
 
 // tslint:disable max-classes-per-file
 
 export class ModuleDependencyNotFoundError extends Error {
 	constructor(moduleName: ModuleName, dependencyName: ModuleName) {
-		moduleName = moduleName.toString();
-		dependencyName = dependencyName.toString();
-
 		super(
-			`Dependency '${dependencyName}' was not found for module '${moduleName}'.`
+			`Dependency '${String(dependencyName)}' was not found for module '${String(moduleName)}'.`
 		);
 	}
 }
 
 export class InitializeMuduleError extends Error {
 	constructor(moduleName: ModuleName) {
-		moduleName = moduleName.toString();
-
 		super(
-			`Failed to initialize module '${moduleName}'.`
+			`Failed to initialize module '${String(moduleName)}'.`
 		);
 	}
 }
 
 export class DuplicateDefinitionError extends Error {
 	constructor(moduleName: ModuleName) {
-		moduleName = moduleName.toString();
-
 		super(
-			`Module '${moduleName}' already defined.`
+			`Module '${String(moduleName)}' already defined.`
 		);
+	}
+}
+
+export class InvalidPluginError extends Error {
+	constructor(plugin) {
+		super(`Plugin ${getPluginName(plugin)} is not valid. Make sure the 'apply' method exist.`);
 	}
 }

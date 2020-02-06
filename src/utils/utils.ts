@@ -11,3 +11,7 @@ export function getAllFilesInDir(dir: string, pattern?: string): string[] {
 export function isFunction(predicate: any): boolean {
 	return typeof predicate === "function";
 }
+
+export function getPluginName(plugin): string {
+	return (plugin && plugin.constructor && plugin.constructor.name);
+}

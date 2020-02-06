@@ -1,29 +1,21 @@
-import { IModule, IContainerConfig, IDefinitionMetadata, IBootstrap } from "./interfaces";
+import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjextHooks } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
-import { getMetadata, hasMetadata, ModuleName } from "./utils/metadata";
-import { Logger, LogLevel } from "./utils/logger";
-import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError } from "./errors";
-
-function defaults(config: Partial<IContainerConfig>): IContainerConfig {
-	return {
-		logLevel: LogLevel.Error,
-		rootDirs: [
-			process.cwd()
-		],
-		logNamespace: "Container",
-		globPattern: "/**/*.js",
-		...config
-	};
-}
+import { getMetadata, hasMetadata } from "./utils/metadata";
+import { Logger } from "./utils/logger";
+import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
+import { SyncHook } from "tapable";
+import createConfig from "./createConfig";
 
 export default class InjexContainer {
 
 	private moduleRegistry: Map<ModuleName, any>;
 	private modules: Map<ModuleName, IModule>;
+	public hooks: IInjextHooks;
 
 	public static create(config: IContainerConfig): InjexContainer {
-		config = defaults(config);
+
+		config = createConfig(config);
 
 		return new InjexContainer(
 			config,
@@ -31,9 +23,13 @@ export default class InjexContainer {
 		);
 	}
 
-	private constructor(private config: IContainerConfig, private logger: Logger) {
+	private constructor(private config: IContainerConfig, public logger: Logger) {
 		this.moduleRegistry = new Map<string, any>();
-		this.modules = new Map<string, any>();
+		this.modules = new Map<string, IModule>();
+
+		this.createHooks();
+
+		this.initPlugins();
 
 		this.logger.debug("Container created with config", this.config);
 	}
@@ -55,7 +51,32 @@ export default class InjexContainer {
 		return this;
 	}
 
+	private initPlugins() {
+		if (!this.config.plugins || !this.config.plugins.length) {
+			return;
+		}
+
+		for (const plugin of this.config.plugins) {
+			this.throwIfInvalidPlugin(plugin);
+			plugin.apply(this);
+		}
+	}
+
+	private createHooks() {
+		this.hooks = {} as IInjextHooks;
+
+		this.hooks.beforeRegistration = new SyncHook();
+		this.hooks.afterRegistration = new SyncHook();
+		this.hooks.beforeCreateModules = new SyncHook();
+		this.hooks.afterCreateModules = new SyncHook();
+		this.hooks.beforeModuleRequire = new SyncHook<string>(["filePath"]);
+		this.hooks.afterModuleRequire = new SyncHook<string, any>(["filePath", "module"]);
+		this.hooks.berforeCreateInstance = new SyncHook<Function, any[]>(["construct", "args"]);
+	}
+
 	private loadProjectFiles() {
+
+		this.hooks.beforeRegistration.call();
 
 		this.config.rootDirs
 
@@ -68,7 +89,11 @@ export default class InjexContainer {
 			// require each file and register its module exports.
 			.forEach((filePath) => {
 
+				this.hooks.beforeModuleRequire.call(filePath);
+
 				const moduleExports = require(filePath);
+
+				this.hooks.afterModuleRequire.call(filePath, moduleExports);
 
 				for (const key of Reflect.ownKeys(moduleExports)) {
 					this.register(
@@ -76,6 +101,8 @@ export default class InjexContainer {
 					);
 				}
 			});
+
+		this.hooks.afterRegistration.call();
 	}
 
 	private throwIfAlreadyDefined(name: ModuleName) {
@@ -90,8 +117,15 @@ export default class InjexContainer {
 		}
 	}
 
+	private throwIfInvalidPlugin(plugin: IInjexPlugin) {
+		if (!plugin.apply || !isFunction(plugin.apply)) {
+			throw new InvalidPluginError(plugin);
+		}
+	}
+
 	private createModules() {
-		const self = this;
+
+		this.hooks.beforeCreateModules.call();
 
 		this.moduleRegistry.forEach((item) => {
 
@@ -99,24 +133,25 @@ export default class InjexContainer {
 
 			this.throwIfModuleExists(metadata.name);
 
-			let module;
-
-			if (metadata.singleton) {
-
-				module = this.createInstance(item, EMPTY_ARGS);
-
-			} else {
-
-				module = async function factory(...args): Promise<any> {
-					const instance = self.createInstance(item, args);
-					self.injectModuleDependencies(instance, metadata);
-					await self.invokeModuleInitMethod(instance, metadata);
-					return instance;
-				};
-			}
+			const module = metadata.singleton
+				? this.createInstance(item, EMPTY_ARGS)
+				: this.createModuleFactoryMethod(item, metadata);
 
 			this.modules.set(metadata.name, { module, metadata });
 		});
+
+		this.hooks.afterCreateModules.call();
+	}
+
+	private createModuleFactoryMethod(construct: Function, metadata: IDefinitionMetadata): (...args) => Promise<void> {
+		const self = this;
+
+		return async function factory(...args): Promise<void> {
+			const instance = self.createInstance(construct, args);
+			self.injectModuleDependencies(instance, metadata);
+			await self.invokeModuleInitMethod(instance, metadata);
+			return instance;
+		}
 	}
 
 	private async initializeModules(): Promise<void> {
@@ -143,6 +178,9 @@ export default class InjexContainer {
 	}
 
 	private createInstance(construct: any, args: any[]): any {
+
+		this.hooks.berforeCreateInstance.call(construct, args);
+
 		return Reflect.construct(construct, args);
 	}
 
@@ -181,7 +219,7 @@ export default class InjexContainer {
 	}
 
 	/**
-	 * Manually add object to the container
+	 * Manually add object to the container as singleton
 	 *
 	 * @param obj - Object to add
 	 * @param name - Name of the object

@@ -1,5 +1,8 @@
 import { LogLevel } from "./utils/logger";
-import { ModuleName } from "./utils/metadata";
+import { Injex } from ".";
+import { SyncHook } from "tapable";
+
+export type ModuleName = string | symbol;
 
 export interface IModule {
 	metadata: IDefinitionMetadata;
@@ -16,6 +19,7 @@ export interface IContainerConfig {
 	logLevel?: LogLevel;
 	logNamespace?: string;
 	globPattern?: string;
+	plugins?: IInjexPlugin[];
 }
 
 export interface IDefinitionMetadata {
@@ -29,4 +33,22 @@ export interface IDefinitionMetadata {
 
 export interface IBootstrap {
 	run(): Promise<void> | void;
+}
+
+export interface IInjexPlugin {
+	apply(container: Injex): void;
+}
+
+export interface IDictionary<T = any> {
+	[index: string]: T
+}
+
+export interface IInjextHooks {
+	beforeRegistration: SyncHook;
+	afterRegistration: SyncHook;
+	beforeCreateModules: SyncHook;
+	afterCreateModules: SyncHook;
+	beforeModuleRequire: SyncHook<string>;
+	afterModuleRequire: SyncHook<string, any>;
+	berforeCreateInstance: SyncHook<Function, any[]>;
 }
