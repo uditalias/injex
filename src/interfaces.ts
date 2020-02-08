@@ -47,6 +47,7 @@ export interface IInjextHooks {
 	beforeRegistration: SyncHook;
 	afterRegistration: SyncHook;
 	beforeCreateModules: SyncHook;
+	afterModuleCreation: SyncHook<IModule>;
 	afterCreateModules: SyncHook;
 	beforeModuleRequire: SyncHook<string>;
 	afterModuleRequire: SyncHook<string, any>;

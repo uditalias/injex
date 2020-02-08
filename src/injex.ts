@@ -75,6 +75,7 @@ export default class InjexContainer {
 		this.hooks.beforeRegistration = new SyncHook();
 		this.hooks.afterRegistration = new SyncHook();
 		this.hooks.beforeCreateModules = new SyncHook();
+		this.hooks.afterModuleCreation = new SyncHook<IModule>(["module"]);
 		this.hooks.afterCreateModules = new SyncHook();
 		this.hooks.beforeModuleRequire = new SyncHook<string>(["filePath"]);
 		this.hooks.afterModuleRequire = new SyncHook<string, any>(["filePath", "module"]);
@@ -144,7 +145,13 @@ export default class InjexContainer {
 				? this.createInstance(item, EMPTY_ARGS)
 				: this.createModuleFactoryMethod(item, metadata);
 
-			this.modules.set(metadata.name, { module, metadata });
+			const moduleWithMetadata: IModule = {
+				module, metadata
+			};
+
+			this.modules.set(metadata.name, moduleWithMetadata);
+
+			this.hooks.afterModuleCreation.call(moduleWithMetadata);
 		});
 
 		this.hooks.afterCreateModules.call();
