@@ -298,7 +298,7 @@ Defualt: `Injex`
 Default: `/**/*.js`
 
 `plugins: IInjexPlugin[];`
-- A list of plugins, see [Plugins](#plugins--hooks) for more info.
+- A list of plugins, see [Plugins](#plugins--hooks) for more info.  
 Default: `[]`
 
   For example:
