@@ -233,7 +233,7 @@ class MyAwesomeNotificationsPlugin {
 
 ### Container hooks
 
-This list describes all the container hooks you can bind to. To bind with hook, use the following syntax:
+This list describes all the container hooks you can bind to. To bind with a hook, use the following syntax:
 
 ```typescript
 container.hooks.afterModuleCreation.tap("PluginName", (module: IModule) => {
@@ -241,21 +241,23 @@ container.hooks.afterModuleCreation.tap("PluginName", (module: IModule) => {
 });
 ```
 
+Some hooks callbacks will be invoked with arguments.
+
 For more information about the tapable module, refer to the [tapable docs](https://github.com/webpack/tapable).
 
-- `beforeModuleRequire` - Before require all files in project root directories.
-- `afterModuleRequire` - After require all files in project root directories.
+- `beforeModuleRequire` - Before require all files in project root directories. The callback function will invoked with the module path.
+- `afterModuleRequire` - After require all files in project root directories. The callback function will invoked with the module path and the `module.exports` object.
 - `beforeRegistration` - Before all modules registration..
 - `afterRegistration` - After all modules registration.
 - `beforeCreateModules` - Before modules created and injected with dependencies.
-- `afterModuleCreation` - After each module created and injected with dependencies.
+- `afterModuleCreation` - After each module created and injected with dependencies. The callback function will invoked with the `module: IModule` just created.
 - `afterCreateModules` - After modules created and injected with dependencies
-- `berforeCreateInstance` - Before a module is created via singleton or factory method.
+- `berforeCreateInstance` - Before a module is created via singleton or factory method. The callback function will invoked with the instance class constructor.
 
 ## Available plugins
 
 - [injex-express-plugin](https://github.com/uditalias/injex-express-plugin)  
-A plugin to handle express application routes in a neat way through controllers.
+Turn your express application into injectable controllers to handle application routes in a neat way.
 - More plugins to come...
 
 ## Container creation config
