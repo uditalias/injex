@@ -298,8 +298,21 @@ Defualt: `Injex`
 Default: `/**/*.js`
 
 `plugins: IInjexPlugin[];`
-- A list of plugins, see [Plugins](#plugins) for more info.
+- A list of plugins, see [Plugins](#plugins--hooks) for more info.
 Default: `[]`
+
+  For example:
+
+  ```typescript
+  const container = await Injex.create({
+	...
+	plugins: [
+		new InjexExpressPlugin({
+			// ...plugin config...
+		})
+	]
+  });
+  ```
 
 **All the container options are optional**
 
