@@ -1,4 +1,4 @@
-import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjextHooks, Constructor } from "./interfaces";
+import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjexHooks, Constructor } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
 import metadataHandlers from "./utils/metadata";
@@ -11,7 +11,7 @@ export default class InjexContainer {
 
 	private moduleRegistry: Map<ModuleName, any>;
 	private modules: Map<ModuleName | Constructor, IModule>;
-	public hooks: IInjextHooks;
+	public hooks: IInjexHooks;
 
 	public static create(config: IContainerConfig): InjexContainer {
 
@@ -70,7 +70,7 @@ export default class InjexContainer {
 	}
 
 	private createHooks() {
-		this.hooks = {} as IInjextHooks;
+		this.hooks = {} as IInjexHooks;
 
 		this.hooks.beforeRegistration = new SyncHook();
 		this.hooks.afterRegistration = new SyncHook();

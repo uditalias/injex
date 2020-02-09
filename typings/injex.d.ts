@@ -1,11 +1,11 @@
-import { ModuleName, IContainerConfig, IInjextHooks, Constructor } from "./interfaces";
+import { ModuleName, IContainerConfig, IInjexHooks, Constructor } from "./interfaces";
 import { Logger } from "./utils/logger";
 export default class InjexContainer {
     private config;
     logger: Logger;
     private moduleRegistry;
     private modules;
-    hooks: IInjextHooks;
+    hooks: IInjexHooks;
     static create(config: IContainerConfig): InjexContainer;
     private constructor();
     bootstrap(): Promise<InjexContainer>;

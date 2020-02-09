@@ -14,5 +14,5 @@ export declare class Logger {
     debug(...args: any[]): void;
     warn(...args: any[]): void;
     error(...args: any[]): void;
-    private invokeLogMethos;
+    private invokeLogMethod;
 }

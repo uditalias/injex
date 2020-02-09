@@ -43,7 +43,7 @@ export interface IDictionary<T = any> {
 	[index: string]: T
 }
 
-export interface IInjextHooks {
+export interface IInjexHooks {
 	beforeRegistration: SyncHook;
 	afterRegistration: SyncHook;
 	beforeCreateModules: SyncHook;

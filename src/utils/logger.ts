@@ -43,27 +43,27 @@ export class Logger {
 
 	@filterLogLevel(LogLevel.Info)
 	public info(...args) {
-		this.invokeLogMethos("info", args, Colors.FgCyan);
+		this.invokeLogMethod("info", args, Colors.FgCyan);
 	}
 
 	@filterLogLevel(LogLevel.Debug)
 	public debug(...args) {
-		this.invokeLogMethos("debug", args, Colors.FgGreen);
+		this.invokeLogMethod("debug", args, Colors.FgGreen);
 	}
 
 	@filterLogLevel(LogLevel.Warn)
 	public warn(...args) {
-		this.invokeLogMethos("warn", args, Colors.FgYellow);
+		this.invokeLogMethod("warn", args, Colors.FgYellow);
 	}
 
 	@filterLogLevel(LogLevel.Error)
 	public error(...args) {
-		this.invokeLogMethos("error", args, Colors.FgRed);
+		this.invokeLogMethod("error", args, Colors.FgRed);
 	}
 
-	private invokeLogMethos(method: LogMethod, args: any[], color: string) {
+	private invokeLogMethod(method: LogMethod, args: any[], color: string) {
 		args = [
-			`\x1b[2m${(new Date()).toLocaleTimeString()}\x1b[0m ${color}[${method.toUpperCase()}]\x1b[0m ${this.namespace}:`,
+			`${Colors.Dim}${(new Date()).toLocaleTimeString()}${Colors.Reset} ${color}[${method.toUpperCase()}]${Colors.Reset} ${this.namespace}:`,
 			...Array.from(args)
 		];
 
