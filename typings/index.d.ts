@@ -15,5 +15,6 @@ export declare const errors: {
     ModuleDependencyNotFoundError: typeof ModuleDependencyNotFoundError;
     InvalidPluginError: typeof InvalidPluginError;
 };
+export { createMetadataHandlers } from "./utils/metadata";
 export { LogLevel } from "./utils/logger";
 export { default as Injex } from "./injex";
