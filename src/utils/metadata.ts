@@ -1,27 +1,27 @@
 import { IDefinitionMetadata } from "../interfaces";
 
-export type MetadataHandlers = {
-	ensureMetadata: (target: any) => IDefinitionMetadata;
-	setMetadata: (target: any, key: keyof IDefinitionMetadata, value: any) => void;
-	getMetadata: (target: any) => IDefinitionMetadata;
+export type MetadataHandlers<T> = {
+	ensureMetadata: (target: any) => T;
+	setMetadata: (target: any, key: keyof T, value: any) => void;
+	getMetadata: (target: any) => T;
 	hasMetadata: (target: any) => boolean;
-	pushMetadata: (target: any, key: keyof IDefinitionMetadata, value: any) => void;
+	pushMetadata: (target: any, key: keyof T, value: any) => void;
 }
 
-export function createMetadataHandlers(metadataKey: symbol): MetadataHandlers {
-	function ensureMetadata(target): IDefinitionMetadata {
+export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHandlers<T> {
+	function ensureMetadata(target): T {
 		target[metadataKey] = target[metadataKey] || {};
 
 		return target[metadataKey];
 	}
 
-	function setMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
+	function setMetadata(target: any, key: keyof T, value: any) {
 		ensureMetadata(target)
 
 		target[metadataKey][key] = value;
 	}
 
-	function getMetadata(target): IDefinitionMetadata {
+	function getMetadata(target): T {
 		return target[metadataKey];
 	}
 
@@ -29,14 +29,14 @@ export function createMetadataHandlers(metadataKey: symbol): MetadataHandlers {
 		return target && target instanceof Object && Reflect.has(target, metadataKey);
 	}
 
-	function pushMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
+	function pushMetadata(target: any, key: keyof T, value: any) {
 		const metadata = ensureMetadata(target);
 
 		if (!metadata[key]) {
 			setMetadata(target, key, []);
 		}
 
-		metadata[key].push(value);
+		(metadata[key] as any).push(value);
 	}
 
 	return {
@@ -50,4 +50,4 @@ export function createMetadataHandlers(metadataKey: symbol): MetadataHandlers {
 
 const metadataSymbol = Symbol("metadata");
 
-export default createMetadataHandlers(metadataSymbol);
+export default createMetadataHandlers<IDefinitionMetadata>(metadataSymbol);
