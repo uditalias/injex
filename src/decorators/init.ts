@@ -1,7 +1,7 @@
-import { setMetadata } from "../utils/metadata"
+import metadataHandlers from "../utils/metadata"
 
 export function init() {
 	return function (targetPrototype, methodName: string) {
-		setMetadata(targetPrototype.constructor, "initMethod", methodName);
+		metadataHandlers.setMetadata(targetPrototype.constructor, "initMethod", methodName);
 	}
 }

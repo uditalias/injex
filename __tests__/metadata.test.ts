@@ -1,4 +1,4 @@
-import { ensureMetadata, hasMetadata, getMetadata, setMetadata, pushMetadata } from "../src/utils/metadata";
+import metadataHandlers from "../src/utils/metadata";
 
 describe("Metadata", () => {
 
@@ -8,8 +8,8 @@ describe("Metadata", () => {
 
 		}
 
-		ensureMetadata(MyClass.prototype);
-		expect(hasMetadata(MyClass.prototype)).toBeTruthy();
+		metadataHandlers.ensureMetadata(MyClass.prototype);
+		expect(metadataHandlers.hasMetadata(MyClass.prototype)).toBeTruthy();
 	});
 
 	it("should getMetadata", () => {
@@ -18,11 +18,11 @@ describe("Metadata", () => {
 
 		}
 
-		expect(hasMetadata(MyClass.prototype)).toBeFalsy();
+		expect(metadataHandlers.hasMetadata(MyClass.prototype)).toBeFalsy();
 
-		ensureMetadata(MyClass.prototype);
+		metadataHandlers.ensureMetadata(MyClass.prototype);
 
-		expect(getMetadata(MyClass.prototype)).toEqual({});
+		expect(metadataHandlers.getMetadata(MyClass.prototype)).toEqual({});
 	});
 
 	it("should setMetadata", () => {
@@ -31,10 +31,10 @@ describe("Metadata", () => {
 
 		}
 
-		setMetadata(MyClass.prototype, "name", "myClass");
-		setMetadata(MyClass.prototype, "singleton", true);
+		metadataHandlers.setMetadata(MyClass.prototype, "name", "myClass");
+		metadataHandlers.setMetadata(MyClass.prototype, "singleton", true);
 
-		const metadata = getMetadata(MyClass.prototype);
+		const metadata = metadataHandlers.getMetadata(MyClass.prototype);
 
 		expect(metadata.singleton).toBe(true);
 		expect(metadata.name).toBe("myClass");
@@ -46,9 +46,9 @@ describe("Metadata", () => {
 
 		}
 
-		pushMetadata(MyClass.prototype, "dependencies", "myClass");
+		metadataHandlers.pushMetadata(MyClass.prototype, "dependencies", "myClass");
 
-		const metadata = getMetadata(MyClass.prototype);
+		const metadata = metadataHandlers.getMetadata(MyClass.prototype);
 
 		expect(metadata.dependencies).toContain("myClass");
 	});

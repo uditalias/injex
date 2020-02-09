@@ -1,7 +1,7 @@
-import { setMetadata } from "../utils/metadata";
+import metadataHandlers from "../utils/metadata";
 
 export function singleton() {
 	return function (targetConstructor) {
-		setMetadata(targetConstructor, "singleton", true);
+		metadataHandlers.setMetadata(targetConstructor, "singleton", true);
 	}
 }

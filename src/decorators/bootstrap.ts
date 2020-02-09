@@ -1,10 +1,10 @@
-import { setMetadata } from "../utils/metadata"
+import metadataHandlers from "../utils/metadata"
 import { bootstrapSymbol } from "../constants";
 
 export function bootstrap() {
 	return function (targetConstructor) {
-		setMetadata(targetConstructor, "name", bootstrapSymbol);
-		setMetadata(targetConstructor, "bootstrap", true);
-		setMetadata(targetConstructor, "singleton", true);
+		metadataHandlers.setMetadata(targetConstructor, "name", bootstrapSymbol);
+		metadataHandlers.setMetadata(targetConstructor, "bootstrap", true);
+		metadataHandlers.setMetadata(targetConstructor, "singleton", true);
 	}
 }

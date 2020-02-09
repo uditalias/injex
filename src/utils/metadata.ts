@@ -1,33 +1,53 @@
 import { IDefinitionMetadata } from "../interfaces";
 
-const metadataSymbol = Symbol("metadata");
-
-export function ensureMetadata(target): IDefinitionMetadata {
-	target[metadataSymbol] = target[metadataSymbol] || {};
-
-	return target[metadataSymbol];
+export type MetadataHandlers = {
+	ensureMetadata: (target: any) => IDefinitionMetadata;
+	setMetadata: (target: any, key: keyof IDefinitionMetadata, value: any) => void;
+	getMetadata: (target: any) => IDefinitionMetadata;
+	hasMetadata: (target: any) => boolean;
+	pushMetadata: (target: any, key: keyof IDefinitionMetadata, value: any) => void;
 }
 
-export function setMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
-	ensureMetadata(target)
+export function createMetadataHandlers(metadataKey: symbol): MetadataHandlers {
+	function ensureMetadata(target): IDefinitionMetadata {
+		target[metadataKey] = target[metadataKey] || {};
 
-	target[metadataSymbol][key] = value;
-}
-
-export function getMetadata(target): IDefinitionMetadata {
-	return target[metadataSymbol];
-}
-
-export function hasMetadata(target): boolean {
-	return target && target instanceof Object && Reflect.has(target, metadataSymbol);
-}
-
-export function pushMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
-	const metadata = ensureMetadata(target);
-
-	if (!metadata[key]) {
-		setMetadata(target, key, []);
+		return target[metadataKey];
 	}
 
-	metadata[key].push(value);
+	function setMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
+		ensureMetadata(target)
+
+		target[metadataKey][key] = value;
+	}
+
+	function getMetadata(target): IDefinitionMetadata {
+		return target[metadataKey];
+	}
+
+	function hasMetadata(target): boolean {
+		return target && target instanceof Object && Reflect.has(target, metadataKey);
+	}
+
+	function pushMetadata(target: any, key: keyof IDefinitionMetadata, value: any) {
+		const metadata = ensureMetadata(target);
+
+		if (!metadata[key]) {
+			setMetadata(target, key, []);
+		}
+
+		metadata[key].push(value);
+	}
+
+	return {
+		ensureMetadata,
+		setMetadata,
+		getMetadata,
+		hasMetadata,
+		pushMetadata,
+	};
 }
+
+const metadataSymbol = Symbol("metadata");
+
+export default createMetadataHandlers(metadataSymbol);

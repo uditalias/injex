@@ -1,7 +1,7 @@
 import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjextHooks, Constructor } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
 import { getAllFilesInDir, isFunction } from "./utils/utils";
-import { getMetadata, hasMetadata } from "./utils/metadata";
+import metadataHandlers from "./utils/metadata";
 import { Logger } from "./utils/logger";
 import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
 import { SyncHook } from "tapable";
@@ -137,7 +137,7 @@ export default class InjexContainer {
 
 		this.moduleRegistry.forEach((item) => {
 
-			const metadata = getMetadata(item);
+			const metadata = metadataHandlers.getMetadata(item);
 
 			this.throwIfModuleExists(metadata.name);
 
@@ -208,7 +208,7 @@ export default class InjexContainer {
 			if (this.modules.has(value)) {
 				dependency = this.modules.get(value).module;
 			} else if (value instanceof Function) {
-				metadata = getMetadata(value);
+				metadata = metadataHandlers.getMetadata(value);
 				dependency = this.modules.get(metadata.name).module;
 			}
 
@@ -221,11 +221,11 @@ export default class InjexContainer {
 	}
 
 	private register(item: any) {
-		if (!item || !hasMetadata(item)) {
+		if (!item || !metadataHandlers.hasMetadata(item)) {
 			return;
 		}
 
-		const metadata = getMetadata(item);
+		const metadata = metadataHandlers.getMetadata(item);
 
 		this.throwIfAlreadyDefined(metadata.name);
 

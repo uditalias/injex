@@ -54,5 +54,4 @@ export interface IInjextHooks {
 	berforeCreateInstance: SyncHook<Constructor, any[]>;
 }
 
-
 export type Constructor<T = any> = new () => T;
