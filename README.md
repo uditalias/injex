@@ -1,4 +1,4 @@
-<img src="assets/logo.png" width="228" /> <a href="https://github.com/langauge/langauge"><img src="http://badge.langauge.io/uditalias/injex" align="right" /></a>
+<img src="assets/logo.png" width="228" /> <a href="https://github.com/langauge/langauge"><img src="https://badge.langauge.io/uditalias/injex" align="right" /></a>
 
 _Simple dependency-injection container for Node JS apps_
 
