@@ -329,40 +329,40 @@ Default: `[]`
 
 ### `@bootstrap()`
 - A class with this decorator will invoke it's `run` method at the end of the bootstrap container phase, after all modules initialized. You don't need to use @define() or @singleton() decorators when you use @bootstrap(), since the bootstrap decorator automatically defined as a singleton module. For Example:
-```typescript
-@bootstrap()
-export class ProjectBootstrapModule implements IBootstrap {
+	```typescript
+	@bootstrap()
+	export class ProjectBootstrapModule implements IBootstrap {
 
-	@inject() private mailManager: MailManager;
+		@inject() private mailManager: MailManager;
 
-	public async run(): Promise<void> {
-		await this.someAsyncTask();
+		public async run(): Promise<void> {
+			await this.someAsyncTask();
 
-		this.mailManager.sendMessage("Bootstrap complete.");
+			this.mailManager.sendMessage("Bootstrap complete.");
+		}
 	}
-}
-```
+	```
 Note that the `run` method can return a `Promise` for async bootstrap.
 
 ### `@inject()`
 - Injects a module as a dependency into another module. You can use the module name or its type. For example:
-```typescript
-@define()
-class Mail {
-	...
-}
+	```typescript
+	@define()
+	class Mail {
+		...
+	}
 
-@define()
-@singleton()
-export class MailManager {
+	@define()
+	@singleton()
+	export class MailManager {
 
-	// Inject a factory method using the module type
-	@inject(Mail) craeteMail: (message: string) => Mail;
+		// Inject a factory method using the module type
+		@inject(Mail) craeteMail: (message: string) => Mail;
 
-	// Inject a factory method using the module name
-	@inject("mail") craeteMail: (message: string) => Mail;
-}
-```
+		// Inject a factory method using the module name
+		@inject("mail") craeteMail: (message: string) => Mail;
+	}
+	```
 
 ## Public container methods
 
