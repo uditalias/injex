@@ -30,6 +30,8 @@ export const errors = {
 	InvalidPluginError,
 };
 
+export { createMetadataHandlers } from "./utils/metadata";
+
 export { LogLevel } from "./utils/logger";
 
 export { default as Injex } from "./injex";
