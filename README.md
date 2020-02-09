@@ -1,6 +1,6 @@
 <img src="assets/logo.png" width="228" /> <a href="https://github.com/langauge/langauge"><img src="https://badge.langauge.io/uditalias/injex" align="right" /></a>
 
-_Simple dependency-injection container for Node JS apps_
+_Simple, Decocated, Pluguble dependency-injection container for Node JS apps_
 
 ---
 
@@ -8,9 +8,14 @@ _Simple dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
+## What is Dependency Injection?
+>In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
+
+From [wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
+
 ## Core concept
 
-Injex has only one core concept, to define, inject and manage module dependencies.
+Injex has only one core concept, to define, inject and manage module dependencies in a simple way with minimum configurations, using decorators and plugins.
 
 
 ## Install
@@ -27,13 +32,13 @@ yarn add injex
 
 ## How it works
 
-Injex create dependency tree between your modules in a simple way, using TypeScript decorators you can define, configure and inject modules into other modules as dependencies.
+Injex create dependency tree between your modules in a simple way, using TypeScript decorators you can define, configure and inject modules into other modules as dependencies. A dependency is an object that can be injected into another dependant object. The dependency itself can had one or more dependencies.
 
 ## Requirements
 
- In order to use Injex, your project should use TypeScript with `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
+ In order to use Injex, your project should use TypeScript with the `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
 
-Each defined module should be exported from it's file so Injex can find and register it.
+Each defined module should be exported from it's file so Injex can find and register it into the container.
 
 ## A quick start
 
@@ -216,17 +221,17 @@ expect(container.get("myCar")).toBeUndefined();
 
 ## Plugins & Hooks
 
-Injex supports plugins by exporting container hooks to manipulate, intercept and extend the container abilities. Under the hood, we're using the [tapable](https://github.com/webpack/tapable) module by [webpack](https://github.com/webpack), So if you had craeted a webpack plugin or you know how they work you can easily create your own Injex plugins.  
+Injex supports plugins by exporting container hooks to manipulate, intercept and extend the container abilities. Under the hood, Injex uses the [tapable](https://github.com/webpack/tapable) module by [webpack](https://github.com/webpack), So if you had craeted a webpack plugin or you know how they work you can easily create your own Injex plugins.  
 
-Injex-Plugin is just a class (or simple object) with an `apply` method to be invoked with the container instance once created. For example:
+Injex-Plugin is just a class (or simple object) with the `apply` method to be invoked with the container instance once created. For example:
 
 ```typescript
 class MyAwesomeNotificationsPlugin {
 	apply(container) {
 		// apply container hooks here, for example:
-		// container.hooks.beforeRegistration.tap("MyAwesomeNotificationsPlugin", () => {
-		//     container.logger.debug("Registration phase started...");
-		// });
+		container.hooks.beforeRegistration.tap("MyAwesomeNotificationsPlugin", () => {
+		     container.logger.debug("Registration phase started...");
+		});
 	}
 }
 ```
@@ -257,7 +262,7 @@ For more information about the tapable module, refer to the [tapable docs](https
 ## Available plugins
 
 - [injex-express-plugin](https://github.com/uditalias/injex-express-plugin)  
-Turn your express application into injectable controllers to handle application routes in a neat way.
+Turn your express application into injectable controllers to handle application routes in a very neat way.
 - More plugins to come...
 
 ## Container creation config
