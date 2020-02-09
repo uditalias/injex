@@ -1,10 +1,10 @@
-import { Injex, LogLevel, errors, plugins } from "../src";
+import { Injex, LogLevel, errors } from "../src";
 import * as path from "path";
 import { MailManager } from "./__mocks__/general/mailManager";
 import { MailService } from "./__mocks__/general/mailService";
 import { Mail } from "./__mocks__/general/mail";
 import { bootstrapSymbol } from "../src/constants";
-import { IBootstrap, IInjexPlugin } from "../src/interfaces";
+import { IBootstrap } from "../src/interfaces";
 
 describe("InjexContainer", () => {
 
@@ -216,54 +216,5 @@ describe("InjexContainer", () => {
 		}
 
 		expect(error).toBeInstanceOf(errors.DuplicateDefinitionError);
-	});
-
-	it("should log instance creation when using the HooksLoggerPlugin", async () => {
-
-		const infoArgs = [];
-		console.debug = jest.fn((...args) => {
-			infoArgs.push.apply(infoArgs, args);
-		});
-
-		container = Injex.create({
-			rootDirs: [
-				path.resolve(__dirname, "__mocks__/general")
-			],
-			globPattern: "/**/*.ts",
-			logLevel: LogLevel.Debug,
-			plugins: [
-				new plugins.HooksLoggerPlugin()
-			]
-		});
-
-		await container.bootstrap();
-
-		expect(infoArgs.join(" ")).toContain("HooksLoggerPlugin Creating instance: ");
-	});
-
-	it("should throw error when plugin is not valid", async () => {
-
-		let error;
-		class FakePlugin { }
-
-		try {
-			container = Injex.create({
-				rootDirs: [
-					path.resolve(__dirname, "__mocks__/general")
-				],
-				globPattern: "/**/*.ts",
-				logLevel: LogLevel.Debug,
-				plugins: [
-					new FakePlugin() as IInjexPlugin
-				]
-			});
-
-			await container.bootstrap();
-
-		} catch (e) {
-			error = e;
-		}
-
-		expect(error).toBeInstanceOf(errors.InvalidPluginError);
 	});
 });

@@ -214,6 +214,50 @@ container.removeObject("myCar");
 expect(container.get("myCar")).toBeUndefined();
 ```
 
+## Plugins & Hooks
+
+Injex supports plugins by exporting container hooks to manipulate, intercept and extend the container abilities. Under the hood, we're using the [tapable](https://github.com/webpack/tapable) module by [webpack](https://github.com/webpack), So if you had craeted a webpack plugin or you know how they work you can easily create your own Injex plugins.  
+
+Injex-Plugin is just a class (or simple object) with an `apply` method to be invoked with the container instance once created. For example:
+
+```typescript
+class MyAwesomeNotificationsPlugin {
+	apply(container) {
+		// apply container hooks here, for example:
+		// container.hooks.beforeRegistration.tap("MyAwesomeNotificationsPlugin", () => {
+		//     container.logger.debug("Registration phase started...");
+		// });
+	}
+}
+```
+
+### Container hooks
+
+This list describes all the container hooks you can bind to. To bind with hook, use the following syntax:
+
+```typescript
+container.hooks.afterModuleCreation.tap("PluginName", (module: IModule) => {
+	// do something here...
+});
+```
+
+For more information about the tapable module, refer to the [tapable docs](https://github.com/webpack/tapable).
+
+- `beforeModuleRequire` - Before require all files in project root directories.
+- `afterModuleRequire` - After require all files in project root directories.
+- `beforeRegistration` - Before all modules registration..
+- `afterRegistration` - After all modules registration.
+- `beforeCreateModules` - Before modules created and injected with dependencies.
+- `afterModuleCreation` - After each module created and injected with dependencies.
+- `afterCreateModules` - After modules created and injected with dependencies
+- `berforeCreateInstance` - Before a module is created via singleton or factory method.
+
+## Available plugins
+
+- [injex-express-plugin](https://github.com/uditalias/injex-express-plugin)  
+A plugin to handle express application routes in a neat way through controllers.
+- More plugins to come...
+
 ## Container creation config
 
 When creating new Injex container, you can use the following configurations:
@@ -225,7 +269,8 @@ const container = await Injex.create({
 	],
 	logLevel: LogLevel.Error,
 	logNamespace: "Injex",
-	globPattern: "/**/*.js"
+	globPattern: "/**/*.js",
+	plugins: []
 });
 ```
 
@@ -249,6 +294,10 @@ Defualt: `Injex`
 `globPattern: string;`
 - When resolving modules on `rootDirs`, this glob will be used to find the project files.  
 Default: `/**/*.js`
+
+`plugins: IInjexPlugin[];`
+- A list of plugins, see [Plugins](#plugins) for more info.
+Default: `[]`
 
 **All the container options are optional**
 
