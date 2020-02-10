@@ -16,6 +16,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 - [Core concept](#core-concept)
 - [What is a Dependency Injection?](#what-is-a-dependency-injection)
 - [Install](#install)
+- [Simple example](#simple-example)
 - [Requirements](#requirements)
 - [Quick start](docs/quick-start.md)
   - [Create Injex container](docs/quick-start.md#create-injex-container)
@@ -34,7 +35,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
   - [@define()](#define)
   - [@singleton()](#singleton)
   - [@init()](#init)
-  - [@bootstrap()](#bootstrap)
+  - [@bootstrap()](#bootstrap-1)
   - [@inject()](#inject)
 
 
@@ -58,6 +59,58 @@ Or
 ```bash
 yarn add injex
 ```
+
+## Simple example
+
+```typescript
+// index.ts
+Injex.create({
+	rootDirs: [
+		path.resolve(__dirname, "./src")
+	]
+})
+.bootstrap()
+
+// src/mailService.ts
+@define()
+@singleton()
+export class MailService {
+	public sendMessage(message: string) {
+		console.log(`Sending message: ${message}...`);
+	}
+}
+
+// src/mailManager.ts
+@define()
+@singleton()
+export class MailManager {
+	@inject() private mailService: IMailService;
+
+	public send(message: string) {
+		this.mailService.sendMessage(message);
+	}
+}
+
+// src/bootstrap.ts
+@bootstrap()
+export class Bootstrap implements IBootstrap {
+	@inject() private mailManager: MailManager;
+
+	public run() {
+		console.log("Ready.");
+
+		this.mailService.send("Hello world!");
+	}
+}
+```
+
+```shell
+> node index
+Sending message: Hello world!...
+```
+
+
+Check out the [Quickstart](docs/quick-start.md) guid for more details.
 
 ## Requirements
 
