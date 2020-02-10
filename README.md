@@ -8,7 +8,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
-### Injex is a simple dependency-injection library for Node JS wich helps to orginize a project code base in an elegant way while keeping it scalable and maintainable.
+### Injex is a simple dependency-injection library for Node JS, which helps to organize a project codebase elegantly while keeping it easy to scale and maintain.
 
 
 ## Table of content
@@ -23,7 +23,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
   - [Using the container to get a defined module](docs/quick-start.md#using-the-container-to-get-a-defined-module)
   - [Using Singleton and Init decorators](docs/quick-start.md#using-singleton-and-init-decorators)
   - [Connecting all the dots with the Inject decorator](docs/quick-start.md#connecting-all-the-dots-with-the-inject-decorator)
-- [Manually add or remove object](#manually-add-or-remove-objects)
+- [Manually add or remove an object](#manually-add-or-remove-objects)
 - [Plugins & Hooks](#plugins--hooks)
   - [Container hooks](#container-hooks)
 - [Available plugins](#available-plugins)
@@ -40,12 +40,12 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 
 ## Core concept
 
-Injex creates dependency tree between your modules. Using TypeScript decorators you can define and inject modules into other modules as dependencies. A dependency is an object which can be injected into another dependant objects.  
+Injex creates a dependency tree between your modules. Using TypeScript decorators, you can define and inject modules into other modules as dependencies. A dependency is an object which can be injected into other dependent objects.  
 
 ## What is a Dependency Injection?
->In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
+>In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example, as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
 
-From [wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
+From [Wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
 
 ## Install
 
@@ -61,16 +61,15 @@ yarn add injex
 
 ## Requirements
 
- In order to use Injex, your project should use TypeScript with the `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
+ A project should use TypeScript with the `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
 
-Each defined module should be exported from it's file so Injex can find and register it into the container.
+Each defined module should be exported from its file so Injex can find and register it into the container.
 
 ## Manually add or remove objects
 
-Sometimes you want to add objects to the container manually, you can use the `addObject` container method like so:
+Sometimes you want to add objects to the container manually, Use the `addObject` container method like so:
 
 ```typescript
-
 const car = {
 	model: "Ford",
 	type: "Mustang",
@@ -111,9 +110,9 @@ expect(container.get("myCar")).toBeUndefined();
 
 ## Plugins & Hooks
 
-Injex supports plugins by exporting container hooks to manipulate, intercept and extend the container abilities. Under the hood, Injex uses the [tapable](https://github.com/webpack/tapable) module by [webpack](https://github.com/webpack), So if you had craeted a webpack plugin or you know how they work you can easily create your own Injex plugins.  
+Injex supports plugins by exporting container hooks to manipulate, intercept, and extend the container abilities. Under the hood, Injex uses the [tapable](https://github.com/webpack/tapable) module by [webpack](https://github.com/webpack), So if you had created a webpack plugin or you know how they work, you can easily create your Injex plugins.  
 
-Injex-Plugin is just a class (or simple object) with the `apply` method to be invoked with the container instance once created. For example:
+Injex-Plugin is just a class (or simple object) with an `apply` method to be invoked with the container instance once created. For example:
 
 ```typescript
 class MyAwesomeNotificationsPlugin {
@@ -136,24 +135,24 @@ container.hooks.afterModuleCreation.tap("PluginName", (module: IModule) => {
 });
 ```
 
-Some hooks callbacks will be invoked with arguments.
+Some hooks callbacks invoked with arguments.
 
 For more information about the tapable module, refer to the [tapable docs](https://github.com/webpack/tapable).
 
-- `beforeModuleRequire` - Before require all files in project root directories. The callback function will invoked with the module path.
-- `afterModuleRequire` - After require all files in project root directories. The callback function will invoked with the module path and the `module.exports` object.
-- `beforeRegistration` - Before all modules registration..
+- `beforeModuleRequire` - Before requiring all files in project root directories. The callback function invoked with the module path.
+- `afterModuleRequire` - After requiring all files in project root directories. The callback function invoked with the module path and the `module.exports` object.
+- `beforeRegistration` - Before all modules registration.
 - `afterRegistration` - After all modules registration.
 - `beforeCreateModules` - Before modules created and injected with dependencies.
-- `afterModuleCreation` - After each module created and injected with dependencies. The callback function will invoked with the `module: IModule` just created.
-- `afterCreateModules` - After modules created and injected with dependencies
-- `berforeCreateInstance` - Before a module is created via singleton or factory method. The callback function will invoked with the instance class constructor.
+- `afterModuleCreation` - After each module created and injected with dependencies. The callback function invoked with the `module: IModule` just created.
+- `afterCreateModules` - After modules created and injected with dependencies.
+- `berforeCreateInstance` - Before a module creation via singleton or factory method. The callback function invoked with the instance class constructor.
 
 ## Available plugins
 
 - [injex-express-plugin](https://github.com/uditalias/injex-express-plugin)  
-Turn your express application into injectable controllers to handle application routes in a very neat way.
-- More plugins to come...
+Turn your express application into injectable controllers to handle application routes in an elegant way.
+- More plugins to come
 
 ## Container setup config
 
@@ -176,7 +175,7 @@ const container = await Injex.create({
 Default: `[process.cwd()]`
 
 `logLevel: LogLevel;`  
-- Set Injex's logger level  
+- Set Injex's logger level.  
 Possible values:
 `LogLevel.Error`,
 `LogLevel.Warn`,
@@ -186,10 +185,10 @@ Default: `LogLevel.Error`
 
 `logNamespace: string;`
 - Set Injex's log namespace. The namespace will be included in each log.  
-Defualt: `Injex`
+Default: `Injex`
 
 `globPattern: string;`
-- When resolving modules on `rootDirs`, this glob will be used to find the project files.  
+- When resolving modules on `rootDirs`, this glob used to find the project files.  
 Default: `/**/*.js`
 
 `plugins: IInjexPlugin[];`
@@ -217,29 +216,30 @@ Default: `[]`
 - Bootstraps the container, creates singletons, factory methods and injects dependencies.  
 **Note** that this method may throw `DuplicateDefinitionError` if there are module duplications or `InitializeMuduleError` if there is an error in one of the `@init` methods.
 
+
 ### `get<T>([name])`
-- Lookup and retrieve a module by it's name. Returns `undefined` if the module is not exist.
+- Lookup and retrieve a module by its name. Returns `undefined` if the module does not exist.  
 
 ### `addObject<T>([object, name])`
 - Add an object to the container with the given name.  
-**Note** that this method will throw an `DuplicateDefinitionError` if the module is already defined.
+**Note** that this method throws the `DuplicateDefinitionError` if the module is already defined.  
 
 ### `removeObject<T>([name])`
-- Removes an object by its name.
+- Remove an object by its name.
 
 ## Decorators
 
 ### `@define()`
-- Defines a class as a module using the camel cased version of the class name, or with a name argument passed to the decorator (`@define("myModule")`)
+- Defines a class as a module using the camel-cased version of the class name, or with the name argument if it's passed to the decorator (`@define("myModule")`)
 
 ### `@singleton()`
-- Set a module as a singleton, the same instance will return on each `@inject()` or `get()`.
+- Defines a module as a singleton, the same instance returns on each `@inject()` or `get()`.
 
 ### `@init()`
-- Define an init method for a module. This method will be called in the bootstrap phase. The method can return a Promise.
+- Define an init method for a module. The method invoked in the bootstrap phase and can return a Promise.
 
 ### `@bootstrap()`
-- A class with this decorator will invoke it's `run` method at the end of the bootstrap container phase, after all modules initialized. You don't need to use @define() or @singleton() decorators when you use @bootstrap(), since the bootstrap decorator automatically defined as a singleton module. For Example:
+- A class with this decorator invoke its `run` method at the end of the bootstrap container phase after all modules initialized. You don't need to use @define() or @singleton() decorators when you use @bootstrap() since the bootstrap decorator automatically defines the module as a singleton. For Example:
 	```typescript
 	@bootstrap()
 	export class ProjectBootstrapModule implements IBootstrap {
@@ -253,10 +253,10 @@ Default: `[]`
 		}
 	}
 	```
-Note that the `run` method can return a `Promise` for async bootstrap.
+Note that the `run` method can return a Promise for async bootstrapping.
 
 ### `@inject()`
-- Injects a module as a dependency into another module. You can use the module name or its type. For example:
+- Used to inject a module as a dependency into other modules. You can use the module name or its type. For example:
 	```typescript
 	@define()
 	class Mail {
@@ -280,5 +280,5 @@ Note that the `run` method can return a `Promise` for async bootstrap.
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
-## Having an issue? A feature idea? Want to contribute?
-Feel free to open an [issue](https://github.com/uditalias/injex/issues/new)  or create a [pull request](https://github.com/uditalias/injex/compare)
+## Are you having an issue? A feature idea? Want to contribute?
+Feel free to open an [issue](https://github.com/uditalias/injex/issues/new) or create a [pull request](https://github.com/uditalias/injex/compare)
