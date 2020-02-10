@@ -8,15 +8,43 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
-## What is Dependency Injection?
->In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
+### **Injex** is a simple dependency-injection library for Node JS that helps orginize your project code base in an elegant way.
 
-From [wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
+
+## Table of content
+
+- Core concept
+- What is a Dependency Injection?
+- Install
+- Requirements
+- Quick start
+  - Creating new Injex container
+  - Defining a module
+  - Using the container to get a defined module
+  - Using Singleton and Init decorators
+  - Connecting all the dots with the Inject decorator
+- Manually add or remove object
+- Plugins & Hooks
+  - Container hooks
+- Available plugins
+- Container setup config
+- Container API
+- Decorators
+  - @define()
+  - @singleton()
+  - @init()
+  - @bootstrap()
+  - @inject()
+
 
 ## Core concept
 
-Injex has only one core concept, to define, inject and manage module dependencies in a simple way with minimum configurations, using decorators and plugins.
+Injex creates dependency tree between your modules. Using TypeScript decorators you can define and inject modules into other modules as dependencies. A dependency is an object which can be injected into another dependant objects.  
 
+## What is a Dependency Injection?
+>In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
+
+From [wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
 
 ## Install
 
@@ -30,17 +58,13 @@ Or
 yarn add injex
 ```
 
-## How it works
-
-Injex create dependency tree between your modules in a simple way, using TypeScript decorators you can define, configure and inject modules into other modules as dependencies. A dependency is an object that can be injected into another dependant object. The dependency itself can had one or more dependencies.
-
 ## Requirements
 
  In order to use Injex, your project should use TypeScript with the `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
 
 Each defined module should be exported from it's file so Injex can find and register it into the container.
 
-## A quick start
+## Quick start
 
 Lets start by creating an Injex container to manage our modules and dependencies, once created and bootstraped, you don't need to interact with it any more, everything will just work.
 
@@ -175,7 +199,7 @@ mailManager.sendMessage("The answer to the question of life, the universe and ev
 // Sending message: The answer to the question of life, the universe and everything!
 ```
 
-## Manually add or remove object
+## Manually add or remove objects
 
 Sometimes you want to add objects to the container manually, you can use the `addObject` container method like so:
 
@@ -265,7 +289,7 @@ For more information about the tapable module, refer to the [tapable docs](https
 Turn your express application into injectable controllers to handle application routes in a very neat way.
 - More plugins to come...
 
-## Container creation config
+## Container setup config
 
 When creating new Injex container, you can use the following configurations:
 
@@ -369,7 +393,7 @@ Note that the `run` method can return a `Promise` for async bootstrap.
 	}
 	```
 
-## Public container methods
+## Container API
 
 ### `bootstrap()`
 - Bootstraps the container, creates singletons, factory methods and injects dependencies.  

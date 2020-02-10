@@ -51,6 +51,20 @@ export default class InjexContainer {
 		return this;
 	}
 
+	public registerModule(filePath: string) {
+		this.hooks.beforeModuleRequire.call(filePath);
+
+		const moduleExports = require(filePath);
+
+		this.hooks.afterModuleRequire.call(filePath, moduleExports);
+
+		for (const key of Reflect.ownKeys(moduleExports)) {
+			this.register(
+				moduleExports[key]
+			);
+		}
+	}
+
 	private initPlugins() {
 		if (!this.config.plugins || !this.config.plugins.length) {
 			return;
@@ -95,20 +109,7 @@ export default class InjexContainer {
 			.reduce((allFiles: string[], files: string[]) => allFiles.concat(files), [])
 
 			// require each file and register its module exports.
-			.forEach((filePath) => {
-
-				this.hooks.beforeModuleRequire.call(filePath);
-
-				const moduleExports = require(filePath);
-
-				this.hooks.afterModuleRequire.call(filePath, moduleExports);
-
-				for (const key of Reflect.ownKeys(moduleExports)) {
-					this.register(
-						moduleExports[key]
-					);
-				}
-			});
+			.forEach((filePath) => this.registerModule(filePath));
 
 		this.hooks.afterRegistration.call();
 	}

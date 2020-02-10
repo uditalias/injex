@@ -15,6 +15,7 @@ export interface IDependency {
 }
 
 export interface IContainerConfig {
+	baseUrl?: string;
 	rootDirs?: string[];
 	logLevel?: LogLevel;
 	logNamespace?: string;
