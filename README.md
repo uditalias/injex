@@ -16,7 +16,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 - [Core concept](#core-concept)
 - [What is a Dependency Injection?](#what-is-a-dependency-injection)
 - [Install](#install)
-- [Simple example](#simple-example)
+- [Basic example](#basic-example)
 - [Requirements](#requirements)
 - [Quick start](docs/quick-start.md)
   - [Create Injex container](docs/quick-start.md#create-injex-container)
@@ -60,7 +60,7 @@ Or
 yarn add injex
 ```
 
-## Simple example
+## Basic example
 
 ```typescript
 // index.ts
