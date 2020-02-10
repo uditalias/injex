@@ -1,4 +1,4 @@
-<img src="/assets/logo.png" width="228" align="right" />
+<img src="/assets/logo.png" width="180" align="right" />
 
 # Quick start
 
