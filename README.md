@@ -64,7 +64,7 @@ yarn add injex
 
 ```typescript
 // index.ts
-Injex.create({
+await Injex.create({
 	rootDirs: [
 		path.resolve(__dirname, "./src")
 	]
