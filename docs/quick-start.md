@@ -133,4 +133,4 @@ mailManager.sendMessage("The answer to the question of life, the universe and ev
 // Sending message: The answer to the question of life, the universe and everything!
 ```
 
-&larr; [Go back home](README.md)
+&larr; [Go back home](/README.md)
