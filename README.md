@@ -13,28 +13,28 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 
 ## Table of content
 
-- Core concept
-- What is a Dependency Injection?
-- Install
-- Requirements
-- Quick start
-  - Create Injex container
-  - Defining a module
-  - Using the container to get a defined module
-  - Using Singleton and Init decorators
-  - Connecting all the dots with the Inject decorator
-- Manually add or remove object
-- Plugins & Hooks
-  - Container hooks
-- Available plugins
-- Container setup config
-- Container API
-- Decorators
-  - @define()
-  - @singleton()
-  - @init()
-  - @bootstrap()
-  - @inject()
+- [Core concept](#core-concept)
+- [What is a Dependency Injection?](#what-is-a-dependency-injection)
+- [Install](#install)
+- [Requirements](#requirements)
+- [Quick start](#quick-start)
+  - [Create Injex container](#create-injex-container)
+  - [Defining a module](#defining-a-module)
+  - [Using the container to get a defined module](#using-the-container-to-get-a-defined-module)
+  - [Using Singleton and Init decorators](#using-singleton-and-init-decorators)
+  - [Connecting all the dots with the Inject decorator](#connecting-all-the-dots-with-the-inject-decorator)
+- [Manually add or remove object](#manually-add-or-remove-objects)
+- [Plugins & Hooks](#plugins--hooks)
+  - [Container hooks](#container-hooks)
+- [Available plugins](#available-plugins)
+- [Container setup config](#container-setup-config)
+- [Container API](#container-api)
+- [Decorators](#decorators)
+  - [@define()](#define)
+  - [@singleton()](#singleton)
+  - [@init()](#init)
+  - [@bootstrap()](#bootstrap)
+  - [@inject()](#inject)
 
 
 ## Core concept
@@ -345,6 +345,22 @@ Default: `[]`
 
 **All the container options are optional**
 
+## Container API
+
+### `bootstrap()`
+- Bootstraps the container, creates singletons, factory methods and injects dependencies.  
+**Note** that this method may throw `DuplicateDefinitionError` if there are module duplications or `InitializeMuduleError` if there is an error in one of the `@init` methods.
+
+### `get<T>([name])`
+- Lookup and retrieve a module by it's name. Returns `undefined` if the module is not exist.
+
+### `addObject<T>([object, name])`
+- Add an object to the container with the given name.  
+**Note** that this method will throw an `DuplicateDefinitionError` if the module is already defined.
+
+### `removeObject<T>([name])`
+- Removes an object by its name.
+
 ## Decorators
 
 ### `@define()`
@@ -392,23 +408,6 @@ Note that the `run` method can return a `Promise` for async bootstrap.
 		@inject("mail") craeteMail: (message: string) => Mail;
 	}
 	```
-
-## Container API
-
-### `bootstrap()`
-- Bootstraps the container, creates singletons, factory methods and injects dependencies.  
-**Note** that this method may throw `DuplicateDefinitionError` if there are module duplications or `InitializeMuduleError` if there is an error in one of the `@init` methods.
-
-### `get<T>([name])`
-- Lookup and retrieve a module by it's name. Returns `undefined` if the module is not exist.
-
-### `addObject<T>([object, name])`
-- Add an object to the container with the given name.  
-**Note** that this method will throw an `DuplicateDefinitionError` if the module is already defined.
-
-### `removeObject<T>([name])`
-- Removes an object by its name.
-
 ---
 
 [![npm version](https://badge.fury.io/js/injex.svg)](https://badge.fury.io/js/injex)
