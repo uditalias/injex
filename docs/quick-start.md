@@ -1,3 +1,5 @@
+<img src="/assets/logo.png" width="228" align="right" />
+
 # Quick start
 
 Lets start by creating an Injex container to manage our modules and dependencies, you can think of a container as a big box with all your project modules (classes) inside of it. Once created and bootstraped, you don't have to interact with it any more, everything will just work as you will see in the following sections.
