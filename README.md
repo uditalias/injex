@@ -8,7 +8,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 [![Build Status](https://travis-ci.org/uditalias/injex.svg?branch=master)](https://travis-ci.org/uditalias/injex)
 [![codecov](https://codecov.io/gh/uditalias/injex/branch/master/graph/badge.svg)](https://codecov.io/gh/uditalias/injex)
 
-### **Injex** is a simple dependency-injection library for Node JS that helps orginize your project code base in an elegant way.
+### Injex is a simple dependency-injection library for Node JS wich helps to orginize a project code base in an elegant way while keeping it scalable and maintainable.
 
 
 ## Table of content
@@ -18,7 +18,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 - Install
 - Requirements
 - Quick start
-  - Creating new Injex container
+  - Create Injex container
   - Defining a module
   - Using the container to get a defined module
   - Using Singleton and Init decorators
@@ -66,10 +66,10 @@ Each defined module should be exported from it's file so Injex can find and regi
 
 ## Quick start
 
-Lets start by creating an Injex container to manage our modules and dependencies, once created and bootstraped, you don't need to interact with it any more, everything will just work.
+Lets start by creating an Injex container to manage our modules and dependencies, you can think of a container as a big box with all your project modules (classes) inside of it. Once created and bootstraped, you don't have to interact with it any more, everything will just work as you will see in the following sections.
 
 
-### Creating new Injex container
+### Create Injex container
 ```typescript
 // index.ts
 
