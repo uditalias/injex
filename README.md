@@ -27,6 +27,7 @@ _Simple, Decorated, Pluguble dependency-injection container for Node JS apps_
 - [Plugins & Hooks](#plugins--hooks)
   - [Container hooks](#container-hooks)
 - [Available plugins](#available-plugins)
+  - [injex-express-plugin](https://github.com/uditalias/injex-express-plugin)
 - [Container setup config](#container-setup-config)
 - [Container API](#container-api)
 - [Decorators](#decorators)
