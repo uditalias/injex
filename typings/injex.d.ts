@@ -9,6 +9,7 @@ export default class InjexContainer {
     static create(config: IContainerConfig): InjexContainer;
     private constructor();
     bootstrap(): Promise<InjexContainer>;
+    registerModule(filePath: string): void;
     private initPlugins;
     private createHooks;
     private loadProjectFiles;
