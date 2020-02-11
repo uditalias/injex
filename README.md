@@ -117,7 +117,7 @@ Check out the [Quickstart](docs/quick-start.md) guid for more details.
 
  A project should use TypeScript with the `experimentalDecorators` compiler flag set to `true`, for more information about this flag, read the TypeScript docs about [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html).  
 
-Each defined module should be exported from its file so Injex can find and register it into the container.
+Each defined module should be exported from its file so Injex can find and register it into the container. You can use any export method (e.g. `export ...`, `export default ...`, `module.export = `).
 
 ## Manually add or remove objects
 
