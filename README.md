@@ -106,6 +106,7 @@ export class Bootstrap implements IBootstrap {
 
 ```shell
 > node index
+Ready.
 Sending message: Hello world!...
 ```
 
