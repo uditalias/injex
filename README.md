@@ -17,6 +17,7 @@ _Simple, Decorated, Pluggable dependency-injection container for Node JS apps_
 - [What is a Dependency Injection?](#what-is-a-dependency-injection)
 - [Install](#install)
 - [Basic example](#basic-example)
+- [Example project](#example-project)
 - [Requirements](#requirements)
 - [Quick start](docs/quick-start.md)
   - [Create Injex container](docs/quick-start.md#create-injex-container)
@@ -112,6 +113,11 @@ Sending message: Hello world!...
 
 
 Check out the [Quickstart](docs/quick-start.md) guid for more details.
+
+## Example project
+
+Check out the [example project](https://github.com/uditalias/injex-express-example) if you want to see Injex in action.
+
 
 ## Requirements
 

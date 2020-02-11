@@ -27,7 +27,17 @@ export class DuplicateDefinitionError extends Error {
 }
 
 export class InvalidPluginError extends Error {
-	constructor(plugin) {
-		super(`Plugin ${getPluginName(plugin)} is not valid. Make sure the 'apply' method exist.`);
+	constructor(plugin: any) {
+		super(
+			`Plugin ${getPluginName(plugin)} is not valid. Make sure the 'apply' method exist.`
+		);
+	}
+}
+
+export class RootDirectoryNotExistError extends Error {
+	constructor(dir: string) {
+		super(
+			`Root directory '${dir}' doesn't exist.`
+		);
 	}
 }
