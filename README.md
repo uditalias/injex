@@ -328,6 +328,10 @@ Note that the `run` method can return a Promise for async bootstrapping.
 		@inject("mail") craeteMail: (message: string) => Mail;
 	}
 	```
+
+## License
+
+[MIT](LICENSE.md)
 ---
 
 [![npm version](https://badge.fury.io/js/injex.svg)](https://badge.fury.io/js/injex)
