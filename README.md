@@ -74,7 +74,7 @@ await Injex.create({
 // src/mailService.ts
 @define()
 @singleton()
-export class MailService {
+export class MailService implements IMailService {
 	public sendMessage(message: string) {
 		console.log(`Sending message: ${message}...`);
 	}
