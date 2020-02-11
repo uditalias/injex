@@ -99,7 +99,7 @@ export class Bootstrap implements IBootstrap {
 	public run() {
 		console.log("Ready.");
 
-		this.mailService.send("Hello world!");
+		this.mailManager.send("Hello world!");
 	}
 }
 ```
