@@ -232,7 +232,7 @@ const container = await Injex.create({
 
 `rootDirs: string[];`  
 - Specify list of root directories to be used when resolving modules.  
-Default: `[path.resolve(process.cwd(), "./src")]` (the `/src` folder inside the executable root)
+Default: `[path.resolve(process.cwd(), "./src")]` (The `/src` folder inside the executable root)
 
 `logLevel: LogLevel;`  
 - Set Injex's logger level.  
