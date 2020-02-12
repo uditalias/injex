@@ -221,7 +221,7 @@ When creating new Injex container, you can use the following configurations:
 ```typescript
 const container = await Injex.create({
 	rootDirs: [
-		process.cwd()
+		path.resolve(process.cwd(), "./src")
 	],
 	logLevel: LogLevel.Error,
 	logNamespace: "Injex",
@@ -232,7 +232,7 @@ const container = await Injex.create({
 
 `rootDirs: string[];`  
 - Specify list of root directories to be used when resolving modules.  
-Default: `[process.cwd()]`
+Default: `[path.resolve(process.cwd(), "./src")]` (the `/src` folder inside the executable root)
 
 `logLevel: LogLevel;`  
 - Set Injex's logger level.  

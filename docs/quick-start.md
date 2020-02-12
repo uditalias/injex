@@ -16,6 +16,7 @@ import * as path from "path";
 
 	// 1. Create and bootstrap new Injex container
 	const container = await Injex.create({
+
 		rootDirs: [
 
 			// 2. Define the root directories, where your modules exists.
@@ -30,6 +31,8 @@ import * as path from "path";
 ```
 
 We created Injex container (1) with the `./src` as our project root directory (2), the bootstrap method, once invoked, finds all the modules, creates the dependency tree, and injects dependencies to the relevant modules.
+
+**_Note_** - You can omit the `rootDirs` if all your files exists inside the `./src` folder. check out the [container setup](/README.md#container-setup-config) for more details.
   
 Let's take a look at how a module is defined and configured with its dependencies via a simple example.
 
