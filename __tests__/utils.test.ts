@@ -28,7 +28,7 @@ describe("Utils", () => {
 		it("should get all files in folder", () => {
 
 			const files = getAllFilesInDir(
-				path.resolve(__dirname, "../ISSUE_TEMPLATE"), "/**/*.md"
+				path.resolve(__dirname, "../.github/ISSUE_TEMPLATE"), "/**/*.md"
 			);
 
 			expect(files.length).toBe(2);
