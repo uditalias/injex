@@ -6,7 +6,7 @@ export default class InjexContainer {
     private moduleRegistry;
     private modules;
     hooks: IInjexHooks;
-    static create(config: IContainerConfig): InjexContainer;
+    static create(config?: IContainerConfig): InjexContainer;
     private constructor();
     bootstrap(): Promise<InjexContainer>;
     registerModule(filePath: string): void;
@@ -16,6 +16,7 @@ export default class InjexContainer {
     private throwIfAlreadyDefined;
     private throwIfModuleExists;
     private throwIfInvalidPlugin;
+    private throwIfRootDirNotExists;
     private createModules;
     private createModuleFactoryMethod;
     private initializeModules;

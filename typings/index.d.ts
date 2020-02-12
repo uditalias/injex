@@ -8,12 +8,13 @@ import HooksLoggerPlugin from "./plugins/HooksLoggerPlugin";
 export declare const plugins: {
     HooksLoggerPlugin: typeof HooksLoggerPlugin;
 };
-import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
+import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError, RootDirectoryNotExistError } from "./errors";
 export declare const errors: {
     DuplicateDefinitionError: typeof DuplicateDefinitionError;
     InitializeMuduleError: typeof InitializeMuduleError;
     ModuleDependencyNotFoundError: typeof ModuleDependencyNotFoundError;
     InvalidPluginError: typeof InvalidPluginError;
+    RootDirectoryNotExistError: typeof RootDirectoryNotExistError;
 };
 export { createMetadataHandlers } from "./utils/metadata";
 export { LogLevel } from "./utils/logger";

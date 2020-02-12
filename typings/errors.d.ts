@@ -11,3 +11,6 @@ export declare class DuplicateDefinitionError extends Error {
 export declare class InvalidPluginError extends Error {
     constructor(plugin: any);
 }
+export declare class RootDirectoryNotExistError extends Error {
+    constructor(dir: string);
+}

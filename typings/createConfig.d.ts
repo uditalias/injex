@@ -1,2 +1,2 @@
 import { IContainerConfig } from "./interfaces";
-export default function createConfig(config: Partial<IContainerConfig>): IContainerConfig;
+export default function createConfig(config?: Partial<IContainerConfig>): IContainerConfig;
