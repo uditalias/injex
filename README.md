@@ -337,7 +337,7 @@ Note that the `run` method can return a Promise for async bootstrapping.
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
 
 ---
 
