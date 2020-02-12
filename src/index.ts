@@ -21,6 +21,7 @@ import {
 	InitializeMuduleError,
 	ModuleDependencyNotFoundError,
 	InvalidPluginError,
+	RootDirectoryNotExistError,
 } from "./errors";
 
 export const errors = {
@@ -28,6 +29,7 @@ export const errors = {
 	InitializeMuduleError,
 	ModuleDependencyNotFoundError,
 	InvalidPluginError,
+	RootDirectoryNotExistError,
 };
 
 export { createMetadataHandlers } from "./utils/metadata";

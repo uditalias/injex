@@ -217,4 +217,20 @@ describe("InjexContainer", () => {
 
 		expect(error).toBeInstanceOf(errors.DuplicateDefinitionError);
 	});
+
+	it("should throw error when one of the rootDirs is not exists", async () => {
+
+		let error;
+		try {
+			container = await Injex.create({
+				rootDirs: [
+					"./some_fake_path"
+				]
+			}).bootstrap();
+		} catch (e) {
+			error = e;
+		}
+
+		expect(error).toBeInstanceOf(errors.RootDirectoryNotExistError);
+	});
 });

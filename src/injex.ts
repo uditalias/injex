@@ -1,9 +1,9 @@
 import { ModuleName, IModule, IContainerConfig, IDefinitionMetadata, IBootstrap, IInjexPlugin, IInjexHooks, Constructor } from "./interfaces";
 import { EMPTY_ARGS, UNDEFINED, bootstrapSymbol } from "./constants";
-import { getAllFilesInDir, isFunction } from "./utils/utils";
+import { getAllFilesInDir, isFunction, isDirExists } from "./utils/utils";
 import metadataHandlers from "./utils/metadata";
 import { Logger } from "./utils/logger";
-import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError } from "./errors";
+import { DuplicateDefinitionError, InitializeMuduleError, ModuleDependencyNotFoundError, InvalidPluginError, RootDirectoryNotExistError } from "./errors";
 import { SyncHook } from "tapable";
 import createConfig from "./createConfig";
 
@@ -13,7 +13,7 @@ export default class InjexContainer {
 	private modules: Map<ModuleName | Constructor, IModule>;
 	public hooks: IInjexHooks;
 
-	public static create(config: IContainerConfig): InjexContainer {
+	public static create(config?: IContainerConfig): InjexContainer {
 
 		config = createConfig(config);
 
@@ -103,7 +103,7 @@ export default class InjexContainer {
 		this.config.rootDirs
 
 			// find all js files in the root directories
-			.map((dir) => getAllFilesInDir(dir, this.config.globPattern))
+			.map((dir) => (this.throwIfRootDirNotExists(dir), getAllFilesInDir(dir, this.config.globPattern)))
 
 			// flat into single array of files
 			.reduce((allFiles: string[], files: string[]) => allFiles.concat(files), [])
@@ -129,6 +129,12 @@ export default class InjexContainer {
 	private throwIfInvalidPlugin(plugin: IInjexPlugin) {
 		if (!plugin.apply || !isFunction(plugin.apply)) {
 			throw new InvalidPluginError(plugin);
+		}
+	}
+
+	private throwIfRootDirNotExists(dir: string) {
+		if (!isDirExists(dir)) {
+			throw new RootDirectoryNotExistError(dir);
 		}
 	}
 
@@ -193,7 +199,6 @@ export default class InjexContainer {
 	}
 
 	private createInstance(construct: any, args: any[]): any {
-
 		this.hooks.berforeCreateInstance.call(construct, args);
 
 		return Reflect.construct(construct, args);

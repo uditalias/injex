@@ -1,4 +1,4 @@
-import { toCamelCase, getAllFilesInDir, isFunction } from "../src/utils/utils";
+import { toCamelCase, getAllFilesInDir, isFunction, isDirExists } from "../src/utils/utils";
 import * as path from "path";
 
 describe("Utils", () => {
@@ -33,5 +33,19 @@ describe("Utils", () => {
 
 			expect(files.length).toBe(2);
 		});
+	});
+
+	describe("isDirExists", () => {
+		it("should return true if a directory exists", () => {
+			expect(
+				isDirExists(path.resolve(__dirname, "./__mocks__"))
+			).toBe(true);
+		});
+
+		it("should return false if a directory NOT exists", () => {
+			expect(
+				isDirExists("./some_fake_path")
+			).toBe(false);
+		})
 	});
 });
