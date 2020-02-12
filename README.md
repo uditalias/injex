@@ -280,11 +280,11 @@ Default: `[]`
 ### `get<T>([name])`
 - Lookup and retrieve a module by its name. Returns `undefined` if the module does not exist.  
 
-### `addObject<T>([object, name])`
+### `addObject([object, name])`
 - Add an object to the container with the given name.  
 **Note** that this method throws the `DuplicateDefinitionError` if the module is already defined.  
 
-### `removeObject<T>([name])`
+### `removeObject([name])`
 - Remove an object by its name.
 
 ## Decorators
