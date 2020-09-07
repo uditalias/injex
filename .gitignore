@@ -6,5 +6,3 @@ coverage
 *.log
 src/**/*.js
 src/**/*.js.map
-playground/**/*.js
-playground/**/*.js.map

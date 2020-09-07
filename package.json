@@ -1,66 +1,7 @@
 {
-  "name": "injex",
-  "version": "1.0.15",
-  "description": "Simple, Decorated, Pluggable dependency-injection container for Node JS apps",
-  "main": "./lib/index.js",
-  "types": "./typings/index.d.ts",
-  "scripts": {
-    "tsc": "tsc",
-    "tsc:watch": "npm run tsc -- --watch",
-    "lint": "tslint -p tsconfig.json",
-    "lint:fix": "npm run lint -- --fix",
-    "clean": "rimraf lib/ typings/",
-    "release": "npm run build && release-it --no-git.requireCleanWorkingDir",
-    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
-    "test": "jest",
-    "test:cov": "jest --coverage",
-    "test:watch": "npm t -- --watch --color --env=jsdom"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint && npm run test"
-    }
-  },
-  "files": [
-    "lib",
-    "typings"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/uditalias/injex.git"
-  },
-  "keywords": [
-    "dependency-injection-container",
-    "dependency",
-    "container",
-    "inject",
-    "ioc"
-  ],
-  "author": {
-    "name": "Udi Talias",
-    "email": "udi.talias@gmail.com",
-    "url": "https://github.com/uditalias"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/uditalias/injex/issues"
-  },
-  "homepage": "https://github.com/uditalias/injex#readme",
+  "name": "root",
+  "private": true,
   "devDependencies": {
-    "@types/jest": "25.1.1",
-    "@types/node": "13.7.0",
-    "@types/tapable": "1.0.5",
-    "husky": "4.2.1",
-    "jest": "25.1.0",
-    "release-it": "12.4.3",
-    "rimraf": "3.0.1",
-    "ts-jest": "25.2.0",
-    "tslint": "6.0.0",
-    "typescript": "3.7.5"
-  },
-  "dependencies": {
-    "glob": "7.1.6",
-    "tapable": "1.1.3",
-    "tslib": "1.10.0"
+    "lerna": "^3.20.2"
   }
 }
