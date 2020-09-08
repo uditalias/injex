@@ -1,2 +1,2 @@
 export * from "./interfaces";
-export { default as Injext } from "./injex";
+export { default as Injex } from "./injex";

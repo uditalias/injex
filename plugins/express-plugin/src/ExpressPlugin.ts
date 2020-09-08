@@ -3,29 +3,19 @@ import * as express from "express";
 import { IInjexPlugin, Injex, IModule } from "@injex/core";
 import metadataHandlers from "./metadataHandlers";
 import { IRoute, IExpressPluginConfig } from "./interfaces";
+import createConfig from "./createConfig";
 
 const expressAppSymbol = Symbol("expressApp");
 
-// tslint:disable-next-line
-function noop(...args: any[]) { }
-
-export class InjexExpressPlugin implements IInjexPlugin {
+export class ExpressPlugin implements IInjexPlugin {
 
     private config: IExpressPluginConfig;
     private app: Application;
     private container: Injex<any>;
 
     constructor(config?: IExpressPluginConfig) {
-        this.config = this.createConfig(config);
+        this.config = createConfig(config);
         this.handleModule = this.handleModule.bind(this);
-    }
-
-    createConfig(config?: Partial<IExpressPluginConfig>): IExpressPluginConfig {
-        return {
-            app: null,
-            createAppCallback: noop,
-            ...config
-        };
     }
 
     public async apply(container: Injex<any>): Promise<void> {

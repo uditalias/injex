@@ -26,6 +26,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
      */
     protected abstract loadContainerFiles(): void;
 
+    public static create(config: IContainerConfig): InjexContainer<IContainerConfig> {
+        throw new Error("Static method create not implemented.");
+    }
+
     protected constructor(config: T) {
         this.config = this.createConfig(config);
         this._logger = new Logger(config.logLevel, config.logNamespace);

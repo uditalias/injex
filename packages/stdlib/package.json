@@ -28,9 +28,9 @@
     "lint:fix": "npm run lint -- --fix",
     "clean": "rimraf lib/",
     "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
-    "test": "exit 0",
-    "test:cov": "exit 0",
-    "test:watch": "exit 0"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "npm t -- --watch --color"
   },
   "bugs": {
     "url": "https://github.com/uditalias/injex/issues"
@@ -39,7 +39,10 @@
   "devDependencies": {
     "rimraf": "^3.0.2",
     "tslint": "^6.1.3",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "@types/jest": "^26.0.13",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0"
   },
   "dependencies": {
     "tslib": "^2.0.1"

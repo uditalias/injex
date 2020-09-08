@@ -7,4 +7,3 @@ coverage
 src/**/*.js
 src/**/*.js.map
 lib/
-typings/
