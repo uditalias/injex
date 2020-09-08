@@ -1,6 +1,6 @@
-export type HookFn<A extends Array<any> = any[]> = (...args: A) => void;
+export type HookFn<A extends any[] = any[]> = (...args: A) => void;
 export type HookCatchFn = (e: Error) => void;
-export type CallbackArgs<A extends Array<any> = any[]> = {
+export type CallbackArgs<A extends any[] = any[]> = {
     async: boolean;
     callback: HookFn<A>;
     catchFn?: HookCatchFn;
@@ -11,9 +11,9 @@ export type HooksMap<T extends string> = {
     [index in T]: Hook<any>;
 }
 
-export class Hook<A extends Array<any> = any[]> {
+export class Hook<A extends any[] = any[]> {
 
-    private _callbacks: Array<CallbackArgs<A>>;
+    private _callbacks: CallbackArgs<A>[];
 
     constructor() {
         this._callbacks = [];

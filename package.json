@@ -4,6 +4,7 @@
   "scripts": {
     "tsc:watch": "lerna run tsc:watch --parallel --stream",
     "lint": "lerna run lint --parallel --stream",
+    "lint:fix": "lerna run lint:fix --parallel --stream",
     "build": "lerna run build --parallel --stream",
     "release": "npm run build && lerna publish"
   },

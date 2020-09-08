@@ -16,7 +16,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     /**
      * Parse and extend with default values configuration
-     * 
+     *
      * @param config - the config object from the constfuctor
      */
     protected abstract createConfig(config: Partial<T>): T;
@@ -302,7 +302,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return this;
     }
 
-    public get<T = any>(itemNameOrType: ModuleName | IConstructor): T {
+    public get<K = any>(itemNameOrType: ModuleName | IConstructor): K {
         if (!this._modules.has(itemNameOrType)) {
             return UNDEFINED;
         }
