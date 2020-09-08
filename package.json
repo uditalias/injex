@@ -1,6 +1,10 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "tsc:watch": "lerna run tsc:watch --parallel --stream",
+    "lint": "lerna run lint --parallel --stream"
+  },
   "devDependencies": {
     "lerna": "^3.20.2"
   }

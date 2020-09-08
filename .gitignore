@@ -6,3 +6,5 @@ coverage
 *.log
 src/**/*.js
 src/**/*.js.map
+lib/
+typings/

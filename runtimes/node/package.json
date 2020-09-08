@@ -9,6 +9,8 @@
     "url": "https://twitter.com/uditalias"
   },
   "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./typings/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +18,18 @@
     "type": "git",
     "url": "git+https://github.com/uditalias/injex.git"
   },
-  "scripts": {},
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:watch": "npm run tsc -- --watch",
+    "lint": "tslint -p tsconfig.json",
+    "lint:fix": "npm run lint -- --fix",
+    "clean": "rimraf lib/ typings/",
+    "release": "npm run build && release-it --no-git.requireCleanWorkingDir",
+    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
+    "test": "exit 0",
+    "test:cov": "exit 0",
+    "test:watch": "exit 0"
+  },
   "bugs": {
     "url": "https://github.com/uditalias/injex/issues"
   },
