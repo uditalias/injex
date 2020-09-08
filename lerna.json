@@ -1,6 +1,7 @@
 {
   "packages": [
     "packages/*",
+    "runtimes/*",
     "plugins/*"
   ],
   "version": "0.0.0"
