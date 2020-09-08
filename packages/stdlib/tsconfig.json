@@ -2,8 +2,7 @@
     "extends": "../../base.tsconfig.json",
     "compilerOptions": {
         "rootDir": "./src",
-        "outDir": "./lib",
-        "declarationDir": "./typings",
+        "outDir": "./lib"
     },
     "include": [
         "./src"
@@ -11,7 +10,6 @@
     "exclude": [
         "node_modules",
         "**/*.test.ts",
-        "lib",
-        "typings"
+        "lib"
     ]
 }

@@ -16,7 +16,10 @@
   },
   "license": "MIT",
   "main": "./lib/index.js",
-  "types": "./typings/index.d.ts",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -29,8 +32,7 @@
     "tsc:watch": "npm run tsc -- --watch",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
-    "clean": "rimraf lib/ typings/",
-    "release": "npm run build && release-it --no-git.requireCleanWorkingDir",
+    "clean": "rimraf lib/",
     "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
     "test": "exit 0",
     "test:cov": "exit 0",
