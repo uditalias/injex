@@ -1,5 +1,5 @@
 {
-    "extends": "../../base.tslint.json",
+    "extends": "../../tslint.json",
     "jsRules": {},
     "rules": {},
     "rulesDirectory": []

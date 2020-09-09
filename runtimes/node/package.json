@@ -36,14 +36,6 @@
     "url": "https://github.com/uditalias/injex/issues"
   },
   "homepage": "https://github.com/uditalias/injex#readme",
-  "devDependencies": {
-    "rimraf": "^3.0.2",
-    "tslint": "^6.1.3",
-    "typescript": "^4.0.2",
-    "@types/jest": "^26.0.13",
-    "jest": "^26.4.2",
-    "ts-jest": "^26.3.0"
-  },
   "dependencies": {
     "@injex/core": "^0.0.0",
     "glob": "^7.1.6",

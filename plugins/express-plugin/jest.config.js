@@ -1,14 +1,10 @@
+const base = require("../../jest.config");
+const package = require("./package.json");
+
 module.exports = {
-    roots: ["<rootDir>/__tests__"],
-    testPathIgnorePatterns: [
-        "<rootDir>/__tests__/__mocks__"
-    ],
-    transform: {
-        "^.+\\.ts?$": "ts-jest"
-    },
-    coverageThreshold: {
-        global: {
-            lines: 80
-        }
-    }
+    ...base,
+    displayName: package.name,
+    name: package.name,
+    rootDir: "./",
+    testMatch: [`**/__tests__/*.+(ts|tsx|js)`]
 };

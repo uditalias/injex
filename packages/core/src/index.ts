@@ -8,4 +8,5 @@ export { alias } from "./decorators/alias";
 export { lazy } from "./decorators/lazy";
 export { LogLevel, Logger } from "@injex/stdlib";
 export * from "./interfaces";
+export * as errors from "./errors";
 export { default as Injex } from "./injex";

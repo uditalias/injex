@@ -32,7 +32,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     protected constructor(config: T) {
         this.config = this.createConfig(config);
-        this._logger = new Logger(config.logLevel, config.logNamespace);
+        this._logger = new Logger(this.config.logLevel, this.config.logNamespace);
 
         this._moduleRegistry = new Map<ModuleName, any>();
         this._modules = new Map<ModuleName | IConstructor, IModule>();
@@ -62,7 +62,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
             await bootstrapModule?.run();
         } catch (e) {
-            bootstrapModule?.didCatch(e);
+            if (bootstrapModule.didCatch) {
+                bootstrapModule?.didCatch(e);
+            } else {
+                throw e;
+            }
         }
 
         return this;
