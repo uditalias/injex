@@ -6,29 +6,30 @@ import { MailService } from "./__mocks__/general/mailService";
 import { Mail } from "./__mocks__/general/mail";
 import { Injex } from "../src";
 
-describe.only("InjexNodeContainer", () => {
+describe("InjexNodeContainer", () => {
 
-    let container: Injex;
+    function createContainer() {
+        const container = Injex.create({
+            rootDirs: [
+                path.resolve(__dirname, "__mocks__/general")
+            ],
+            globPattern: "/**/*.ts",
+            logLevel: LogLevel.Error,
+            plugins: []
+        });
 
-    // beforeEach(async () => {
-    //     container = Injex.create({
-    //         rootDirs: [
-    //             path.resolve(__dirname, "__mocks__/general")
-    //         ],
-    //         globPattern: "/**/*.ts",
-    //         logLevel: LogLevel.Debug,
-    //         plugins: []
-    //     });
+        return container.bootstrap();
+    }
 
-    //     await container.bootstrap();
-    // });
+    it("should create container", async () => {
+        const container = await createContainer();
 
-    it("should create container", () => {
         expect(container).toBeDefined();
         expect(container).toBeInstanceOf(Injex);
     });
 
-    it("should get object", () => {
+    it("should get object", async () => {
+        const container = await createContainer();
 
         const mailManager = container.get<MailManager>("mailManager");
         const mailService = container.get<MailService>("mailService");
@@ -39,7 +40,8 @@ describe.only("InjexNodeContainer", () => {
         expect(mailService).toBeInstanceOf(MailService);
     });
 
-    it("should inject and use dependency", () => {
+    it("should inject and use dependency", async () => {
+        const container = await createContainer();
 
         const mailManager = container.get<MailManager>("mailManager");
         const mailService = container.get<MailService>("mailService");
@@ -55,10 +57,10 @@ describe.only("InjexNodeContainer", () => {
         expect(mailFactory).toHaveBeenCalled();
         expect(mailFactory).toHaveBeenCalledTimes(1);
         expect(mailFactory).toHaveBeenCalledWith("Hello World!");
-
     });
 
-    it("should addObject to container", () => {
+    it("should addObject to container", async () => {
+        const container = await createContainer();
 
         const car = {
             model: "ford",
@@ -71,7 +73,8 @@ describe.only("InjexNodeContainer", () => {
         expect(container.get("myCar")).toStrictEqual(car);
     });
 
-    it("should removeObject from the container", () => {
+    it("should removeObject from the container", async () => {
+        const container = await createContainer();
 
         let mailService = container.get<MailService>("mailService");
 
@@ -86,6 +89,7 @@ describe.only("InjexNodeContainer", () => {
     });
 
     it("should get factory method", async () => {
+        const container = await createContainer();
 
         const mailFactory = container.get<(message: string) => Mail>("mail");
 
@@ -93,17 +97,18 @@ describe.only("InjexNodeContainer", () => {
 
         expect(mail).toBeInstanceOf(Mail);
         expect(mail.message).toBe("Hello World!");
-
     });
 
-    it("should invoke @init method", () => {
+    it("should invoke @init method", async () => {
+        const container = await createContainer();
 
         const mailManager = container.get<MailManager>("mailManager");
 
         expect(mailManager.initialized).toBeTruthy();
     });
 
-    it("should create object as singleton", () => {
+    it("should create object as singleton", async () => {
+        const container = await createContainer();
 
         const mailManager = container.get<MailManager>("mailManager");
 
@@ -113,56 +118,44 @@ describe.only("InjexNodeContainer", () => {
 
     });
 
-    it("should throw error when adding an object with a name that already defined", () => {
+    it("should throw error when adding an object with a name that already defined", async () => {
+        const container = await createContainer();
 
         expect(() => {
             container.addObject({}, "mailService");
         }).toThrowError(
-            errors.DuplicateDefinitionError
+            "Module 'mailService' already defined."
         );
-
     });
 
-    it.only("should throw error on @init method error", async () => {
-
-        let error;
-        container = Injex.create({
+    it("should throw error on @init method error", async () => {
+        const container = Injex.create({
             rootDirs: [
                 path.resolve(__dirname, "__mocks__/willThrow")
             ],
             globPattern: "/**/badService.ts"
         });
 
-        try {
-            await container.bootstrap();
-        } catch (e) {
-            error = e;
-        }
-
-        expect(error).toBeInstanceOf(errors.InitializeMuduleError);
+        expect(container.bootstrap()).rejects.toThrowError(
+            "Failed to initialize module 'badService'."
+        );
     });
 
     it("should throw error when module dependency not found", async () => {
-
-        let error;
-        container = Injex.create({
+        const container = Injex.create({
             rootDirs: [
                 path.resolve(__dirname, "__mocks__/willThrow")
             ],
             globPattern: "/**/unknownService.ts"
         });
 
-        try {
-            await container.bootstrap();
-        } catch (e) {
-            error = e;
-        }
-
-        expect(error).toBeInstanceOf(errors.ModuleDependencyNotFoundError);
-
+        expect(container.bootstrap()).rejects.toThrowError(
+            "Dependency 'atlantisLocation' was not found for module 'unknownService'."
+        );
     });
 
-    it("should return undefined when module is not found in the module registry", () => {
+    it("should return undefined when module is not found in the module registry", async () => {
+        const container = await createContainer();
 
         const service = container.get("maybeExistService");
 
@@ -170,60 +163,41 @@ describe.only("InjexNodeContainer", () => {
 
     });
 
-    it("should skip module registration when already exists", async () => {
-
-        let error;
-        container = Injex.create({
+    it("should throw when two modules defined with the same name", async () => {
+        const container = Injex.create({
             rootDirs: [
                 path.resolve(__dirname, "__mocks__/willThrow")
             ],
             globPattern: "/**/dupService*.ts"
         });
 
-        try {
-            await container.bootstrap();
-        } catch (e) {
-            error = e;
-        }
-
-        expect(error).toBeInstanceOf(errors.DuplicateDefinitionError);
-
+        expect(container.bootstrap()).rejects.toThrowError(
+            "Module 'dupService1' already defined."
+        );
     });
 
     it("should throw error when two modules defined with the bootstrap decorator", async () => {
+        const container = Injex.create({
+            rootDirs: [
+                path.resolve(__dirname, "__mocks__/willThrow")
+            ],
+            globPattern: "/**/*Bootstrap.ts"
+        });
 
-        let error;
-        try {
-            container = Injex.create({
-                rootDirs: [
-                    path.resolve(__dirname, "__mocks__/willThrow")
-                ],
-                globPattern: "/**/*Bootstrap.ts"
-            });
-
-            await container.bootstrap();
-
-        } catch (e) {
-            error = e;
-        }
-
-        expect(error).toBeInstanceOf(errors.DuplicateDefinitionError);
+        expect(container.bootstrap()).rejects.toThrowError(
+            "Module 'Symbol(bootstrapModule)' already defined."
+        );
     });
 
     it("should throw error when one of the rootDirs is not exists", async () => {
-        let error;
-        try {
-            container = Injex.create({
-                rootDirs: [
-                    "./some_fake_path"
-                ]
-            });
+        const container = Injex.create({
+            rootDirs: [
+                "./some_fake_path"
+            ]
+        });
 
-            await container.bootstrap();
-        } catch (e) {
-            error = e;
-        }
-
-        expect(error).toBeInstanceOf(RootDirectoryNotExistError);
+        expect(container.bootstrap()).rejects.toThrowError(
+            "Root directory './some_fake_path' doesn't exist."
+        );
     });
 });

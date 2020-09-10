@@ -62,7 +62,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
             await bootstrapModule?.run();
         } catch (e) {
-            if (bootstrapModule.didCatch) {
+            if (bootstrapModule?.didCatch) {
                 bootstrapModule?.didCatch(e);
             } else {
                 throw e;

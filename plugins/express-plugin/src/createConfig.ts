@@ -7,6 +7,6 @@ export default function createConfig(config?: Partial<IExpressPluginConfig>): IE
     return {
         app: null,
         createAppCallback: noop,
-        ...config
+        ...config,
     };
 }
