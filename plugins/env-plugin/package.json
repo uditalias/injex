@@ -1,0 +1,51 @@
+{
+  "name": "@injex/env-plugin",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "author": {
+    "name": "Udi Talias",
+    "email": "udi.talias@gmail.com",
+    "url": "https://twitter.com/uditalias"
+  },
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uditalias/injex.git"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:watch": "npm run tsc -- --watch",
+    "lint": "tslint -p tsconfig.json",
+    "lint:fix": "npm run lint -- --fix",
+    "clean": "rimraf lib/",
+    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "npm t -- --watch --color"
+  },
+  "bugs": {
+    "url": "https://github.com/uditalias/injex/issues"
+  },
+  "homepage": "https://github.com/uditalias/injex#readme",
+  "devDependencies": {
+    "@injex/core": "^0.0.0",
+    "@injex/node": "^0.0.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@injex/stdlib": "^0.0.0",
+    "tslib": "^2.0.1"
+  }
+}
