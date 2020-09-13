@@ -1,13 +1,24 @@
-import { Application } from "express";
+import { IConstructor } from "@injex/stdlib";
+import { Application, NextFunction } from "express";
 
-export interface IRoute {
+export interface IRouteConfig {
     path: string;
     method: string;
     handler: string;
 }
 
+export interface IMiddlewareConfig {
+    middleware: IMiddleware | string;
+    handler: string;
+}
+
+export interface IMiddleware extends IConstructor {
+    handle(req: Express.Request, res: Express.Response, next: NextFunction): void;
+}
+
 export interface IMetadata {
-    routes: IRoute[];
+    routes: IRouteConfig[];
+    middlewares: IMiddlewareConfig[];
 }
 
 export interface IExpressPluginConfig {
@@ -16,3 +27,5 @@ export interface IExpressPluginConfig {
 }
 
 export type CreateAppCallback = (app: Application) => Promise<void> | void;
+
+export type ExpressRequestHandler = (req: Express.Request, res: Express.Response, next: NextFunction) => void;

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { controller } from "../src/decorators/controller";
 import { get } from "../src/decorators/get";
 import { post } from "../src/decorators/post";

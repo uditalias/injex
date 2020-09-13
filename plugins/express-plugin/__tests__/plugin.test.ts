@@ -24,7 +24,7 @@ describe("Plugin", () => {
 		expect(plugin).toBeInstanceOf(ExpressPlugin);
 	});
 
-	it("should create plugin with express routes (e2e)", async () => {
+	it("should create plugin with express routes and middlewares (e2e)", async () => {
 
 		const app = express();
 		const server = app.listen(8080);
@@ -53,6 +53,14 @@ describe("Plugin", () => {
 
 		const categoryResponse = await get("http://localhost:8080/cat/lifestyle");
 		expect(categoryResponse).toBe("<h1>Welcome to lifestyle category</h1>");
+
+		// test middleware failure
+		const cartResponseUnauthorized = await get("http://localhost:8080/cart");
+		expect(cartResponseUnauthorized).toBe("unauthorize");
+
+		// test middleware pass
+		const cartResponseAuthorized = await get("http://localhost:8080/cart?token=123456");
+		expect(cartResponseAuthorized).toBe("<h1>This is your cart</h1>");
 
 		server.close();
 	});
