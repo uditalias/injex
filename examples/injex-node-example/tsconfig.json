@@ -1,22 +1,24 @@
 {
     "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./out",
         "module": "commonjs",
-        "declaration": true,
         "alwaysStrict": true,
         "importHelpers": true,
-        "target": "ES5",
+        "target": "es6",
         "noImplicitAny": false,
         "sourceMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "moduleResolution": "node",
-        "allowJs": false,
-        "preserveConstEnums": true,
-        "lib": [
-			"es6",
-			"es7",
-			"dom"
-        ]
+        "allowJs": true,
+        "preserveConstEnums": true
     },
+    "include": [
+        "./src"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
     "compileOnSave": false
 }

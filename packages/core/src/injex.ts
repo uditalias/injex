@@ -19,7 +19,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
      *
      * @param config - the config object from the constfuctor
      */
-    protected abstract createConfig(config: Partial<T>): T;
+    protected abstract createConfig(config?: Partial<T>): T;
 
     /**
      * Load all project files and call `registerModuleExports` with each module
@@ -231,29 +231,32 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return new construct(...args);
     }
 
+    public getModuleDefinition(moduleNameOrType: string | IConstructor): IModule {
+        if (this._modules.has(moduleNameOrType)) {
+            return this._modules.get(moduleNameOrType);
+        } else if (moduleNameOrType instanceof Function) {
+            const metadata = metadataHandlers.getMetadata(moduleNameOrType);
+            return this._modules.get(metadata.name);
+        }
+
+        return null;
+    }
+
     private _injectModuleDependencies(module: any, metadata: IDefinitionMetadata) {
         const dependencies = metadata.dependencies || [];
-        const aliasFactories = metadata.aliasFactories || [];
+        const aliasDependencies = metadata.aliasDependencies || [];
 
         for (const { label, value } of dependencies) {
+            const dependencyDefinition = this.getModuleDefinition(value);
 
-            let dependency;
-
-            if (this._modules.has(value)) {
-                dependency = this._modules.get(value).module;
-            } else if (value instanceof Function) {
-                metadata = metadataHandlers.getMetadata(value);
-                dependency = this._modules.get(metadata.name).module;
-            }
-
-            if (!dependency) {
+            if (!dependencyDefinition) {
                 throw new ModuleDependencyNotFoundError(metadata.name, value);
             }
 
-            module[label] = dependency;
+            module[label] = dependencyDefinition.module;
         }
 
-        for (const { label, alias, keyBy } of aliasFactories) {
+        for (const { label, alias, keyBy } of aliasDependencies) {
             const aliasModules = this._aliases.get(alias);
 
             if (!aliasModules) {
@@ -261,9 +264,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             }
 
             module[label] = {};
-
             for (const aliasModule of aliasModules) {
-                const keyValue = aliasModule.metadata.item[keyBy];
+                const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
                 module[label][keyValue] = aliasModule.module;
             }
         }

@@ -1,6 +1,6 @@
 export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
-export { injectAliasFactory } from "./decorators/injectAliasFactory";
+export { injectAlias } from "./decorators/injectAlias";
 export { singleton } from "./decorators/singleton";
 export { init } from "./decorators/init";
 export { bootstrap } from "./decorators/bootstrap";

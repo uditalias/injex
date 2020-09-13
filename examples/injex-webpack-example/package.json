@@ -1,0 +1,22 @@
+{
+  "name": "injex-webpack-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "author": {
+    "name": "Udi Talias",
+    "email": "udi.talias@gmail.com",
+    "url": "https://twitter.com/uditalias"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uditalias/injex.git"
+  },
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/uditalias/injex/issues"
+  },
+  "homepage": "https://github.com/uditalias/injex#readme"
+}

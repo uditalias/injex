@@ -13,7 +13,7 @@ export interface IDependency {
     value: any;
 }
 
-export interface IAliasFactory {
+export interface IAliasDependency {
     label: string;
     alias: string;
     keyBy: string;
@@ -24,7 +24,7 @@ export interface IDefinitionMetadata {
     name?: ModuleName;
     singleton?: boolean;
     dependencies?: IDependency[];
-    aliasFactories?: IAliasFactory[];
+    aliasDependencies?: IAliasDependency[];
     aliases?: string[];
     initMethod?: string;
     bootstrap?: boolean;
@@ -60,3 +60,4 @@ export interface ILazyModule<T> {
 }
 
 export type AliasFactory<T> = { [index: string]: () => T };
+export type AliasMap<K extends string, T> = { [key in K]: T };

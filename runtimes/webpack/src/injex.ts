@@ -3,7 +3,7 @@ import { IWebpackContainerConfig } from "./interfaces";
 
 export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
 
-    public static create(config: IWebpackContainerConfig): InjexWebpack {
+    public static create(config?: IWebpackContainerConfig): InjexWebpack {
         return new InjexWebpack(config);
     }
 

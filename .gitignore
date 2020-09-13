@@ -4,6 +4,8 @@
 node_modules
 coverage
 *.log
-src/**/*.js
-src/**/*.js.map
+**/src/**/*.js
+**/src/**/*.js.map
+**/src/**/*.d.ts
 lib/
+out/

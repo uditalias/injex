@@ -6,7 +6,7 @@ import { RootDirectoryNotExistError } from "./errors";
 
 export default class InjexNode extends Injex<INodeContainerConfig> {
 
-    public static create(config: INodeContainerConfig): InjexNode {
+    public static create(config?: INodeContainerConfig): InjexNode {
         return new InjexNode(config);
     }
 
