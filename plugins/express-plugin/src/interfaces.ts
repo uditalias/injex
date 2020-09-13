@@ -22,6 +22,7 @@ export interface IMetadata {
 }
 
 export interface IExpressPluginConfig {
+    name?: string;
     app?: Application;
     createAppCallback?: CreateAppCallback;
 }

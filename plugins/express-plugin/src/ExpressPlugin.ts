@@ -5,8 +5,6 @@ import metadataHandlers from "./metadataHandlers";
 import { IRouteConfig, IExpressPluginConfig, IMiddlewareConfig, IMiddleware, ExpressRequestHandler } from "./interfaces";
 import createConfig from "./createConfig";
 
-const expressAppSymbol = Symbol("expressApp");
-
 export class ExpressPlugin implements IInjexPlugin {
 
     private config: IExpressPluginConfig;
@@ -35,7 +33,7 @@ export class ExpressPlugin implements IInjexPlugin {
         }
 
         // save the express app instance for later use
-        this.container.addObject(this.app, expressAppSymbol);
+        this.container.addObject(this.app, this.config.name);
 
         this.container.hooks.afterModuleCreation.tap(this.handleModule, null, this);
     }
@@ -46,7 +44,7 @@ export class ExpressPlugin implements IInjexPlugin {
         if (metadataHandlers.hasMetadata(module.metadata.item)) {
 
             // get the @controller routes and middlewares
-            const { routes, middlewares } = metadataHandlers.getMetadata(module.metadata.item);
+            const { routes = [], middlewares = [] } = metadataHandlers.getMetadata(module.metadata.item);
 
             // convert controller handlers to express route handlers
             for (const route of routes) {
