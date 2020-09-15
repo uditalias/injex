@@ -7,7 +7,7 @@
     "lint": "lerna run lint --parallel --stream",
     "lint:fix": "lerna run lint:fix --parallel --stream",
     "build": "lerna run build --stream",
-    "release": "npm run build && lerna publish --force-publish",
+    "release": "npm run build && lerna publish",
     "test": "lerna run test -- -- --passWithNoTests",
     "test:cov": "lerna run test:cov -- -- --passWithNoTests",
     "test:watch": "lerna run test:watch --stream -- -- --passWithNoTests"
