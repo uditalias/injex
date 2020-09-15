@@ -93,7 +93,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             this._throwIfInvalidPlugin(plugin);
 
             applyPluginPromises.push(
-                plugin.apply(this)
+                (plugin.apply(this) || Promise.resolve())
             );
         }
 

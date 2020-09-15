@@ -37,7 +37,7 @@ export interface IBootstrap {
 }
 
 export interface IInjexPlugin<T extends IContainerConfig = any> {
-    apply(container: Injex<T>): Promise<void>;
+    apply(container: Injex<T>): void | Promise<void>;
 }
 
 export interface IInjexHooks {
