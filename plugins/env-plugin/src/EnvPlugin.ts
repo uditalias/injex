@@ -11,9 +11,9 @@ export class EnvPlugin implements IInjexPlugin {
     }
 
     public apply(container: Injex<any>) {
-        const current = this.config.environments[this.config.current] || {}
-            , defaults = this.config.defaults || {}
-            , environment = { ...defaults, ...current };
+        const current = this.config.environments[this.config.current] || {};
+        const defaults = this.config.defaults || {};
+        const environment = { ...defaults, ...current };
 
         container.addObject(environment, this.config.name);
     }

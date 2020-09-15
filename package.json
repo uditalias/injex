@@ -7,14 +7,20 @@
     "lint": "lerna run lint --parallel --stream",
     "lint:fix": "lerna run lint:fix --parallel --stream",
     "build": "lerna run build --stream",
-    "release": "npm run build && lerna publish",
+    "release": "npm run build && lerna publish --force-publish",
     "test": "lerna run test -- -- --passWithNoTests",
     "test:cov": "lerna run test:cov -- -- --passWithNoTests",
     "test:watch": "lerna run test:watch --stream -- -- --passWithNoTests"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^26.0.13",
     "@types/node": "^14.6.4",
+    "husky": "^4.3.0",
     "jest": "^26.4.2",
     "lerna": "^3.20.2",
     "rimraf": "^3.0.2",
