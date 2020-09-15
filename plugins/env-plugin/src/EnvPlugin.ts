@@ -10,11 +10,11 @@ export class EnvPlugin implements IInjexPlugin {
         this.config = createConfig(config);
     }
 
-    public async apply(container: Injex<any>): Promise<void> {
+    public apply(container: Injex<any>) {
         const current = this.config.environments[this.config.current] || {}
             , defaults = this.config.defaults || {}
             , environment = { ...defaults, ...current };
 
-        container.addObject(environment, "env");
+        container.addObject(environment, this.config.name);
     }
 }
