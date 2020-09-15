@@ -15,6 +15,7 @@
     "url": "git+https://github.com/uditalias/injex.git"
   },
   "scripts": {
+    "tsc": "tsc",
     "tsc:watch": "tsc -w",
     "start": "node out/index"
   },
