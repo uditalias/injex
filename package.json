@@ -7,7 +7,7 @@
     "lint": "lerna run lint --parallel --stream",
     "lint:fix": "lerna run lint:fix --parallel --stream",
     "build": "lerna run build --stream",
-    "website:build": "yarn --cwd website build",
+    "website:build": "cd website && npm run build",
     "release": "npm run build && lerna publish",
     "test": "lerna run test -- -- --passWithNoTests",
     "test:cov": "lerna run test:cov -- -- --passWithNoTests",
