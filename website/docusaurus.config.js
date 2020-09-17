@@ -7,7 +7,7 @@ module.exports = {
   ],
   url: 'https://injex.netlify.com',
   baseUrl: '/website/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   favicon: 'img/favicon.png',
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
