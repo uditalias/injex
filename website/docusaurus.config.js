@@ -6,7 +6,7 @@ module.exports = {
     "https://fonts.googleapis.com/icon?family=Material+Icons",
   ],
   url: 'https://injex.netlify.com',
-  baseUrl: '/website/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   favicon: 'img/favicon.png',
   organizationName: 'uditalias', // Usually your GitHub org/user name.
