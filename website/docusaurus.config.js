@@ -1,17 +1,27 @@
 module.exports = {
   title: 'Injex',
-  tagline: 'Simple, Decorated, Pluggable dependency-injection container',
+  tagline: 'Simple, Decorated, Pluggable dependency-injection container for TypeScript applications',
+  stylesheets: [
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap",
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+  ],
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
   themeConfig: {
+    prism: {
+      defaultLanguage: "typescript",
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require('prism-react-renderer/themes/nightOwl')
+    },
     navbar: {
-      title: 'My Site',
+      title: 'injex',
+      hideOnScroll: true,
       logo: {
-        alt: 'My Site Logo',
+        alt: '',
         src: 'img/logo.svg',
       },
       items: [
@@ -19,18 +29,20 @@ module.exports = {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
-          position: 'left',
+          position: 'right',
         },
-        { to: 'blog', label: 'Blog', position: 'left' },
+        { to: 'plugins/', label: 'Plugins', position: 'right' },
+        { to: 'runtimes/', label: 'Runtimes', position: 'right' },
+        { to: 'examples/', label: 'Examples', position: 'right' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/uditalias/injex',
           label: 'GitHub',
           position: 'right',
         },
       ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
@@ -65,19 +77,19 @@ module.exports = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: 'blog',
-            },
+            // {
+            //   label: 'Blog',
+            //   to: 'blog',
+            // },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/uditalias/injex',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-    },
+      copyright: `Copyright © ${new Date().getFullYear()} Udi Talias.`,
+    }
   },
   presets: [
     [
