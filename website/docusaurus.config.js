@@ -5,8 +5,8 @@ module.exports = {
     "https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap",
     "https://fonts.googleapis.com/icon?family=Material+Icons",
   ],
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://injex.netlify.com',
+  baseUrl: '/website/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.png',
   organizationName: 'uditalias', // Usually your GitHub org/user name.
