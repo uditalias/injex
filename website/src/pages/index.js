@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import CodeBlock from '@theme/CodeBlock';
@@ -24,7 +24,6 @@ const tabs = [{ value: "node", label: "Node" }, { value: "webpack", label: "Webp
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
-  const [selectedValue, setSelectedValue] = useState("node");
   return (
     <Layout
       description={siteConfig.tagline}>
@@ -32,11 +31,14 @@ function Home() {
         <img src="https://badge.fury.io/js/injex.svg" /> <img src="https://travis-ci.org/uditalias/injex.svg?branch=master" />
         <div className={styles.inner}>
           <div>
-            <h2>Simple, Decorated, Pluggable dependency-injection container for TypeScript applications</h2>
+            <h2>Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications</h2>
             <h3>Injex creates a dependency tree between your modules. Using TypeScript decorators you can define, reuse and inject modules into other modules as dependencies.</h3>
-            <Link to="docs" className={styles.button}>Get Started</Link>
+            <Link to="docs/introduction" className={styles.button}>Get Started</Link>
           </div>
           <div className={styles.image}>
+            {/* <img src="img/undraw_developer_activity_bv83.svg" /> */}
+            {/* <img src="img/undraw_Freelancer_re_irh4.svg" /> */}
+            {/* <img src="img/undraw_coding_6mjf.svg" /> */}
             <img src="img/undraw_programming_2svr.svg" />
           </div>
         </div>
@@ -51,7 +53,7 @@ function Home() {
           <Feature image="img/typescript.svg" title="For TypeScript" description="Used to power your Node.JS or client side TypeScript applications." />
           <Feature icon="looks_one" title="Singleton" description="Create, inject and reuse singleton modules." />
           <Feature icon="build" title="Factories" description="Inject class factories to easily create module instances." />
-          <Feature icon="account_tree" title="Inversion of control" description="Define aliases to inject IoC modules." />
+          <Feature icon="account_tree" title="SOLID Principles" description="Get the tools to implement a SOLID software." />
           <Feature icon="code" title="Lazy Modules" description="Create lazy modules and take control of code-splitting." />
         </div>
       </main>
@@ -73,7 +75,7 @@ function Home() {
             </p>
           </div>
           <div className={styles.code}>
-            <Tabs values={tabs} defaultValue={selectedValue}>
+            <Tabs values={tabs} defaultValue="node">
               <TabItem value="node">
                 <p>Install using npm or yarn</p>
                 <CodeBlock className="bash">
@@ -138,8 +140,12 @@ export class MailService {
       </main>
       <main className={styles.container}>
         <div className={styles.end}>
+          <div className={styles.credits}>
+            <img src="img/logo.svg" /> <i className="material-icons">add</i> <img src="img/typescript.svg" />
+          </div>
           <h2>Injex changes the way you write TypeScript applications. for good.</h2>
-          <Link className={styles.button} to="/docs/">Get Started</Link>
+          <Link className={styles.button} to="/docs/introduction">Get Started</Link>
+          <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
         </div>
       </main>
     </Layout>

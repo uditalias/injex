@@ -48,10 +48,11 @@
   display: inline-block;
   background-color: var(--ifm-color-primary);
   color: #fff;
-  padding: 1.2rem 2.4rem;
+  padding: 1rem 2.4rem;
   border-radius: 5rem;
   font-size: 1.8rem;
   transition: box-shadow 200ms, transform 200ms;
+  border: solid .2rem var(--ifm-color-primary);
 }
 
 .button:hover {
@@ -63,7 +64,6 @@
 
 .button.outline {
   background-color: transparent;
-  border: solid .2rem var(--ifm-color-primary);
   color: var(--ifm-color-primary);
 }
 
@@ -112,6 +112,7 @@
   display: block;
   width: 3.6rem;
   margin-bottom: 2rem;
+  border-radius: .5rem;
 }
 
 .example {
@@ -166,4 +167,23 @@
 
 .end h2 {
   margin-bottom: 4rem;
+}
+
+.credits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.credits i {
+  font-size: 3.8rem;
+}
+
+.credits img {
+  margin: 0 1.2rem;
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: .7rem;
 }

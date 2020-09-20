@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Injex',
-  tagline: 'Simple, Decorated, Pluggable dependency-injection container for TypeScript applications',
+  tagline: 'Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications',
   stylesheets: [
     "https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap",
     "https://fonts.googleapis.com/icon?family=Material+Icons",
@@ -12,28 +12,30 @@ module.exports = {
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
   themeConfig: {
+    announcementBar: {
+      id: 'supportus',
+      content:
+        '⭐️ If you like Injex, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/uditalias/injex">GitHub</a>! ⭐️',
+    },
     prism: {
       defaultLanguage: "typescript",
       theme: require('prism-react-renderer/themes/github'),
-      darkTheme: require('prism-react-renderer/themes/nightOwl')
+      darkTheme: require('prism-react-renderer/themes/dracula')
     },
     navbar: {
       title: 'injex',
-      hideOnScroll: true,
+      hideOnScroll: false,
       logo: {
-        alt: '',
+        alt: 'Injex - Dependency Injection Framework',
         src: 'img/logo.svg',
       },
       items: [
         {
-          to: 'docs/',
-          activeBasePath: 'docs',
-          label: 'Docs',
-          position: 'right',
+          to: 'docs/introduction', activeBaseRegex: '(/introduction|getting-started)', label: 'Docs', position: 'right',
         },
-        { to: 'plugins/', label: 'Plugins', position: 'right' },
-        { to: 'runtimes/', label: 'Runtimes', position: 'right' },
-        { to: 'examples/', label: 'Examples', position: 'right' },
+        { to: 'docs/runtimes/node', label: 'Runtimes', position: 'right' },
+        { to: 'docs/plugins/', label: 'Plugins', position: 'right' },
+        { to: 'docs/examples/node', label: 'Examples', position: 'right' },
         {
           href: 'https://github.com/uditalias/injex',
           label: 'GitHub',
@@ -96,17 +98,18 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          remarkPlugins: [require('./src/plugins/remark-npm2yarn')],
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/uditalias/injex/edit/master/website/',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-        },
+        // blog: {
+        //   showReadingTime: true,
+        //   // Please change this to your repo.
+        //   editUrl:
+        //     'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+        // },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },

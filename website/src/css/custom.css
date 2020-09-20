@@ -29,6 +29,7 @@
   --ifm-toc-padding-vertical: .8rem;
   --ifm-h2-font-size: 2.4rem;
   --ifm-h3-font-size: 2rem;
+  --ifm-leading: calc(1.25 * 1.6rem);
 }
 
 .docusaurus-highlight-code-line {
@@ -59,7 +60,7 @@ body {
 
 .navbar__title {
   font-weight: 700;
-  font-size: 2.2rem;
+  font-size: 1.6rem;
 }
 
 .navbar__logo {
@@ -83,4 +84,17 @@ margin-bottom: .4rem;
 .menu__link {
   align-items: center;
   border-radius: .4rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+.padding-vert--lg  {
+  padding-bottom: 3.2rem !important;
+  padding-top: 3.2rem !important;
+}
+
+article header h1 {
+  font-size: 4.8rem !important;
 }

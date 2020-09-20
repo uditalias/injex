@@ -1,7 +1,7 @@
 {
   "name": "@injex/core",
   "version": "0.0.1-2.0.0-alpha.0.0",
-  "description": "Simple, Decorated, Pluggable dependency-injection container for TypeScript apps",
+  "description": "Simple, Decorated, Pluggable dependency-injection framework for TypeScript apps",
   "keywords": [
     "dependency-injection-container",
     "dependency",
