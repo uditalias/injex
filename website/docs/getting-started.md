@@ -35,9 +35,7 @@ npm install --save @injex/webpack
 ```
 
 :::info
-
 When working on an hybrid application (server and client) you can install more than one runtime.
-
 :::
 
 Read on to learn more about Injex runtimes and how to create a container on each one of them.

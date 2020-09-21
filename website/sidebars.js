@@ -5,10 +5,8 @@ module.exports = {
     Plugins: ['plugins', 'express-plugin', 'env-plugin', 'plugins-create'],
     "API Reference": [
       'container',
-      'decorators'
-      // {
-      //   Core: ['decorators']
-      // }
+      'decorators',
+      'enums',
     ],
     Examples: [
       "examples-node",

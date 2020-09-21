@@ -23,7 +23,7 @@ module.exports = {
       darkTheme: require('prism-react-renderer/themes/dracula')
     },
     navbar: {
-      title: 'injex',
+      title: 'Injex',
       hideOnScroll: false,
       logo: {
         alt: 'Injex - Dependency Injection Framework',
@@ -50,45 +50,45 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
-              to: 'docs/',
+              label: 'Introduction',
+              to: '/docs/introduction',
             },
             {
-              label: 'Second Doc',
-              to: 'docs/doc2/',
-            },
-          ],
+              label: 'Getting Started',
+              to: '/docs/getting-started',
+            }
+          ]
         },
         {
-          title: 'Community',
+          title: 'Tutorials',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Basic Example',
+              to: 'docs/basic-example',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Create a Runtime',
+              to: 'docs/runtimes/create-runtime',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
-          ],
+              label: 'Create a Plugin',
+              to: 'docs/plugins/create-plugin',
+            }
+          ]
         },
         {
           title: 'More',
           items: [
-            // {
-            //   label: 'Blog',
-            //   to: 'blog',
-            // },
             {
               label: 'GitHub',
               href: 'https://github.com/uditalias/injex',
             },
-          ],
-        },
+            {
+              label: '@uditalias',
+              href: 'https://twitter.com/uditalias',
+            }
+          ]
+        }
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Udi Talias.`,
     }

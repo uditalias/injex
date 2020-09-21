@@ -5,10 +5,8 @@
  * and scoped locally.
  */
 
-.container {
-  padding: 4rem;
-  max-width: 140rem;
-  margin: 0 auto;
+:global .home .container {
+  margin-top: 5rem;
 }
 
 .header code {
@@ -17,17 +15,8 @@
   border-radius: 2rem;
 }
 
-.header .inner {
-  display: flex;
-  align-items: center;
-}
-
-.header .inner > * {
-  flex: 1;
-}
-
 .header h2 {
-  line-height: 1.5;
+  line-height: 1.4;
   font-size: 3.4rem;
   font-weight: 700;
   margin: 2rem 0;
@@ -44,6 +33,31 @@
   margin-left: 6rem;
 }
 
+@media (max-width: 996px) {
+  .image {
+    margin: 3.2rem auto 0 auto;
+  }
+
+  .feature .top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .feature h3 {
+    margin-bottom: 0 !important;
+  }
+
+  .feature i, .feature img {
+    margin-right: 1.8rem;
+    margin-bottom: 0 !important;
+  }
+
+  .feature + .feature {
+    margin-top: 2rem;
+  }
+}
+
 .button {
   display: inline-block;
   background-color: var(--ifm-color-primary);
@@ -53,6 +67,7 @@
   font-size: 1.8rem;
   transition: box-shadow 200ms, transform 200ms;
   border: solid .2rem var(--ifm-color-primary);
+  text-align: center;
 }
 
 .button:hover {
@@ -71,34 +86,32 @@
   margin-left: 2rem;
 }
 
+@media (max-width: 560px) {
+  .button {
+    display: block;
+  }
+
+  .button+.button {
+    margin: 2rem 0 0 0;
+  }
+
+  .image {
+    display: none !important;
+  }
+}
+
 .features {
   margin: 4.2rem 0 0 0;
-  display: grid;
-  grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  margin-left: calc(var(--ifm-spacing-horizontal) * -1) !important;
+  margin-right: calc(var(--ifm-spacing-horizontal) * -1) !important;
 }
 
-.feature {
-  padding: 3.2rem;
-  border-right: solid .1rem rgba(0,0,0,.1);
-}
-
-.feature:nth-child(4n) {
-  border-right: none;
-  padding-right: 0;
-}
-
-.feature:nth-child(n+5) {
-  border-top: solid .1rem rgba(0,0,0,.1);
-}
-
-.feature:nth-child(4n+1) {
-  padding-left: 0;
+.features + .features {
+  margin-top: 0;
 }
 
 .feature h3 {
   font-size: 1.6rem;
-  display: flex;
-  align-items: center;
   color: var(--ifm-color-primary);
 }
 
@@ -115,19 +128,11 @@
   border-radius: .5rem;
 }
 
-.example {
-  display: flex;
-  align-items: flex-start;
-
+.desc {
 }
 
-.example .desc {
-  flex: 1;
-  margin-right: 6rem;
-}
-
-.example .code {
-  flex: 1;
+.code {
+  min-width: 1px;
 }
 
 .desc ul {
@@ -161,7 +166,7 @@
 }
 
 .end {
-  margin: 3rem 0;
+  margin: 6rem 0;
   text-align: center;
 }
 
@@ -185,5 +190,5 @@
   margin: 0 1.2rem;
   width: 7.2rem;
   height: 7.2rem;
-  border-radius: .7rem;
+  border-radius: .5rem;
 }
