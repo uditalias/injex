@@ -41,6 +41,22 @@ An Injex container instance is the same on all runtimes. Checkout the [Container
 
 You can config the Node container with the following configurations.
 
+#### `rootDirs`
+
+A list of folders for modules lookup (recursive)
+
+* Type: `Array`
+* default: `[path.resolve(process.cwd(), "./src")]`
+* Required: `false`
+
+#### `globPattern`
+
+Define the modules glob pattern
+
+* Type: `string`
+* default: `/**/*.js`
+* Required: `false`
+
 #### `logLevel`
 
 Controls Injex's internal logger log level
@@ -63,22 +79,6 @@ List of plugins to include with the container instance.
 
 * Type: `Array`
 * default: `[]`
-* Required: `false`
-
-#### `rootDirs`
-
-A list of folders for modules lookup (recursive)
-
-* Type: `Array`
-* default: `[path.resolve(process.cwd(), "./src")]`
-* Required: `false`
-
-#### `globPattern`
-
-Define the modules glob pattern
-
-* Type: `string`
-* default: `/**/*.js`
 * Required: `false`
 
 :::tip A working Example

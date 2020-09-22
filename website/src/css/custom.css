@@ -50,6 +50,37 @@
   --ifm-h6-font-size: 1.3rem;
 }
 
+.markdown ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  counter-reset: section;
+}
+
+.markdown ol li {
+  display: flex;
+  align-items: center;
+}
+
+.markdown ol li + li {
+  margin-top: 1rem;
+}
+
+.markdown ol li:before {
+  counter-increment: section;
+  color: #fff;
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: var(--ifm-color-primary);
+  border-radius: 100%;
+  display: flex;
+  content: counter(section);
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;

@@ -26,7 +26,7 @@ Injex's core API works the same both on the server and the client so it's easy t
 
 ## Why should I use Injex?
 
-1. You love and write applications with TypeScript.
+1. You love and write TypeScript applications.
 2. You like to write clean code.
 3. You want to implement the SOLID principles.
 4. You're a full-stack developer who wants to build server/client applications.
@@ -42,5 +42,5 @@ Injex's core API works the same both on the server and the client so it's easy t
 From [Wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
 
 :::note
-Injex should be used in TypeScript applications.
+Currently you should use the Injex framework with TypeScript.
 :::
