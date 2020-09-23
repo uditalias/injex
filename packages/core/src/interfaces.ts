@@ -46,7 +46,7 @@ export interface IInjexHooks {
     beforeCreateModules: Hook;
     afterModuleCreation: Hook<[IModule]>;
     afterCreateModules: Hook;
-    berforeCreateInstance: Hook<[IConstructor, args: any[]]>;
+    berforeCreateInstance: Hook<[IConstructor, any[]]>;
 }
 
 export interface IContainerConfig {
