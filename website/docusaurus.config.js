@@ -12,6 +12,7 @@ module.exports = {
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
   themeConfig: {
+    image: "img/poster.png",
     announcementBar: {
       id: 'supportus',
       content:
