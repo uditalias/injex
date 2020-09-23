@@ -9,8 +9,8 @@ Injex is a set of npm packages under the `@injex` npm scope.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/) version >= 10
-- [TypeScript](https://www.typescriptlang.org/) version >= 3.8
+- [Node.js](https://nodejs.org/en/) version >= 8.17.0
+- [TypeScript](https://www.typescriptlang.org/) version >= 3.0.0
 
 ## Installation
 
