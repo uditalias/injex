@@ -1,7 +1,7 @@
 ---
 id: basic-example
 title: A basic Node application
-sidebar_label: Basic Example
+sidebar_label: Basic Usage Example
 slug: /basic-example
 ---
 
@@ -180,6 +180,10 @@ export class Bootstrap {
 Line 1 defines this module as the bootstrap class, you should have only 1 class in your container with the `@bootstrap()` decorator.
 
 In line 6 we tells Injex that we want to `@inject()` the `mailService` singleton module we created earlier so we can use it to send our so important email 😅.
+
+:::note A Side Note
+You probably asking yourself, how is the mailService on line 6 received the singleton instance of `MailService` (with the capital 'M'), the answer is that Injex takes the name of the module class (MailService) and convert it to it's camelCased version. You can read more about it on the [@inject()](/docs/api/core/decorators/inject) decorator docs.
+:::
 
 ## The Injex container
 

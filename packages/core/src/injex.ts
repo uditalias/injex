@@ -22,7 +22,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     protected abstract createConfig(config?: Partial<T>): T;
 
     /**
-     * Load all project files and call `registerModuleExports` with each module
+     * Load all project files and call `registerModuleExports` for each module
      */
     protected abstract loadContainerFiles(): void;
 
