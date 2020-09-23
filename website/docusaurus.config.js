@@ -60,10 +60,10 @@ module.exports = {
           ]
         },
         {
-          title: 'Tutorials',
+          title: 'Guides & Tutorials',
           items: [
             {
-              label: 'Basic Example',
+              label: 'Basic Usage',
               to: 'docs/basic-example',
             },
             {
