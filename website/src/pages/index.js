@@ -151,7 +151,7 @@ export class MailService {
             <div className={styles.credits}>
               <img src="img/logo.svg" /> <i className="material-icons">add</i> <img src="img/typescript.svg" />
             </div>
-            <h2>Injex changes the way you write TypeScript applications. for good.</h2>
+            <h2>Injex changes the way you write TypeScript applications. Forever.</h2>
             <Link className={styles.button} to="/docs/introduction">Get Started</Link>
             <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
           </div>
