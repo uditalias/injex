@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+.idea
+node_modules
+coverage
+*.log
+**/src/**/*.js
+!website/**/*.js
+**/*.d.ts
+**/*.js.map
+lib/
+out/

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "alwaysStrict": true,
+        "importHelpers": true,
+        "target": "ES5",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "allowJs": false,
+        "preserveConstEnums": true,
+        "lib": [
+			"es6",
+			"es7",
+			"dom"
+        ]
+    },
+    "compileOnSave": false
+}

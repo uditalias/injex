@@ -1,0 +1,39 @@
+{
+  "name": "injex-express-plugin-example",
+  "version": "2.0.0-alpha.3",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "author": {
+    "name": "Udi Talias",
+    "email": "udi.talias@gmail.com",
+    "url": "https://twitter.com/uditalias"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uditalias/injex.git"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w",
+    "start": "node out/index"
+  },
+  "bugs": {
+    "url": "https://github.com/uditalias/injex/issues"
+  },
+  "homepage": "https://github.com/uditalias/injex#readme",
+  "dependencies": {
+    "@injex/core": "^2.0.0-alpha.3",
+    "@injex/env-plugin": "^2.0.0-alpha.3",
+    "@injex/express-plugin": "^2.0.0-alpha.3",
+    "@injex/node": "^2.0.0-alpha.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.6.4",
+    "typescript": "^4.0.2"
+  }
+}

@@ -1,0 +1,182 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #1877f2;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-code-font-size: 95%;
+  --ifm-navbar-height: 6rem;
+
+  --ifm-navbar-padding-vertical: 3rem;
+  --ifm-navbar-padding-horizontal: 2rem;
+
+  --ifm-menu-link-padding-vertical: 1rem;
+  --ifm-menu-link-padding-horizontal: 1rem;
+  --ifm-global-spacing: 1.6rem;
+  
+  --ifm-heading-line-height: 2rem;
+  --ifm-toc-padding-vertical: .8rem;
+  --ifm-leading: calc(1.25 * 1.6rem);
+
+  --ifm-h1-font-size: 3.2rem;
+  --ifm-h2-font-size: 3.2rem;
+  --ifm-h3-font-size: 2rem;
+  --ifm-h4-font-size: 1.6rem;
+  --ifm-h5-font-size: 1.4rem;
+  --ifm-h6-font-size: 1.3rem;
+}
+
+.markdown > h1,
+.markdown > h2,
+.markdown > h3,
+.markdown > h4,
+.markdown > h5,
+.markdown > h6 {
+  --ifm-h1-font-size: 3.2rem;
+  --ifm-h2-font-size: 3.2rem;
+  --ifm-h3-font-size: 2rem;
+  --ifm-h4-font-size: 1.6rem;
+  --ifm-h5-font-size: 1.4rem;
+  --ifm-h6-font-size: 1.3rem;
+}
+
+.markdown ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  counter-reset: section;
+}
+
+.markdown ol li {
+  display: flex;
+  align-items: center;
+}
+
+.markdown ol li + li {
+  margin-top: 1rem;
+}
+
+.markdown ol li:before {
+  counter-increment: section;
+  color: #fff;
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: var(--ifm-color-primary);
+  border-radius: 100%;
+  display: flex;
+  content: counter(section);
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+html * {
+  box-sizing: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: rgba(36, 37, 38, .8);
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, .8);
+}
+
+.navbar:not(.navbar-sidebar--show) {
+  backdrop-filter: saturate(180%) blur(10px);
+}
+
+.navbar__inner {
+  flex-wrap: nowrap;
+  background-color: transparent;
+}
+
+.navbar__title {
+  font-weight: 700;
+  font-size: 2.4rem;
+}
+
+.navbar__logo {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-right: 1rem;
+}
+
+.table-of-contents {
+  font-size: 1.4rem;
+}
+
+.menu__list-item {
+  margin: .5rem 0;
+}
+
+.pagination-nav__sublabel {
+margin-bottom: .4rem;
+}
+
+.menu__link {
+  align-items: center;
+  border-radius: .4rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+}
+
+.padding-vert--lg  {
+  padding-bottom: 3.2rem !important;
+  padding-top: 3.2rem !important;
+}
+
+article header h1 {
+  font-size: 4.8rem !important;
+}
+
+.prism-code {
+  counter-reset: line-number;
+}
+
+.prism-code.language-ts .token-line::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  margin-right: calc(var(--ifm-pre-padding) * 1.5);
+  text-align: right;
+  min-width: 2.5rem;
+  display: inline-block;
+  opacity: .3;
+  position: sticky;
+  left: var(--ifm-pre-padding);
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0,0,0,.1);
+}
