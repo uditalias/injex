@@ -32,7 +32,7 @@ function Home() {
       <div className="home">
 
         <header className={clsx(styles.header, "container")}>
-          <img src="https://badge.fury.io/js/injex.svg" /> <img src="https://travis-ci.org/uditalias/injex.svg?branch=master" />
+          <img className={styles.badge} src="https://img.shields.io/npm/v/@injex/core?style=for-the-badge" />
           <div className="row">
             <div className="col col-6">
               <h2>Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications</h2>

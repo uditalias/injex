@@ -9,6 +9,11 @@
   margin-top: 5rem;
 }
 
+.badge {
+  display: block;
+  border-radius: 3rem;
+}
+
 .header code {
   font-size: 1.8rem;
   padding: 1rem 2rem;
