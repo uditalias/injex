@@ -61,7 +61,7 @@ Define the modules glob pattern
 
 Controls Injex's internal logger log level
 
-* Type: [`LogLevel`](/docs/api/core/enums#loglevel)
+* Type: [`LogLevel`](/docs/api/core/enums-interfaces#loglevel)
 * default: `LogLevel.Error`
 * Required: `false`
 

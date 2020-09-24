@@ -139,7 +139,7 @@ export class TodosController {
 
 ### `@middleware()`
 
-Define a middleware or a list of chainable middlewares on a controller route handler. A middleware is a class that implements the `IMiddleware` interface.
+Define a middleware or a list of chainable middlewares on a controller route handler. A middleware is a class that implements the [`IMiddleware`](/docs/api/core/enums-interfaces#imiddleware) interface.
 
 Note that you can pass an array of middlewares (`@middleware([ ... ])`), in that case, the middlewares will be called from left to right. If a middleware failed with an error, the route handler function will not be triggered.
 

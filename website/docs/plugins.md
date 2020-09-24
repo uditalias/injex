@@ -19,7 +19,7 @@ If you created a new plugin, let us know by creating a new [issue](https://githu
 
 ## Anatomy
 
-An Injex plugin is a JavaScript object or a class that implements the `IInjexPlugin` interface. This interface has only the `apply` method. This method is called by the Injex runtime with a container as an argument to bind into its hooks.
+An Injex plugin is a JavaScript object or a class that implements the [`IInjexPlugin`](/docs/api/core/enums-interfaces#iinjexplugin) interface. This interface has only the `apply` method. This method is called by the Injex runtime with a container as an argument to bind into its hooks.
 
 ```ts title="NotifyBeforeInstanceCreationPlugin.ts"
 export default class NotifyBeforeInstanceCreationPlugin {
