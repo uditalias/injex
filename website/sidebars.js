@@ -5,10 +5,10 @@ module.exports = {
     Plugins: ['plugins', 'env-plugin', 'express-plugin'],
     "API Reference": [
       'container',
-      'enums',
       {
         'Core Decorators': ['define', 'singleton', 'bootstrap', 'alias', 'lazy', 'inject', 'injectAlias', 'init']
-      }
+      },
+      'enums',
     ],
     Examples: [
       "examples-node",

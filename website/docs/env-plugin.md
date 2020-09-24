@@ -11,7 +11,7 @@ The Env Plugin defines and manages multiple environment variables based on the `
 
 The plugin adds the relevant environment object to the runtime container so you can inject it into any module as a dependency.
 
-This is NOT a runtime specific plugin and can be used on all runtimes.
+This is NOT a runtime specific plugin and can be used on all Injex's runtimes.
 
 ## Installation
 
@@ -21,11 +21,9 @@ You can install the Env Plugin via NPM or Yarn.
 npm install --save @injex/env-plugin
 ```
 
-## Usage
+## Initialization
 
-Example usage with the node runtime.
-
-Creating the plugin and passing it to the container creation config object
+Creating the plugin and passing it to the runtime container config object
 
 ```ts {7-21}
 import { Injex } from "@injex/node";
@@ -53,22 +51,6 @@ Injex.create({
 });
 ```
 
-Injecting the environment object created by the plugin into other module
-
-```ts {4}
-@define()
-@singleton()
-export class MyService {
-    @inject() private env;
-
-    @init()
-    public initialize() {
-        console.log(this.env.logLovel); // "silence"
-        console.log(this.env.myVar); // 123
-    }
-}
-```
-
 ## Configurations
 
 You can pass the following configurations to the EnvPlugin
@@ -78,7 +60,7 @@ You can pass the following configurations to the EnvPlugin
 The environment object name in the runtime container for later injection.
 
 * Type: `string`
-* default: `env`
+* Default: `env`
 * Required: `false`
 
 ### `current`
@@ -86,7 +68,7 @@ The environment object name in the runtime container for later injection.
 Enforce an environment by its name.
 
 * Type: `string`
-* default: `process.env.NODE_ENV`
+* Default: `process.env.NODE_ENV`
 * Required: `false`
 
 ### `defaults`
@@ -94,7 +76,7 @@ Enforce an environment by its name.
 An object with default values to be used as a fallback to the selected environment.
 
 * Type: `object`
-* default: `{}`
+* Default: `{}`
 * Required: `false`
 
 ### `environments`
@@ -124,5 +106,23 @@ const plugin = new EnvPlugin({
 ```
 
 * Type: `object`
-* default: `{}`
+* Default: `{}`
 * Required: `false`
+
+## Usage
+
+Injecting the environment object created by the plugin into other module using the `@inject()` decorator.
+
+```ts {4}
+@define()
+@singleton()
+export class MyService {
+    @inject() private env;
+
+    @init()
+    public initialize() {
+        console.log(this.env.logLovel); // "silence"
+        console.log(this.env.myVar); // 123
+    }
+}
+```

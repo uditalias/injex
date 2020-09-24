@@ -14,7 +14,7 @@ For example, you can inject new modules from your plugin into a container and ac
 In the next sections you'll lean how to create a new Plugin for Injex and find out about some of the Plugins already exists.
 
 :::info
-If you created a new plugin, create a new [issue](https://github.com/uditalias/injex/issues/new) so we can add it to the docs.
+If you created a new plugin, let us know by creating a new [issue](https://github.com/uditalias/injex/issues/new) and we'll consider adding it to the plugin list section.
 :::
 
 ## Anatomy
