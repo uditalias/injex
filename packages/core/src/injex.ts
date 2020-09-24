@@ -14,6 +14,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     public hooks: IInjexHooks;
 
+    public get logger(): Logger {
+        return this._logger;
+    }
+
     /**
      * Parse and extend with default values configuration
      *
@@ -60,8 +64,15 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         try {
             await this._initializeModules();
 
+            this.hooks.bootstrapRun.call();
+
             await bootstrapModule?.run();
+
+            this.hooks.bootstrapComplete.call();
         } catch (e) {
+
+            this.hooks.bootstrapError.call(e);
+
             if (bootstrapModule?.didCatch) {
                 bootstrapModule?.didCatch(e);
             } else {
@@ -125,7 +136,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             beforeCreateModules: new Hook(),
             afterModuleCreation: new Hook(),
             afterCreateModules: new Hook(),
-            berforeCreateInstance: new Hook(),
+            beforeCreateInstance: new Hook(),
+            bootstrapRun: new Hook(),
+            bootstrapError: new Hook(),
+            bootstrapComplete: new Hook(),
         };
     }
 
@@ -226,7 +240,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _createInstance(construct: any, args: any[] = []): any {
-        this.hooks.berforeCreateInstance.call(construct, args);
+        this.hooks.beforeCreateInstance.call(construct, args);
 
         return new construct(...args);
     }

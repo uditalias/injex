@@ -72,8 +72,8 @@ module.exports = {
               to: 'docs/runtimes/create-runtime',
             },
             {
-              label: 'Create a Plugin',
-              to: 'docs/plugins/create-plugin',
+              label: 'Plugins Concept',
+              to: 'docs/plugins',
             }
           ]
         },
@@ -91,6 +91,11 @@ module.exports = {
           ]
         }
       ],
+      logo: {
+        alt: 'Injex Logo',
+        src: 'img/logo.svg',
+        href: 'https://www.injex.dev',
+      },
       copyright: `Copyright © ${new Date().getFullYear()} Udi Talias.`,
     }
   },

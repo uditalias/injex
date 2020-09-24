@@ -2,7 +2,7 @@ module.exports = {
   root: {
     Injex: ['introduction', "getting-started", "basic-example"],
     Runtimes: ['runtimes-node', 'runtimes-webpack', 'runtimes-create'],
-    Plugins: ['plugins', 'express-plugin', 'env-plugin', 'plugins-create'],
+    Plugins: ['plugins', 'env-plugin', 'express-plugin'],
     "API Reference": [
       'container',
       'enums',

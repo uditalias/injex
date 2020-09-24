@@ -180,3 +180,12 @@ article header h1 {
 .docusaurus-highlight-code-line {
   background-color: rgba(0,0,0,.1);
 }
+
+footer.footer a {
+  opacity: 1;
+}
+
+.footer__logo {
+  margin-top: 3rem;
+  max-width: 6rem;
+}
