@@ -33,6 +33,20 @@ export default class NotifyBeforeInstanceCreationPlugin {
 
 The `apply` method receives only one argument - the runtime container. You can bind to the container hooks or manually inject modules into it to be accessed by your application later on with the `@inject()` decorator.
 
+## Usage
+
+Plugins should be passed into the container creation object using the `plugins` array. for example:
+
+```ts {3-6}
+Injex.create({
+    ... more configurations ...
+    plugins: [
+        new NotifyBeforeInstanceCreationPlugin(),
+        ... more plugins ...
+    ]
+})
+```
+
 ## Container Hooks
 
 The runtime container is the core of the Injex framework that creates and manage the application modules. In order to extend the functionality with plugins, the runtime container exposese hooks. The following exposed hooks can be accessed in this way:

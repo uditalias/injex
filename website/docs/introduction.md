@@ -15,6 +15,8 @@ so today it's easy to refactor large codebase applications without the fear of b
 
 But still, when you need to organize your codebase, keep it abstract and implement the SOLID principles, you need something to manage modules, instances, factories and abstraction.
 
+<img src="/img/poster.png" style={{borderRadius: "var(--ifm-alert-border-radius)" }} />
+
 ## Dependency Injection Framework
 
 **Injex** is a dependency injection framework that helps you resolve dependencies auto-magically. Think about a large application codebase with hundreds of modules, how can we manage all this connections and dependencies?
