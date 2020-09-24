@@ -234,4 +234,4 @@ We created a simple Node application to show the basic parts of Injex framework.
 
 We then created the bootstrap class and we used the MailService singleton instance that injected into it.
 
-You can checkout the [examples](/docs/examples/node) section for more examples and use cases.
+You can checkout the [examples](/docs/examples) section for more examples and use cases.

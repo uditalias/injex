@@ -36,7 +36,7 @@ module.exports = {
         },
         { to: 'docs/runtimes/node', label: 'Runtimes', position: 'right' },
         { to: 'docs/plugins/', label: 'Plugins', position: 'right' },
-        { to: 'docs/examples/node', label: 'Examples', position: 'right' },
+        { to: 'docs/examples/', label: 'Examples', position: 'right' },
         {
           href: 'https://github.com/uditalias/injex',
           label: 'GitHub',
@@ -66,6 +66,10 @@ module.exports = {
             {
               label: 'Basic Usage',
               to: 'docs/basic-example',
+            },
+            {
+              label: 'Examples & Use Cases',
+              to: 'docs/examples',
             },
             {
               label: 'Create a Runtime',

@@ -78,7 +78,7 @@ function Home() {
                 <li>Small size footprint</li>
               </ul>
               <p>
-                Checkout the <Link to="/examples/">examples</Link> page for full examples and use cases.
+                Checkout the <Link to="/docs/examples/">examples</Link> page for full examples and use cases.
             </p>
             </div>
             <div className={clsx(styles.code, "col col-6")}>

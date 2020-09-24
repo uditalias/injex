@@ -55,13 +55,26 @@ The express application instance container name in the runtime container for lat
 
 If you already have an express instance in your application, you can pass it to the `app` config option so the plugin will use it.
 
+For example:
+
+```ts
+import { ExpressPlugin } from "@injex/express-plugin";
+import * as express from "express";
+
+const myApp = express();
+
+const plugin = new ExpressPlugin({
+    app: myApp
+})
+```
+
 - Type: `ExpressApplication instance`
 - Default: null
 - Required: `false`
 
 ### `createAppCallback`
 
-If you don't provide the `app` config option, the Express Plugin will create one for you. You can pass in the `createAppCallback` if you want to hook up the application instance in order to customize it using middlewares etc.
+If you don't provide the `app` config option, the Express Plugin will create one for you. You can pass in the `createAppCallback` if you want to hook up the application instance in order to customize it using middlewares or listening to a network port.
 
 For example:
 
@@ -77,6 +90,7 @@ Injex.create({
         new ExpressPlugin({
             createAppCallback: (app) => {
                 app.use(bodyParser());
+                app.listen(8080);
             }
         })
     ]
@@ -215,4 +229,4 @@ export class TodosController {
 }
 ```
 
-If you want a quick demo to play with, check out the [express example](/docs/examples/express) in the examples section.
+If you want a quick demo to play with, check out the [express example](/docs/examples#express-plugin-example) in the examples section.

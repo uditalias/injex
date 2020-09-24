@@ -92,7 +92,7 @@ List of plugins to include with the container instance.
 * Required: `false`
 
 :::tip Example
-You can go to the [webpack example](/docs/examples/webpack) to see the Webpack runtime in action.
+You can go to the [webpack example](/docs/examples#webpack-runtime-example) to see the Webpack runtime in action.
 :::
 
 ## Code splitting

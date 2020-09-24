@@ -14,5 +14,5 @@
 ·
 [Plugins](https://www.injex.dev/docs/plugins)
 ·
-[Examples](https://www.injex.dev/docs/examples/node)
+[Examples](https://www.injex.dev/docs/examples)
 </h3>
