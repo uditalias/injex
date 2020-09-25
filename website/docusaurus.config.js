@@ -100,7 +100,7 @@ module.exports = {
         src: 'img/logo.svg',
         href: 'https://www.injex.dev',
       },
-      copyright: `Copyright © ${new Date().getFullYear()} Udi Talias.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Injex`,
     }
   },
   presets: [
