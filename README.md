@@ -2,7 +2,7 @@
 
 <h1>Injex <img src="https://img.shields.io/npm/v/@injex/core" /></h1>
 <h3>Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications</h3>
-<p>Injex creates a dependency tree between your modules. Using TypeScript decorators, you define, inject, and reuse modules as dependencies across your application.</p>
+<p>Injex makes software architecture more easy & fun by creating a dependency tree between your application modules with a minimal API.</p>
 
 <h3 align="center">
 

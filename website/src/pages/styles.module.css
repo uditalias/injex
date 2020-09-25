@@ -34,10 +34,6 @@
   margin-bottom: 3rem;
 }
 
-.image {
-  margin-left: 6rem;
-}
-
 @media (max-width: 996px) {
   .image {
     margin: 3.2rem auto 0 auto;

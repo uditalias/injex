@@ -36,7 +36,7 @@ function Home() {
           <div className="row">
             <div className="col col-6">
               <h2>Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications</h2>
-              <h3>Injex creates a dependency tree between your modules. Using TypeScript decorators, you define, inject, and reuse modules as dependencies across your application.</h3>
+              <h3>Injex makes software architecture more easy & fun by creating a dependency tree between your application modules with a minimal API.</h3>
               <Link to="docs/introduction" className={styles.button}>Get Started</Link>
               <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
             </div>
