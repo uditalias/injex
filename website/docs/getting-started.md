@@ -20,7 +20,11 @@ Injex can be installed via [NPM](https://www.npmjs.com/) or [YARN](https://yarnp
 npm install --save @injex/core
 ```
 
+<<<<<<< HEAD
 After installing the core package, you will need to install an Injex runtime. A runtime implements the functionality of loading files and modules into Injex container. For example, the Node runtime defines the root directories for modules, while the Webpack runtime defines the require context for modules.
+=======
+After installing the core package you will need to install an Injex runtime. A runtime implements the functionality of loading files and modules into Injex container, for example, the Node runtime defines the root directories for modules while the Webpack runtime defines the require context for modules.
+>>>>>>> d6d8137520674a5c0270c10fb58f11574f1d22bc
 
 If you're working on a server-side project, install the Node runtime:
 
