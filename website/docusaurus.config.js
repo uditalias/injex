@@ -32,9 +32,9 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/introduction', activeBaseRegex: '(/introduction|getting-started)', label: 'Docs', position: 'right',
+          to: 'docs/introduction', activeBaseRegex: '(/introduction|getting-started|basic-example)', label: 'Docs', position: 'right',
         },
-        { to: 'docs/runtimes/node', label: 'Runtimes', position: 'right' },
+        { to: 'docs/runtimes/node', activeBaseRegex: '/runtimes/', label: 'Runtimes', position: 'right' },
         { to: 'docs/plugins/', label: 'Plugins', position: 'right' },
         { to: 'docs/examples/', label: 'Examples', position: 'right' },
         {
