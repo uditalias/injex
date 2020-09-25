@@ -5,7 +5,7 @@ sidebar_label: Examples
 slug: /examples
 ---
 
-A list of examples and instructions how to run them. All examples exists inside [Injex's GitHub repository](https://github.com/uditalias/injex) under the `examples/` folder.
+Here is a list of examples and instructions to run them. All examples exist inside [Injex's GitHub repository](https://github.com/uditalias/injex) under the `examples/` folder.
 
 First, clone the repository to your local machine
 
@@ -13,7 +13,7 @@ First, clone the repository to your local machine
 git clone git@github.com:uditalias/injex.git
 ```
 
-After the clone is done, run the following commands inside the cloned folder
+After the clone is done, run the following commands:
 
 ```bash
 cd injex
@@ -21,7 +21,7 @@ npm install
 npx lerna bootstrap
 ```
 
-When everything's done, go to the folder of the example you want to play/run.
+When done, go to the example folder you want to run.
 
 ## Node runtime example
 

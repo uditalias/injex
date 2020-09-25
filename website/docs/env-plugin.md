@@ -53,11 +53,11 @@ Injex.create({
 
 ## Configurations
 
-You can pass the following configurations to the EnvPlugin
+You can pass the following configurations to the EnvPlugin.
 
 ### `name`
 
-The environment object name in the runtime container for later injection.
+The environment object name, as it will be used in the runtime container for later injection.
 
 * Type: `string`
 * Default: `env`
@@ -81,7 +81,7 @@ An object with default values to be used as a fallback to the selected environme
 
 ### `environments`
 
-An object contains the evironments and their variables.
+An object contains the environments and their variables.
 
 For example:
 
@@ -111,7 +111,7 @@ const plugin = new EnvPlugin({
 
 ## Usage
 
-Injecting the environment object created by the plugin into other module using the `@inject()` decorator.
+To inject the environment object created by the plugin into other modules using the `@inject()` decorator.
 
 ```ts {4}
 @define()

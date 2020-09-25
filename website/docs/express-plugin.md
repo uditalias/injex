@@ -7,9 +7,9 @@ slug: /plugins/express
 
 <img src="https://img.shields.io/npm/v/@injex/express-plugin" />
 
-The Express Plugin provides a set of tools to work with the [Express Framework](https://expressjs.com/) to create Express applications in a better and organized way.
+The Express Plugin provides tools to work with the [Express Framework](https://expressjs.com/) to create Express applications in a better and organized way.
 
-The plugin expose decorators for creating controllers, route handlers and middlewares that wraps the Express API.
+The plugin exposes decorators for creating controllers, route handlers, and middlewares that wraps the Express API.
 
 This plugin should be used with Injex's Node runtime.
 
@@ -21,7 +21,7 @@ You can install the Env Plugin via NPM or Yarn.
 npm install --save @injex/express-plugin
 ```
 
-You should also make sure `express` is installed in your project.
+You should also make sure `Express` is installed on your project.
 
 ## Initialization
 
@@ -45,7 +45,7 @@ Injex.create({
 
 ### `name`
 
-The express application instance container name in the runtime container for later injection.
+The express application instance name, as it will be used in the runtime container for later injection.
 
 - Type: `string`
 - Default: `expressApp`
@@ -74,7 +74,7 @@ const plugin = new ExpressPlugin({
 
 ### `createAppCallback`
 
-If you don't provide the `app` config option, the Express Plugin will create one for you. You can pass in the `createAppCallback` if you want to hook up the application instance in order to customize it using middlewares or listening to a network port.
+If you don't provide the `app` config option, the Express Plugin will create an Express app instance for you. You can pass in the `createAppCallback` if you want to hook up the application instance with custom middleware or listen to a network port.
 
 For example:
 
@@ -103,11 +103,11 @@ Injex.create({
 
 ## Usage
 
-As mentioned above, the Express plugin exposes decorators to handle routes and middlewares inside a controller. A controller is a collection of route handlers related to a specific domain in your application. An interesting part about controllers is the fact that they responds to the `@singleton()` decorator, so you can create a singleton controller or a factory based controller that will be created for each request.
+As mentioned above, the Express plugin exposes decorators to handle routes and middlewares inside a controller. A controller is a collection of route handlers related to a specific domain in your application. An exciting part about controllers is that they respond to the `@singleton()` decorator so that you can create a singleton controller or a factory-based controller made for each request.
 
 ### `@controller()`
 
-Defines a class and mark it as a controller. If the `@singleton()` decorator is also used, only one controller will be created for all requests, otherwise, a controller instance will be created for each request.
+Defines a class and mark it as a controller. If the `@singleton()` decorator is also used, only one controller will be created for all requests; otherwise, a controller instance will be created for each request.
 
 ```ts {2}
 @define()
@@ -141,7 +141,7 @@ export class TodosController {
 
 Define a middleware or a list of chainable middlewares on a controller route handler. A middleware is a class that implements the [`IMiddleware`](/docs/api/core/enums-interfaces#imiddleware) interface.
 
-Note that you can pass an array of middlewares (`@middleware([ ... ])`), in that case, the middlewares will be called from left to right. If a middleware failed with an error, the route handler function will not be triggered.
+Note that you can pass an array of middlewares (`@middleware([ ... ])`); in that case, the middlewares get called from left to right. If a middleware failed with an error, the route handler function would not be triggered.
 
 ```ts {23}
 @define()

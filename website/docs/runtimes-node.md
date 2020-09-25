@@ -34,7 +34,7 @@ Injex.create({
 Returns a new Injex container instance.
 
 :::note
-An Injex container instance is the same on all runtimes. Checkout the [Container API](/docs/api/core/container) for more info.
+An Injex container instance is the same on all runtimes. Check out the [Container API](/docs/api/core/container) for more info.
 :::
 
 ### Configurations

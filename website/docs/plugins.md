@@ -5,21 +5,21 @@ sidebar_label: Concept & Hooks
 slug: /plugins
 ---
 
-A good architecture is the one that let you extend a program functionality without changing it's core. With Injex plugins you can leverage the dependency-injection mechanism to implement new features around it.
+Good architecture is the one that lets you extend a program functionality without changing its core. With Injex plugins, you can leverage the dependency-injection mechanism to implement new features around it.
 
-The Injex framework exposes hooks you can bind to in order to create a rich experience for you and for other developers using Injex.
+The Injex framework exposes hooks you can bind to create a rich experience for you and other developers using Injex.
 
-For example, you can inject new modules from your plugin into a container and access them from any module in your project that shares the same container.
+For example, you can inject new modules from your plugin into a container and access them from any module in your project that shares the same runtime container.
 
-In the next sections you'll lean how to create a new Plugin for Injex and find out about some of the Plugins already exists.
+In the next sections, you'll learn how to create a new Plugin for Injex and find out some of the Plugins already exists.
 
 :::info
-If you created a new plugin, let us know by creating a new [issue](https://github.com/uditalias/injex/issues/new) and we'll consider adding it to the plugin list section.
+If you created a new plugin, let us know by creating a new [issue](https://github.com/uditalias/injex/issues/new), and we'll consider adding it to the plugin list section.
 :::
 
 ## Anatomy
 
-An Injex plugin is a JavaScript object or a class that implements the [`IInjexPlugin`](/docs/api/core/enums-interfaces#iinjexplugin) interface. This interface has only the `apply` method. This method is called by the Injex runtime with a container as an argument to bind into its hooks.
+An Injex plugin is a JavaScript object or a class that implements the [`IInjexPlugin`](/docs/api/core/enums-interfaces#iinjexplugin) interface. This interface has only the `apply` method. The Injex runtime calls this method with the runtime container as an argument so you can bind into its hooks.
 
 ```ts title="NotifyBeforeInstanceCreationPlugin.ts"
 export default class NotifyBeforeInstanceCreationPlugin {
@@ -49,7 +49,7 @@ Injex.create({
 
 ## Container Hooks
 
-The runtime container is the core of the Injex framework that creates and manage the application modules. In order to extend the functionality with plugins, the runtime container exposese hooks. The following exposed hooks can be accessed in this way:
+The runtime container is the core of the Injex framework that creates and manages the application modules. To extend its functionality with plugins, the runtime container exposes hooks. You can bind those hooks in this way:
 
 ```ts
 container.hooks.hookName.tap((...args) => {
@@ -59,11 +59,11 @@ container.hooks.hookName.tap((...args) => {
 
 ### `beforeRegistration`
 
-Called after all plugins created and just before files has been loaded.
+Called after all plugins created and just before files have loaded by the runtime.
 
 ### `afterRegistration`
 
-Called after all files has been registered to the runtime container and before modules has been created.
+Called after all files have registered to the runtime container and before modules have been created.
 
 ### `beforeCreateModules`
 
@@ -85,7 +85,7 @@ container.hooks.beforeCreateInstance.tap((Constructor, args: any[]) => {
 
 ### `afterModuleCreation`
 
-Called after a module created. If it's a singleton module, an instance as been created and if it's not, a factory method was created.
+Called after a module created. If it's a singleton module, an instance has been created, and if it's not, a factory method has created.
 
 ```ts
 container.hooks.afterModuleCreation.tap(({module, metadata}) => {
@@ -94,12 +94,12 @@ container.hooks.afterModuleCreation.tap(({module, metadata}) => {
 ```
 
 - Callback Parameters: `{ module, metadata }`
-    - `module` - The actual instance of factory method.
+    - `module` - The actual instance of the factory method.
     - `metadata` - a collection of metadata saved by the Injex runtime.
 
 ### `afterCreateModules`
 
-Called after all modules has been created.
+Called after all modules have been created.
 
 ### `bootstrapRun`
 
@@ -107,7 +107,7 @@ Called after all modules created and the initialized [`@init()`](/docs/api/core/
 
 ### `bootstrapComplete`
 
-Called after bootstrap is completed and the [`@bootstrap()`](/docs/api/core/decorators/bootstrap) module `run` method has completed successfully.
+Called after bootstrap is completed, and the [`@bootstrap()`](/docs/api/core/decorators/bootstrap) module `run` method has completed successfully.
 
 ### `bootstrapError`
 

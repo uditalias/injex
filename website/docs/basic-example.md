@@ -5,26 +5,25 @@ sidebar_label: Basic Usage Example
 slug: /basic-example
 ---
 
-In this section we are going to create a basic TypeScript Node application powered by the Injex framework. This example will overview the core functionality of Injex, including how to create an IoC container, define and inject modules and bootstrap your application.
+In this section, we will create a basic TypeScript Node application powered by the Injex framework. This example will overview the core functionality of Injex, including how to create an IoC container, define and inject modules, and bootstrap your application.
 
-At the end of this example you will have all the tools to get you up and running using Injex on your own
-TypeScript applications, making it easier for you implementing paradigms like the [SOLID principles](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf).
+At the end of this example, you will have all the tools to get you up and running using Injex on your TypeScript applications, making it easier to implement paradigms like the [SOLID principles](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf).
 
 :::note
-Check out the [Getting Started](/docs/getting-started) section if you havn't read it yet.
+Check out the [Getting Started](/docs/getting-started) section if you haven't read it yet.
 :::
 
 ## What we're going to build
 
-We're going to build a mail sender service for Node. The app will receive a mail provider type, a message body and a contact email address to send the mail to.
+We're going to build a mail sender service for Node. The app will receive a mail provider type, a message body, and a contact email address as the addressee.
 
 :::note
-This is just a demo application and it's not going to actually send anything. We are creating it for demonstration purpose.
+Remember, its just a demo application, and it's not going to send anything. We are creating it for demonstration purposes.
 :::
 
 ## Scaffolding
 
-Let's start by creating a folder and init an npm project.
+Start by creating a folder and init an npm project.
 
 ```bash
 mkdir -p injex-node-app/src
@@ -33,7 +32,7 @@ npm init -y
 touch src/index.ts
 ```
 
-Now, lets install the dependencies we're going to use in our project.
+Now, install the dependencies you're going to use in the project.
 
 ```bash npm2yarn
 npm install --save @injex/core @injex/node typescript @types/node
@@ -76,7 +75,7 @@ Edit the `package.json` file, replace the `"scripts": {...}` section with:
 
 ### Interfaces
 
-We're going to use the `IMailProvider` Typescript interface later on, let's add it to a file called `interfaces.ts` inside the `src/` folder.
+We're going to use the `IMailProvider` Typescript interface later on, So add it to a file called `interfaces.ts` inside the `src/` folder.
 
 ```ts title="src/interfaces.ts"
 export interface IMailProvider {
@@ -86,7 +85,7 @@ export interface IMailProvider {
 
 ## The mail providers
 
-Now we are going to create 2 mail providers, `GoogleMailProvider` and `MicrosoftMailProvider` so we can send the mail message using GMAIL or MSN. Let's create 2 files inside the `src/providers/` folder.
+Now we will create two mail providers, `GoogleMailProvider` and `MicrosoftMailProvider`, so we can send the mail message using GMAIL or MSN. Let's start by creating two files inside the `src/providers/` folder.
 
 ```ts {4-6} title="src/providers/googleMailProvider.ts"
 import { define, singleton, alias } from "@injex/core";
@@ -122,17 +121,17 @@ export class MicrosoftMailProvider implements IMailProvider {
 }
 ```
 
-Both of the files are pretty the same except for minor changes. Just remeber this is not a real world mail sender service, so we just print some content to the console.
+Both of the files are pretty the same except for minor changes. Remember, this is not a real-world mail sender service, so we only print some content to the console.
 
 Let's go over the important lines (4, 5, 6):
 
-In line 4 we define the provider class as an Injex module, this will register the class in the Injex container, line 5 marks this class as a [singleton](https://en.wikipedia.org/wiki/Singleton_pattern), meaning that any time a module will "require" this provider, he will get the same instance of the mail provider.
+In line 4, we define the provider class as an Injex module; this will register the class in the Injex container. Line 5 marks this class as a [singleton](https://en.wikipedia.org/wiki/Singleton_pattern), meaning that any time a module will "require" this provider, he will get the same instance of the mail provider.
 
-In line 6 we tells Injex that each module has the alias name `MailProvider` so we can use the `@injectAlias(NAME, KEY)` decorator in order to inject a dictionary with all the modules with this alias as we will see in a minute.
+In line 6, we tell Injex that each module has the alias name `MailProvider` so we can use the `@injectAlias(NAME, KEY)` decorator to inject a dictionary with all the modules with this alias as we will see in a minute.
 
 ## The mail service
 
-Let's create a service called `MailService`, this service will have the `send` method wich receives the mail provider type, a message body and the address of our contact to send the message as arguments, and triggers the send method of the selected mail provider.
+Let's create a service called `MailService`. This service will have the `send` method, which receives the mail provider type, a message body, and the addressee send the message as arguments and triggers the send method of the selected mail provider.
 
 Create the file `services/mailService.ts` inside the `src/` folder and paste the following code.
 
@@ -153,9 +152,9 @@ export class MailService {
 ```
 Like before, let's go over the important lines (3, 4, 6):
 
-Lines 3 and 4 should be familiar, we define and register the module and mark it as a singleton module.
+Lines 3 and 4 should be familiar. We define and register the module and mark it as a singleton module.
 
-In line 6, we tells Injex to inject all the modules with the `MailProvider` alias name into a dictionary called `mailProviders` wich is a member of the `MailService` class, the `"Type"` in line 7 tells Injex what will be the key for this dictionary (line 8 in our mail providers from before).
+In line 6, we tell Injex to inject all the modules with the `MailProvider` alias name into a dictionary object called `mailProviders` which is a member of the `MailService` class, the `"Type"` in line 7 tells Injex what will be the key for this dictionary (line 8 in our mail providers from before).
 
 ## Bootstrap
 
@@ -177,17 +176,17 @@ export class Bootstrap {
 }
 ```
 
-Line 1 defines this module as the bootstrap class, you should have only 1 class in your container with the `@bootstrap()` decorator.
+Line 1 defines this module as the bootstrap class. You should have only 1 class in your container with the `@bootstrap()` decorator.
 
-In line 6 we tells Injex that we want to `@inject()` the `mailService` singleton module we created earlier so we can use it to send our so important email 😅.
+In line 6, we tell Injex that we want to `@inject()` the `mailService` singleton module we created earlier so we can use it to send our so important email 😅.
 
 :::note A Side Note
-You probably asking yourself, how is the mailService on line 6 received the singleton instance of `MailService` (with the capital 'M'), the answer is that Injex takes the name of the module class (MailService) and convert it to it's camelCased version. You can read more about it on the [@inject()](/docs/api/core/decorators/inject) decorator docs.
+You probably asking yourself, how is the `mailService` on line 6 received the singleton instance of `MailService` (with the capital 'M')? The answer is that Injex takes the name of the module class (MailService) and converts it to its camelCased version. You can read more about it on the [@inject()](/docs/api/core/decorators/inject) decorator docs.
 :::
 
 ## The Injex container
 
-The container is the main part of the Injex framework, this is where all your application module definitions, instances, factories and configurations will live for later injection.
+The container is the central part of the Injex framework. It's where all your application module definitions, instances, factories, and configurations will live for later injection.
 
 We're going to use the Injex Node container, the one we installed earlier via the `npm install @injex/node` command.
 
@@ -201,9 +200,9 @@ Injex.create({
 }).bootstrap();
 ```
 
-Here we import Injex from `@injex/node` and creates the container using the `Injex.create()` method, we pass the `__dirname` as the only root directory of our project so Injex can scan all the files inside this directory and look for Injex modules for auto registration.
+Here we import Injex from `@injex/node` and creates the container using the `Injex.create()` method. We pass the `__dirname` as the only root directory of our project, so Injex can scan all the files inside this directory and look for Injex modules for auto registration.
 
-This is one of the great parts of the Injex framework. You just need to create a module inside the root directory and Injex will find it automatically and wire everything for us. No need to add each module manually.
+This is one of the significant parts of the Injex framework. You need to create a module inside the root directory, and Injex will find it automatically and wire everything for you. No need to add each module manually.
 
 :::note
 Check out the [Node](/docs/runtimes/node) runtime for more configuration options.
@@ -213,15 +212,15 @@ Check out the [Node](/docs/runtimes/node) runtime for more configuration options
 
 Ok, we came so far, let's start the engine and watch the magic.
 
-Open your terminal and run the build command in order to transpile our TypeScript.
+Open your terminal and run the build command to transpile our TypeScript.
 
-Make sure you're inside our project root folder and run the following commands.
+Please make sure you're inside the project root folder and run the following commands.
 
 ```bash
 npm run build && npm start
 ```
 
-You should see the output:
+You should see the following output:
 
 ```bash
 GMAIL: Sending message to udi.talias@gmail.com...
@@ -230,8 +229,8 @@ GMAIL: Hello from Injex!
 
 ## Summary
 
-We created a simple Node application to show the basic parts of Injex framework. We created a service and some classes with an alias name and injected them into the service using the `@injectAlias()` decorator.
+We created a simple Node application to show the basic parts of the Injex framework. We created a service and some classes with an alias name and injected them into the service using the `@injectAlias()` decorator.
 
-We then created the bootstrap class and we used the MailService singleton instance that injected into it.
+We then created the bootstrap class, and we used the MailService singleton instance, which we injected into it.
 
 You can checkout the [examples](/docs/examples) section for more examples and use cases.

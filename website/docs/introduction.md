@@ -7,24 +7,21 @@ slug: /introduction
 
 ## Prologue
 
-Creating software can be hard, but it's not have to be. When it comes to project scalability and maintainability, it's important
-to keep a project's files, modules and dependencies nice and tidy so you can add features, fix bugs and refactor code more easily.
+Creating software can be challenging, but it does not have to be. When it comes to project scalability and maintainability, it's essential to keep a project's files, modules, and dependencies nice and tidy so you can add features, fix bugs, and refactor code more efficiently.
 
-TypeScript is designed for development of large applications and brings the benefits of strict and static types over JavaScript,
-so today it's easy to refactor large codebase applications without the fear of breaking things on runtime.
+TypeScript is designed for development of large applications and brings the benefits of strict and static types over JavaScript, so today, it's easy to refactor large codebase applications without the fear of breaking things on runtime.
 
-But still, when you need to organize your codebase, keep it abstract and implement the SOLID principles, you need something to manage modules, instances, factories and abstraction.
+But still, when you need to organize your codebase, keep it abstract and implement the SOLID principles, you need something to manage modules, instances, factories, and abstraction.
 
 <img src="/img/poster.png" style={{borderRadius: "var(--ifm-alert-border-radius)" }} />
 
 ## Dependency Injection Framework
 
-**Injex** is a dependency injection framework that helps you resolve dependencies auto-magically. Think about a large application codebase with hundreds of modules, how can we manage all this connections and dependencies?
+**Injex** is a dependency injection framework that helps you resolve dependencies automatically. Think about a large application codebase with hundreds of modules; how can we manage all these connections and dependencies?
 
-The Injex framework was created with simplicity in mind and in an unopinionated way so you can keep writing your classes
-with a small footprint. Injex API is small so you don't need to learn new concepts.
+The Injex framework was created with simplicity in mind and in an unopinionated way so you can keep writing your classes with a small footprint. Injex API is small, so you don't need to learn new concepts.
 
-Injex's core API works the same both on the server and the client so it's easy to share code between them.
+Injex's core API works the same both on the server and the client, so it's easy to share code between them.
 
 ## Why should I use Injex?
 
@@ -32,8 +29,8 @@ Injex's core API works the same both on the server and the client so it's easy t
 2. You like to write clean code.
 3. You want to implement the SOLID principles.
 4. You're a full-stack developer who wants to build server/client applications.
-5. You want to focus on your software domain implementation rather on a technical debt.
-6. You want to be able to refactor code more easily.
+5. You want to focus on your software domain implementation rather on technical debt.
+6. You want to be able to refactor code more efficiently.
 7. You like to keep your code abstract as possible.
 8. You want something to manage module dependencies for you.
 
@@ -44,5 +41,5 @@ Injex's core API works the same both on the server and the client so it's easy t
 From [Wikipedia](https://en.wikipedia.org/wiki/Dependency_injection)
 
 :::note
-Currently you should use the Injex framework with TypeScript.
+Currently, the Injex framework works only with TypeScript.
 :::

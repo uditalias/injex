@@ -36,7 +36,7 @@ function Home() {
           <div className="row">
             <div className="col col-6">
               <h2>Simple, Decorated, Pluggable dependency-injection framework for TypeScript applications</h2>
-              <h3>Injex creates a dependency tree between your modules. Using TypeScript decorators you define, inject and reuse modules as dependencies across your application.</h3>
+              <h3>Injex creates a dependency tree between your modules. Using TypeScript decorators, you define, inject, and reuse modules as dependencies across your application.</h3>
               <Link to="docs/introduction" className={styles.button}>Get Started</Link>
               <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
             </div>
@@ -50,26 +50,26 @@ function Home() {
         </header>
         <main className="container">
           <h2>The right way to write TypeScript applications</h2>
-          <p>Use decorators to define, reuse and link modules and dependencies together.</p>
+          <p>Use decorators to define, reuse, and link modules and dependencies together.</p>
           <div className={clsx(styles.features, "row")}>
-            <Feature icon="flare" title="Simple" description="Simply define and reuse module and dependencies." />
-            <Feature icon="settings_input_component" title="Pluggable" description="Use or create your own plugins to manage dependencies." />
+            <Feature icon="flare" title="Simple" description="Define and reuse modules and dependencies." />
+            <Feature icon="settings_input_component" title="Pluggable" description="Use or create plugins to manage dependencies." />
             <Feature icon="category" title="Organized" description="Better project code organization approach." />
-            <Feature image="img/typescript.svg" title="For TypeScript" description="Used to power your Node.JS or client side TypeScript applications." />
+            <Feature image="img/typescript.svg" title="For TypeScript" description="Power up your Node.JS or client-side TypeScript applications." />
           </div>
           <div className={clsx(styles.features, "row")}>
-            <Feature icon="looks_one" title="Singleton" description="Create, inject and reuse singleton modules." />
-            <Feature icon="build" title="Factories" description="Inject class factories to easily create module instances." />
-            <Feature icon="account_tree" title="SOLID Principles" description="Get the tools to implement a SOLID software." />
-            <Feature icon="code" title="Lazy Modules" description="Create lazy modules and take control of code-splitting." />
+            <Feature icon="looks_one" title="Singleton" description="Create, inject, and reuse modules as singletons." />
+            <Feature icon="build" title="Factories" description="Inject class factories to create module instances easily." />
+            <Feature icon="account_tree" title="SOLID Principles" description="Get the tools to implement SOLID applications." />
+            <Feature icon="code" title="Lazy Modules" description="Create lazy modules and take control of client-side code splitting." />
           </div>
         </main>
         <main className="container">
-          <h2>Fastest way to get started</h2>
+          <h2>The fastest way to get started</h2>
           <p>Quick installation of Injex core and Node.JS/Webpack runtime.</p>
           <div className="row">
             <div className={clsx(styles.desc, "col col-6")}>
-              <p>Injex runtimes are consistent so you would'nt notice any change. Full Stack TypeScript development (server/client) at its best.</p>
+              <p>Injex runtimes are consistent so that you wouldn't notice any change. Full Stack TypeScript development (server/client) at its best.</p>
               <ul>
                 <li>Unopinionated</li>
                 <li>Minimalist API</li>

@@ -5,11 +5,11 @@ sidebar_label: Create a Runtime
 slug: /runtimes/create-runtime
 ---
 
-An Injex runtime defines the functionality needed to load modules automatically on a spcific environment (or runtime).
+An Injex runtime defines the functionality needed to load modules automatically on a specific environment (or runtime).
 As an example, the [Node runtime](/docs/runtimes/node) defines the functionality to load modules for a Node application.
 As you may see, creating a new runtime is a simple task.
 
-In order to create a new runtime, you'll need to inherit the `Injex` abstract class from the `@injex/core` package where most of the runtime functionality exists. All you need to do is to implement 2 abstract functions as you will see in a minute.
+To create a new runtime, you'll need to inherit the `Injex` abstract class from the `@injex/core` package where most of the runtime functionality exists. All you need to do is implement two abstract functions, as you will see in a minute.
 
 ## Implementation
 
@@ -51,10 +51,10 @@ You'll need to implement the `createConfig()` and the `loadContainerFiles()` abs
 This method will get the config argument passed to the static `create` method and should return the full configurations for this runtime with default values as a fallback.
 
 :::note Recommendation
-The static `create()` method is not mandatory for the runtime to operate but you want to implement it in order to be consistent with other runtimes.
+The static `create()` method is not mandatory for the runtime to operate, but you want to implement it consistently with other runtimes.
 :::
 
-A config interface should extends the [`IContainerConfig`](#icontainerconfig-interface) interface as you can see in line 3.
+A config interface should extend the [`IContainerConfig`](#icontainerconfig-interface) interface, as you can see in line 3.
 
 Example from the Node runtime:
 
@@ -84,7 +84,7 @@ Lines 3-5 are fallback values for the base `IContainerConfig` interface, lines 6
 
 ### `loadContainerFiles()`
 
-This is the most important part of an Injex runtime. This method should load all module files in a project so Injex can scan those files for module definitions. You should call the `registerModuleExports()` internal method with the required file content.
+The most important part of an Injex runtime is to load all module files in a project so Injex can scan those files for module definitions. You should call the `registerModuleExports()` internal method with the required file content.
 
 Example from the Node runtime:
 
@@ -97,7 +97,7 @@ protected loadContainerFiles(): void {
 }
 ```
 
-In the node runtime we load all files inside the `rootDirs` config as you can see in line 3. In line 5 we iterate and call the `registerModuleExports()` method for each file with the `require(filePath)` module as an argument, so Injex can scan it and look for module definitions.
+We load all files inside the `rootDirs` config with the node runtime, as shown in line 3. In line 5 we iterate and call the `registerModuleExports()` method for each file with the `require(filePath)` module as an argument, so Injex can scan it and look for module definitions.
 
 ### `IContainerConfig` interface
 
@@ -111,7 +111,7 @@ export interface IContainerConfig {
 
 ## Exporting a runtime
 
-For consistency, export your runtime container you created in the `injex.ts` file under the name `Injex`.
+For consistency, export the runtime container you created in the `injex.ts` file under the name `Injex`.
 
 As an example, this is how the Node and Webpack runtimes are imported:
 
@@ -138,6 +138,5 @@ import CodeBlock from '@theme/CodeBlock';
 <br/>
 
 :::note RECOMMENDATION
-It's a good practice to go over the source code of an existing runtime before you implement yours.
-Injex's native runtimes source code can be found under the `runtimes/` root folder inside [Injex's GitHub repository](https://github.com/uditalias/injex).
+It's a good practice to go over the source code of an existing runtime before implementing yours. Injex's runtimes source code is located under the runtimes/ root folder inside [Injex's GitHub repository](https://github.com/uditalias/injex).
 :::
