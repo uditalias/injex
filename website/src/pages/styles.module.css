@@ -12,6 +12,7 @@
 .badge {
   display: block;
   border-radius: 3rem;
+  min-height: 2.8rem;
 }
 
 .header code {
@@ -127,9 +128,6 @@
   width: 3.6rem;
   margin-bottom: 2rem;
   border-radius: .5rem;
-}
-
-.desc {
 }
 
 .code {

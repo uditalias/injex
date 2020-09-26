@@ -5,4 +5,4 @@ sidebar_label: "@injectAlias"
 slug: /api/core/decorators/inject-alias
 ---
 
-Hello!
+<img class="decorator-badge" src="https://img.shields.io/badge/Type-Member%20Decorator-orange?style=for-the-badge" />

@@ -189,3 +189,9 @@ footer.footer a {
   margin-top: 3rem;
   max-width: 6rem;
 }
+
+.decorator-badge {
+  margin: 1rem 0;
+  border-radius: 3rem;
+  min-height: 2.8rem; 
+}
