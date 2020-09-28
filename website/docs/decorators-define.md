@@ -5,7 +5,7 @@ sidebar_label: "@define"
 slug: /api/core/decorators/define
 ---
 
-<img class="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
+<img className="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
 
 The Define decorator is the most used decorator when working with the Injex framework. With this decorator, you define and register a class as a module inside the runtime container.
 

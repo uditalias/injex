@@ -5,7 +5,7 @@ sidebar_label: "@singleton"
 slug: /api/core/decorators/singleton
 ---
 
-<img class="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
+<img className="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
 
 The [singleton pattern](https://en.wikipedia.org/wiki/Singleton_pattern) allows us to restrict a class's instantiation to a single instance during a program's lifecycle.
 

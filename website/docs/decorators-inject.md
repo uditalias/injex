@@ -5,4 +5,4 @@ sidebar_label: "@inject"
 slug: /api/core/decorators/inject
 ---
 
-<img class="decorator-badge" src="https://img.shields.io/badge/Type-Property%20Decorator-orange?style=for-the-badge" />
+<img className="decorator-badge" src="https://img.shields.io/badge/Type-Property%20Decorator-orange?style=for-the-badge" />

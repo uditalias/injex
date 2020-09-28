@@ -5,7 +5,7 @@ sidebar_label: "@bootstrap"
 slug: /api/core/decorators/bootstrap
 ---
 
-<img class="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
+<img className="decorator-badge" src="https://img.shields.io/badge/Type-Class%20Decorator-blue?style=for-the-badge" />
 
 An application should have an entry point from where it should start running. When working with the Injex framework, you can choose to define a class as the bootstrap class, and it will become the entry point for your Injex application.
 
