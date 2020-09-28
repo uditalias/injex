@@ -9,7 +9,7 @@ slug: /api/core/decorators/lazy
 
 When working on a big scaled application, sometimes you want to load and asynchronously instantiate part of it. If you worked on a big client-side application with a bundler like Webpack, you probably know how [code-splitting](https://webpack.js.org/guides/code-splitting/) works.
 
-If you leaned about Injex's [Webpack Runtime](/docs/runtimes/webpack), you noticed that we use the `require.context()` to load the files inside the project. The problem with this approach is that we're bundling all the code together.
+If you read about Injex's [Webpack Runtime](/docs/runtimes/webpack), you noticed that we use the `require.context()` to load the files inside the project. The problem with this approach is that we're bundling all the code together.
 
 With the `@lazy()` decorator you create a class that implements the [`ILazyModule`](/docs/api/core/enums-interfaces#ilazymodule) interface. The `import` method should load and return a Constructor inside a Promise, then the constructor is called with args you pass in. You can use the `import` method for lazy-loading the code.
 
