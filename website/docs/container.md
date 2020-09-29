@@ -88,6 +88,8 @@ Bootstraps and initialize the runtime container and all the registered modules.
 - Returns: The container instance
 - Async: `true`
 
+**Learn more about the [bootstrap lifecycle](/docs/api/core/bootstrap-lifecycle).**
+
 ### `container.getModuleDefinition(moduleNameOrType)`
 
 Get a module metadata and its instance/factory method.
