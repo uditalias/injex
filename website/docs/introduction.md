@@ -29,12 +29,12 @@ Injex's core API works the same both on the server and the client, so it's easy 
 2. You like to write clean code.
 3. You want to implement the SOLID principles.
 4. You're a full-stack developer who wants to build server/client applications.
-5. You want to focus on your software domain implementation rather on technical debt.
+5. You don't want to make your hands dirty from circular dependencies.
 6. You want to be able to refactor code more efficiently.
 7. You like to keep your code abstract as possible.
 8. You want something to manage module dependencies for you.
 
-## What is a dependency injection?
+## What is dependency injection?
 
 >In software engineering, dependency injection is a technique whereby one object supplies the dependencies of another object. A "dependency" is an object that can be used, for example, as a service. Instead of a client specifying which service it will use, something tells the client what service to use. The "injection" refers to the passing of a dependency (a service) into the object (a client) that would use it.
 

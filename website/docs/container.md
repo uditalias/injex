@@ -55,6 +55,9 @@ export { MyModule, MyOtherModule };
 You can have multiple classes defined and exported from the same file.
 :::
 
+### Module access in constructors
+
+Since Injex handles circular dependencies for you, one caveat is that you can't access injectable dependencies from module class constructors. Injex offers the [`@init()`](/docs/api/core/decorators/init) decorator to bypass this limitation.
 
 ## API
 
