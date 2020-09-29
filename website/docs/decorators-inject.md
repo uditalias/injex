@@ -11,7 +11,7 @@ The main task of a dependency-injection framework is to inject modules as depend
 
 ## Usage
 
-Use the `@inject()` decorator to inject your pre-defined modules into others, by merely decorating class properties that share the same name with a module.
+Use the `@inject()` decorator to inject your pre-defined modules into others by decorating class properties that share the same name with a module.
 
 ```ts {6,9}
 import { define, singleton, inject } from "@injex/core";
@@ -82,7 +82,7 @@ export class UsersManager {
 
 ### Factory vs. Singleton
 
-As you may already saw, you can create modules as singletons with the `@singleton()` decorator. When you don't use a singleton for a module, it's injectable become a factory method you can call to create an instance.
+As you may already saw, you can create modules as singletons with the [`@singleton()`](/docs/api/core/decorators/singleton) decorator. When you don't use a singleton for a module, it's injectable become a factory method you can call to create an instance.
 
 ```ts title="zebra.ts"
 import { define } from "@injex/core";

@@ -1,5 +1,4 @@
-import { define, inject, injectAlias, singleton } from "@injex/core";
-import { AliasMap } from "@injex/core/src";
+import { define, inject, injectAlias, singleton, AliasMap } from "@injex/core";
 import { MailProvider } from "../common/enums";
 import IEnvironment from "../interfaces/IEnvironment";
 import IMailProvider from "../interfaces/IMailProvider";
