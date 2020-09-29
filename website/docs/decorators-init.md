@@ -13,7 +13,7 @@ Since Injex handles circular dependencies for you, one caveat is that you can't 
 
 You use the `@init()` decorator by decorating a module class method to behave as the initialize method. This method is called by the Injex runtime after the class constructor.
 
-```ts
+```ts {16}
 import { define, init } from "@injex/core";
 
 @define()
