@@ -5,6 +5,7 @@ module.exports = {
     Plugins: ['plugins', 'env-plugin', 'express-plugin'],
     "API Reference": [
       'container',
+      'lifecycle',
       {
         'Core Decorators': ['define', 'singleton', 'bootstrap', 'alias', 'lazy', 'inject', 'injectAlias', 'init']
       },

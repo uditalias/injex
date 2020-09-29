@@ -12,6 +12,11 @@ module.exports = {
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
   themeConfig: {
+    algolia: {
+      apiKey: 'apiKey',
+      indexName: 'injex',
+      searchParameters: {}, // Optional (if provided by Algolia)
+    },
     image: "img/poster.png",
     announcementBar: {
       id: 'supportus',
@@ -91,6 +96,8 @@ module.exports = {
             {
               label: '@uditalias',
               href: 'https://twitter.com/uditalias',
+            }, {
+              html: `<a href="https://www.netlify.com" target="_blank"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify"></a>`
             }
           ]
         }
