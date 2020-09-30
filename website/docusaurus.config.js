@@ -12,11 +12,11 @@ module.exports = {
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
   themeConfig: {
-    algolia: {
-      apiKey: 'apiKey',
-      indexName: 'injex',
-      searchParameters: {}, // Optional (if provided by Algolia)
-    },
+    // algolia: {
+    //   apiKey: 'apiKey',
+    //   indexName: 'injex',
+    //   searchParameters: {}, // Optional (if provided by Algolia)
+    // },
     image: "img/poster.png",
     announcementBar: {
       id: 'supportus',

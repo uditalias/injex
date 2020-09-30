@@ -11,7 +11,7 @@ The Injex framework exposes hooks you can bind to create a rich experience for y
 
 For example, you can inject new modules from your plugin into a container and access them from any module in your project that shares the same runtime container.
 
-In the next sections, you'll learn how to create a new Plugin for Injex and find out some of the Plugins already exists.
+In the next sections, you'll learn how to create a new Plugin for Injex and discover the Plugins already exists.
 
 :::info
 If you created a new plugin, let us know by creating a new [issue](https://github.com/uditalias/injex/issues/new), and we'll consider adding it to the plugin list section.
