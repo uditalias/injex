@@ -195,3 +195,7 @@ footer.footer a {
   border-radius: 3rem;
   min-height: 2.8rem; 
 }
+
+.menu > ul > li > a {
+  font-weight: bolder;
+}
