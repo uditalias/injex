@@ -44,7 +44,12 @@ export class ExpressPlugin implements IInjexPlugin {
         if (metadataHandlers.hasMetadata(module.metadata.item)) {
 
             // get the @controller routes and middlewares
-            const { routes = [], middlewares = [] } = metadataHandlers.getMetadata(module.metadata.item);
+            const { controller, routes = [], middlewares = [] } = metadataHandlers.getMetadata(module.metadata.item);
+
+            // module must be decorated with @controller()
+            if (!controller) {
+                return;
+            }
 
             // convert controller handlers to express route handlers
             for (const route of routes) {

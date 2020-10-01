@@ -17,6 +17,7 @@ export interface IMiddleware extends IConstructor {
 }
 
 export interface IMetadata {
+    controller: boolean;
     routes: IRouteConfig[];
     middlewares: IMiddlewareConfig[];
 }
