@@ -1,7 +1,7 @@
 import { Hook, IConstructor, isFunction, Logger } from "@injex/stdlib";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
 import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError, ModuleDependencyNotFoundError } from "./errors";
-import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata } from "./interfaces";
+import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
 import metadataHandlers from "./metadataHandlers";
 
 export default abstract class InjexContainer<T extends IContainerConfig> {
@@ -245,7 +245,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return new construct(...args);
     }
 
-    public getModuleDefinition(moduleNameOrType: string | IConstructor): IModule {
+    public getModuleDefinition(moduleNameOrType: ModuleName | IConstructor): IModule {
         if (this._modules.has(moduleNameOrType)) {
             return this._modules.get(moduleNameOrType);
         } else if (moduleNameOrType instanceof Function) {
@@ -261,27 +261,17 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         const aliasDependencies = metadata.aliasDependencies || [];
 
         for (const { label, value } of dependencies) {
-            const dependencyDefinition = this.getModuleDefinition(value);
+            const dependency = this.get(value);
 
-            if (!dependencyDefinition) {
+            if (!dependency) {
                 throw new ModuleDependencyNotFoundError(metadata.name, value);
             }
 
-            module[label] = dependencyDefinition.module;
+            module[label] = dependency;
         }
 
         for (const { label, alias, keyBy } of aliasDependencies) {
-            const aliasModules = this._aliases.get(alias);
-
-            if (!aliasModules) {
-                throw new ModuleDependencyNotFoundError(metadata.name, alias);
-            }
-
-            module[label] = {};
-            for (const aliasModule of aliasModules) {
-                const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
-                module[label][keyValue] = aliasModule.module;
-            }
+            module[label] = this.getAlias(alias, keyBy);
         }
     }
 
@@ -327,14 +317,24 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     public get<K = any>(itemNameOrType: ModuleName | IConstructor): K {
-        if (!this._modules.has(itemNameOrType)) {
+        const definition = this.getModuleDefinition(itemNameOrType);
+
+        if (!definition) {
             return UNDEFINED;
         }
 
-        const {
-            module
-        } = this._modules.get(itemNameOrType);
+        return definition.module;
+    }
 
-        return module;
+    public getAlias<K extends string = string, V = any>(alias: string, keyBy: string): AliasMap<K, V> | AliasFactory<K, V> {
+        const aliasModules = this._aliases.get(alias);
+        const map = {};
+
+        for (const aliasModule of aliasModules) {
+            const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
+            map[keyValue] = aliasModule.module;
+        }
+
+        return map as AliasMap<K, V> | AliasFactory<K, V>;
     }
 }
