@@ -165,4 +165,8 @@ Removes an object from the runtime container
 
 ### `container.get(itemNameOrType)`
 
-Get a module from the runtime container, which can be an instance of a class (if it's a singleton module) or a factory method to create its instance.
+Similar to the [`@inject()` decorator](/docs/api/core/decorators/inject), get a module from the runtime container, which can be an instance of a class (if it's a singleton module) or a factory method to create its instance.
+
+### `container.getAlias(alias, keyBy)`
+
+Similar to the [`@injectAlias(NAME, KEY_BY)` decorator](/docs/api/core/decorators/inject-alias), get an alias map from the runtime container.
