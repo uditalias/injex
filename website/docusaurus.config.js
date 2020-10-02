@@ -94,6 +94,10 @@ module.exports = {
               href: 'https://github.com/uditalias/injex',
             },
             {
+              label: 'Discord',
+              href: 'https://discord.gg/y5EpGd'
+            },
+            {
               label: '@uditalias',
               href: 'https://twitter.com/uditalias',
             }, {
