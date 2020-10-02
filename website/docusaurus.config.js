@@ -98,9 +98,6 @@ module.exports = {
               href: 'https://discord.gg/y5EpGd'
             },
             {
-              label: '@uditalias',
-              href: 'https://twitter.com/uditalias',
-            }, {
               html: `<a href="https://www.netlify.com" target="_blank"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify"></a>`
             }
           ]
