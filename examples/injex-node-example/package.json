@@ -1,6 +1,6 @@
 {
   "name": "injex-node-example",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.7",
   "private": true,
   "description": "",
   "keywords": [],
@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/core": "^2.0.0-alpha.6",
-    "@injex/env-plugin": "^2.0.0-alpha.6",
-    "@injex/node": "^2.0.0-alpha.6"
+    "@injex/core": "^2.0.0-alpha.7",
+    "@injex/env-plugin": "^2.0.0-alpha.7",
+    "@injex/node": "^2.0.0-alpha.7"
   },
   "devDependencies": {
     "@types/node": "^14.6.4",
