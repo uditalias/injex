@@ -38,5 +38,5 @@ export class Zebra extends Animal {
 ```
 
 :::note
-Notice that you may return a promise from the initialization method if you like; the Injex runtime will "await" for this promise.
+Notice that you may return a promise from the initialization method if you like; Injex will "await" for and return this promise from the factory method.
 :::

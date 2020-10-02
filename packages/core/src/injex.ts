@@ -1,4 +1,4 @@
-import { Hook, IConstructor, isFunction, Logger } from "@injex/stdlib";
+import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
 import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError, ModuleDependencyNotFoundError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
@@ -207,10 +207,17 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     private _createModuleFactoryMethod(construct: IConstructor, metadata: IDefinitionMetadata): (...args) => Promise<void> {
         const self = this;
 
-        return async function factory(...args): Promise<void> {
+        return function factory(...args): Promise<any> {
             const instance = self._createInstance(construct, args);
             self._injectModuleDependencies(instance, metadata);
-            await self._invokeModuleInitMethod(instance, metadata);
+            const initValue: Promise<void> | void = self._invokeModuleInitMethod(instance, metadata);
+
+            if (isPromise(initValue)) {
+                return (initValue as Promise<void>)
+                    .then(() => instance)
+                    .catch((err) => this._onInitModuleError(metadata, err));
+            }
+
             return instance;
         }
     }
@@ -228,15 +235,19 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         );
     }
 
-    private async _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<void> {
+    private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<void> | void {
         if (metadata.initMethod && isFunction(module[metadata.initMethod])) {
             try {
-                await module[metadata.initMethod]();
+                return module[metadata.initMethod]();
             } catch (e) {
-                this._logger.error(e);
-                throw new InitializeMuduleError(metadata.name);
+                this._onInitModuleError(metadata, e);
             }
         }
+    }
+
+    private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
+        this._logger.error(err);
+        throw new InitializeMuduleError(metadata.name);
     }
 
     private _createInstance(construct: any, args: any[] = []): any {

@@ -1,4 +1,4 @@
-import { toCamelCase, isFunction, getConstructorName } from "../src/utils";
+import { toCamelCase, isFunction, isPromise, getConstructorName } from "../src/utils";
 
 describe("Utils", () => {
 
@@ -20,6 +20,23 @@ describe("Utils", () => {
             expect(isFunction(false)).toBe(false);
             expect(isFunction("string")).toBe(false);
             expect(isFunction(42)).toBe(false);
+        });
+    });
+
+    describe("isPromise", () => {
+        it("should return true if object is promise", () => {
+            const promise = new Promise(() => { });
+            expect(isPromise(promise)).toBe(true);
+            expect(isPromise(Promise.resolve())).toBe(true);
+            expect(isPromise({ then: () => { }, catch: () => { } })).toBe(true);
+        });
+
+        it("should return false if object is not a promise", () => {
+            expect(isPromise({})).toBe(false);
+            expect(isPromise(null)).toBe(false);
+            expect(isPromise(undefined)).toBe(false);
+            expect(isPromise({ then: () => { } })).toBe(false);
+            expect(isPromise({ catch: () => { } })).toBe(false);
         });
     });
 
