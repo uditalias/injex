@@ -11,9 +11,6 @@ module.exports = {
   favicon: 'img/favicon.png',
   organizationName: 'uditalias', // Usually your GitHub org/user name.
   projectName: 'injex', // Usually your repo name.
-  plugins: [
-    '@docusaurus/plugin-google-analytics'
-  ],
   themeConfig: {
     googleAnalytics: {
       trackingID: 'UA-179494632-1'
