@@ -58,6 +58,10 @@
   .feature + .feature {
     margin-top: 2rem;
   }
+
+  .productHunt {
+    display: none;
+  }
 }
 
 .button {

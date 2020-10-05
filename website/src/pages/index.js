@@ -49,6 +49,7 @@ function Home() {
           </div>
         </header>
         <main className="container">
+          <a className={styles.productHunt} href="https://www.producthunt.com/posts/injex-framework?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-injex-framework" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=269437&theme=dark" alt="Injex Framework - Dependency-Injection framework for TypeScript applications | Product Hunt" style={{ width: 250, height: 54, float: "right" }} width="250" height="54" /></a>
           <h2>The right way to write TypeScript applications</h2>
           <p>Use decorators to define, reuse, and link modules and dependencies together.</p>
           <div className={clsx(styles.features, "row")}>
