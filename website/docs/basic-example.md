@@ -75,7 +75,7 @@ Edit the `package.json` file, replace the `"scripts": {...}` section with:
 
 ### Interfaces
 
-We're going to use the `IMailProvider` Typescript interface later on, So add it to a file called `interfaces.ts` inside the `src/` folder.
+We're going to use the `IMailProvider` TypeScript interface later on, So add it to a file called `interfaces.ts` inside the `src/` folder.
 
 ```ts title="src/interfaces.ts"
 export interface IMailProvider {
