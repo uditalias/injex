@@ -340,7 +340,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     public getAlias<K extends string = string, V = any>(alias: string, keyBy: string): AliasMap<K, V> | AliasFactory<K, V> {
-        const aliasModules = this._aliases.get(alias);
+        const aliasModules = this._aliases.get(alias) || [];
         const map = {};
 
         for (const aliasModule of aliasModules) {
