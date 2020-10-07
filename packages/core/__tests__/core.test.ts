@@ -25,6 +25,7 @@ describe("Core", () => {
 
         await container.bootstrap();
 
+        const containerRef = container.get("$injex");
         const mailService = container.get<MailService>("mailService");
         const mailServiceDef = container.getModuleDefinition(MailService);
 
@@ -35,6 +36,10 @@ describe("Core", () => {
         expect(mailServiceDef.metadata).toBeDefined();
         expect(mailServiceDef.metadata.singleton).toBe(true);
         expect(mailServiceDef.metadata.item).toBe(MailService);
+
+        expect(containerRef).toBeDefined();
+        expect(containerRef).toBeInstanceOf(InjexMock);
+        expect(containerRef).toEqual(container);
     });
 
     it("should get module", async () => {

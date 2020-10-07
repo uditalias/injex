@@ -42,6 +42,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this._modules = new Map<ModuleName | IConstructor, IModule>();
         this._aliases = new Map<string, IModule[]>();
 
+        this.addObject(this, "$injex");
+
         this._createHooks();
 
         this._logger.debug("Container created with config", this.config);
@@ -163,7 +165,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 module = this._createLazyModuleFactoryMethod(item, metadata);
                 break;
             case metadata.singleton:
-                module = this._createInstance(item, EMPTY_ARGS)
+                module = this._createInstance(item, EMPTY_ARGS);
                 break;
             default:
                 module = this._createModuleFactoryMethod(item, metadata);
