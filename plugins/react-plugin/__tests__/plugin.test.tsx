@@ -28,19 +28,17 @@ describe("Plugin", () => {
                 { Bootstrap }
             ],
             plugins: [
-                new ReactPlugin({
-                    render
-                })
+                new ReactPlugin({ render })
             ]
         }).bootstrap();
 
         expect(screen.queryByText("Test")).toHaveTextContent("Test");
     });
 
-    it("should get module from container using useInjex hook", async () => {
+    it("should inject using useInjex hook", async () => {
         function Home() {
-            const [get] = useInjex();
-            const userService = get<UserService>("userService");
+            const [inject] = useInjex();
+            const userService = inject<UserService>("userService");
 
             return (
                 <div className="home">{userService.name}, {userService.role}</div>
@@ -73,19 +71,17 @@ describe("Plugin", () => {
                 { Bootstrap }, { UserService }
             ],
             plugins: [
-                new ReactPlugin({
-                    render
-                })
+                new ReactPlugin({ render })
             ]
         }).bootstrap();
 
-        expect(screen.getByText("Udi Talias, Author")).toBeDefined();
+        expect(screen.getByText("Udi Talias, Author")).toHaveTextContent("Udi Talias, Author");
     });
 
-    it("should getAlias modules from container using useInjex hook", async () => {
+    it("should injectAlias using useInjex hook", async () => {
         function AnimalSound({ name }) {
-            const [_, getAlias] = useInjex();
-            const animals = getAlias<string, Animal>("Animal", "name") as AliasMap<string, Animal>;
+            const [_, injectAlias] = useInjex();
+            const animals = injectAlias<string, Animal>("Animal", "name") as AliasMap<string, Animal>;
             const animal = animals[name];
 
             return (
@@ -122,12 +118,10 @@ describe("Plugin", () => {
                 { Bootstrap }, { Dog }
             ],
             plugins: [
-                new ReactPlugin({
-                    render
-                })
+                new ReactPlugin({ render })
             ]
         }).bootstrap();
 
-        expect(screen.getByText("Woof Woof!")).toBeDefined();
+        expect(screen.getByText("Woof Woof!")).toHaveTextContent("Woof Woof!");
     });
 });
