@@ -59,6 +59,20 @@ You can have multiple classes defined and exported from the same file.
 
 Since Injex handles circular dependencies for you, one caveat is that you can't access injectable dependencies from module class constructors. Injex offers the [`@init()`](/docs/api/core/decorators/init) decorator to bypass this limitation.
 
+
+### Decorators
+
+Since Injex API built using decorators, use need to turn on the `experimentalDecorators` in your application's `tsconfig.json` file.
+
+```json title="tsconfig.json"
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        ...
+    }
+}
+```
+
 ## API
 
 The runtime container exposes a small API you can use to handle dependencies. To get the runtime container instance, you call the `create()` method.
