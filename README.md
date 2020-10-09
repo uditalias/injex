@@ -104,4 +104,4 @@ Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Di
 
 ## License
 
-This repository is available under the [MIT License](./LICENCE).
+This repository is available under the [MIT License](./LICENSE).
