@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+  - 14
+
+before_script:
+  - npm run build
+
+script:
+  - npm run test
+
+notifications:
+  email:
+    - udi.talias@gmail.com
