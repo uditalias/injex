@@ -1,7 +1,7 @@
 import { AliasFactory, AliasMap, Injex } from "@injex/core";
 
 export interface IReactPluginConfig {
-    render(children: JSX.Element, container?: HTMLElement): void;
+    render?(children: JSX.Element, container?: HTMLElement): void;
     rootElementOrSelector?: HTMLElement | string;
 }
 

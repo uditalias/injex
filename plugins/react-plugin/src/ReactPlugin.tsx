@@ -20,13 +20,6 @@ export class ReactPlugin implements IInjexPlugin {
     }
 
     private _render(children: JSX.Element, rootElement?: HTMLElement) {
-
-        const provider = (
-            <InjexProvider container={this.container}>
-                {children}
-            </InjexProvider>
-        );
-
         let root = rootElement;
 
         if (!root) {
@@ -38,6 +31,12 @@ export class ReactPlugin implements IInjexPlugin {
                 root = rootElementOrSelector;
             }
         }
+
+        const provider = (
+            <InjexProvider container={this.container}>
+                {children}
+            </InjexProvider>
+        );
 
         if (root) {
             this.config.render(provider, root);
