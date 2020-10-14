@@ -202,6 +202,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             const lazyMetadata = metadataHandlers.getMetadata(Ctor);
             const lazyInstance = self._createInstance(Ctor, args);
             self._injectModuleDependencies(lazyInstance, lazyMetadata);
+            await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
+
             return lazyInstance;
         }
     }

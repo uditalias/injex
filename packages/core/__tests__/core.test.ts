@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { alias, define, init, singleton } from "../src";
+import { alias, define, init, inject, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 
 describe("Core", () => {
@@ -98,5 +98,39 @@ describe("Core", () => {
 
         expect(animals.dog).toBeInstanceOf(Dog);
         expect(animals.cat).toBeInstanceOf(Cat);
+    });
+
+    xit("should extend injectable module with abstract module", async () => {
+
+        const fn = jest.fn();
+
+        @define()
+        @singleton()
+        class Module {
+            public start() { }
+        }
+
+        abstract class Parent {
+            @inject() protected module: Module;
+        }
+
+        @define()
+        @singleton()
+        class Child extends Parent {
+            @init()
+            protected initialize() {
+                fn();
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Module }, { Parent }, { Child }
+            ]
+        });
+
+        await container.bootstrap();
+
+        expect(fn).toHaveBeenCalledTimes(1);
     });
 });
