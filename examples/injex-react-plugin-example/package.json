@@ -1,6 +1,6 @@
 {
   "name": "injex-react-plugin-example",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "description": "",
   "keywords": [],
@@ -68,11 +68,11 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
-    "@injex/core": "^2.0.1",
-    "@injex/env-plugin": "^2.0.1",
-    "@injex/react-plugin": "^2.0.1",
-    "@injex/stdlib": "^2.0.1",
-    "@injex/webpack": "^2.0.1",
+    "@injex/core": "^2.0.2",
+    "@injex/env-plugin": "^2.0.2",
+    "@injex/react-plugin": "^2.0.2",
+    "@injex/stdlib": "^2.0.2",
+    "@injex/webpack": "^2.0.2",
     "blueimp-md5": "^2.18.0",
     "clsx": "^1.1.1",
     "mobx": "^5.15.7",
