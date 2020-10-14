@@ -10,3 +10,4 @@ coverage
 **/*.js.map
 lib/
 out/
+!examples/**/src/lib
