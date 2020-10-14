@@ -1,0 +1,114 @@
+@import "styles/mixins";
+
+@keyframes in {
+    to {
+        opacity: 1;
+    }
+}
+
+.users {
+    grid-area: users;
+    background-color: var(--theme-color-0);
+    opacity: 0;
+    animation: in .3s ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 70ms;
+    display: flex;
+    flex-direction: column;
+
+    .currentUser {
+        position: relative;
+        overflow: hidden;
+
+        .menu {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 200ms;
+            box-shadow: -2rem 0 2rem var(--theme-color-0);
+            background-color: var(--theme-color-0);
+            padding: 1rem;
+
+            button {
+                border: none;
+                background: none;
+                cursor: pointer;
+
+                i {
+                    color: var(--color-red);
+                }
+            }
+        }
+
+        &:hover {
+            .menu {
+                opacity: 1;
+            }
+        }
+    }
+
+    .filter {
+        padding: 2rem;
+
+        input {
+            border-radius: 2rem;
+            width: 100%;
+            padding: .8rem 1.5rem;
+            background-color: var(--theme-color-2);
+            font-size: 1.6rem;
+            outline: none;
+            border: none;
+            color: var(--theme-color-6);
+            transition: background-color 100ms;
+
+            &:focus {
+                background-color: var(--theme-color-3);
+            }
+        }
+    }
+
+    .list {
+        flex: 1;
+        overflow: auto;
+    }
+
+    .user {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 1rem 2rem;
+        border-bottom: solid .1rem var(--theme-color-1);
+
+        .avatar {
+            margin-right: 1rem;
+            position: relative;
+        }
+
+        .status {
+            position: absolute;
+            bottom: -.2rem;
+            right: -.2rem;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+            @include truncate;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+
+        h2 {
+            font-weight: 400;
+            font-size: 1.4rem;
+            color: var(--theme-color-6);
+        }
+    }
+}

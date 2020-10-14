@@ -14,7 +14,7 @@ export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHa
     }
 
     function setMetadata(target: any, key: keyof T, value: any) {
-        ensureMetadata(target)
+        ensureMetadata(target);
 
         target[metadataKey][key] = value;
     }

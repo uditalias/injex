@@ -1,0 +1,31 @@
+@keyframes in {
+    to {
+        transform: scale(1);
+    }
+}
+
+.chat {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--theme-color-6);
+    padding: 7rem;
+    overflow: hidden;
+}
+
+.window {
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: var(--theme-color-7);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+    animation: in .3s var(--animation-function-cubic-in);
+    animation-fill-mode: forwards;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: minmax(30rem, 15%) 1fr;
+    grid-template-areas:
+        "users messages"
+        "users input";
+}

@@ -1,0 +1,10 @@
+.avatar {
+    overflow: hidden;
+    border-radius: 100%;
+    background-color: var(--theme-color-4);
+
+    img {
+        width: 100%;
+        display: block;
+    }
+}

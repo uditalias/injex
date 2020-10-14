@@ -1,0 +1,26 @@
+@import "variables";
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+}
+
+html * {
+  box-sizing: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+:global #root {
+  width: 100%;
+  min-height: 100vh;
+}

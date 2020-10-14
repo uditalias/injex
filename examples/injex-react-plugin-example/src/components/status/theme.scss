@@ -1,0 +1,15 @@
+.status {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 100%;
+    border: solid .2rem var(--theme-color-0);
+    background-color: var(--theme-color-6);
+
+    &.online {
+        background-color: var(--color-green);
+    }
+
+    &.offline {
+        background-color: var(--color-red);
+    }
+}
