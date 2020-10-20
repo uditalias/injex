@@ -100,7 +100,7 @@ describe("Core", () => {
         expect(animals.cat).toBeInstanceOf(Cat);
     });
 
-    xit("should extend injectable module with abstract module", async () => {
+    it("should extend injectable module with abstract module", async () => {
 
         const fn = jest.fn();
 
