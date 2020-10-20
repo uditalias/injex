@@ -10,9 +10,11 @@ export class ExpressPlugin implements IInjexPlugin {
     private config: IExpressPluginConfig;
     private app: Application;
     private container: Injex<any>;
+    private controllerModules: IModule[];
 
     constructor(config?: IExpressPluginConfig) {
         this.config = createConfig(config);
+        this.controllerModules = [];
         this.handleModule = this.handleModule.bind(this);
     }
 
@@ -36,28 +38,38 @@ export class ExpressPlugin implements IInjexPlugin {
         this.container.addObject(this.app, this.config.name);
 
         this.container.hooks.afterModuleCreation.tap(this.handleModule, null, this);
+        this.container.hooks.afterCreateModules.tap(this.initializeControllers, null, this);
+    }
+
+    private initializeControllers() {
+        for (const controllerModule of this.controllerModules) {
+            const { routes = [], middlewares = [] } = metadataHandlers.getMetadata(controllerModule.metadata.item);
+
+            // convert controller handlers to express route handlers
+            for (const route of routes) {
+                const handlerMiddlewares = this.getMiddlewareModulesForRoute(route, middlewares);
+                controllerModule.metadata.singleton
+                    ? this.createSingletonRouteHandler(route, controllerModule.module, handlerMiddlewares)
+                    : this.createFactoryRouteHandler(route, controllerModule.module, handlerMiddlewares);
+            }
+        }
+
+        // remove all controller modules references
+        this.controllerModules.length = 0;
     }
 
     private handleModule(module: IModule) {
 
         // check if this is a @controller module
         if (metadataHandlers.hasMetadata(module.metadata.item)) {
-
-            // get the @controller routes and middlewares
-            const { controller, routes = [], middlewares = [] } = metadataHandlers.getMetadata(module.metadata.item);
+            const { controller } = metadataHandlers.getMetadata(module.metadata.item);
 
             // module must be decorated with @controller()
             if (!controller) {
                 return;
             }
 
-            // convert controller handlers to express route handlers
-            for (const route of routes) {
-                const handlerMiddlewares = this.getMiddlewareModulesForRoute(route, middlewares);
-                module.metadata.singleton
-                    ? this.createSingletonRouteHandler(route, module.module, handlerMiddlewares)
-                    : this.createFactoryRouteHandler(route, module.module, handlerMiddlewares);
-            }
+            this.controllerModules.push(module);
         }
     }
 
@@ -68,6 +80,7 @@ export class ExpressPlugin implements IInjexPlugin {
         for (let i = 0, len = middlewares.length; i < len; i++) {
             config = middlewares[i];
             if (config.handler === route.handler) {
+                // @ts-ignore
                 const middlewareModule = this.container.getModuleDefinition(config.middleware);
                 if (middlewareModule) {
                     routeMiddlewares.push(middlewareModule);

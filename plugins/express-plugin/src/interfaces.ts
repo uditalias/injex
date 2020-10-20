@@ -12,7 +12,7 @@ export interface IMiddlewareConfig {
     handler: string;
 }
 
-export interface IMiddleware extends IConstructor {
+export interface IMiddleware {
     handle(req: Express.Request, res: Express.Response, next: NextFunction): void;
 }
 

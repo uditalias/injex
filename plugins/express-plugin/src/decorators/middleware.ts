@@ -1,7 +1,8 @@
+import { IConstructor } from "@injex/stdlib";
 import { IMiddleware } from "../interfaces";
 import metadataHandlers from "../metadataHandlers";
 
-export type MiddlewareNameOrType = IMiddleware | string;
+export type MiddlewareNameOrType = IConstructor<IMiddleware> | string;
 
 export function middleware(middlewareNameOrType: MiddlewareNameOrType | MiddlewareNameOrType[]) {
     return function (targetPrototype, methodName: string, propertyDescriptor: PropertyDescriptor) {
