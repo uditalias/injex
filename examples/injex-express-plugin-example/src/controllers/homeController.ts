@@ -1,6 +1,7 @@
 import { define, singleton } from "@injex/core";
-import { controller, get } from "@injex/express-plugin";
+import { controller, get, middleware } from "@injex/express-plugin";
 import { Request, Response } from "express";
+import { RequestLogMiddleware } from "../middlewares/requestLogMiddleware";
 
 @define()
 @singleton()
@@ -8,6 +9,7 @@ import { Request, Response } from "express";
 export class HomeController {
 
     @get("/")
+    @middleware(RequestLogMiddleware)
     public renderHome(req: Request, res: Response) {
         res.send(`
             <h1>Welcome!</h1>
