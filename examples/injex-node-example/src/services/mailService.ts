@@ -1,12 +1,11 @@
-import { define, inject, injectAlias, singleton, AliasMap } from "@injex/core";
+import { define, injectAlias, singleton, AliasMap } from "@injex/core";
 import { MailProvider } from "../common/enums";
-import IEnvironment from "../interfaces/IEnvironment";
 import IMailProvider from "../interfaces/IMailProvider";
+import { BaseService } from "./base/baseService";
 
 @define()
 @singleton()
-export class MailService {
-    @inject() private env: IEnvironment;
+export class MailService extends BaseService {
     @injectAlias("IMailProvider", "Type") private mailProviders: AliasMap<MailProvider, IMailProvider>;
 
     public send(message: string) {
