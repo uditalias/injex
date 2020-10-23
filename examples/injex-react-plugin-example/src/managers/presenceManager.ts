@@ -1,5 +1,4 @@
 import { define, singleton, inject } from "@injex/core";
-import { Hook } from "@injex/stdlib";
 import { IChatUser } from "interfaces/IUser";
 import { computed, observable } from "mobx";
 import { FirebaseService } from "services/firebaseService";
@@ -22,6 +21,12 @@ export class PresenceManager {
 
     @computed public get allUsers(): IChatUser[] {
         return Object.values(this.users);
+    }
+
+    @computed public get onlineCount(): number {
+        return Object.values(this.users).reduce((current, next) => {
+            return next.presence === "online" ? current + 1 : current;
+        }, 1);
     }
 
     public initialize() {
@@ -62,6 +67,10 @@ export class PresenceManager {
             } else {
                 this.users[id].presence = data[id].state;
             }
+        }
+
+        if (!missingUserIds.length) {
+            return;
         }
 
         const users = await this.usersManager.getAllById(missingUserIds);

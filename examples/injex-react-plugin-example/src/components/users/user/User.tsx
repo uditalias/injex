@@ -1,20 +1,22 @@
 import * as React from "react";
-import { observer } from "mobx-react";
-import IUser, { IChatUser } from "interfaces/IUser";
+import IUser from "interfaces/IUser";
 import { useInjex } from "@injex/react-plugin";
 import { GravatarService } from "services/gravatarService";
 import Avatar from "components/avatar";
 import theme from "./theme.scss";
 import Status from "components/status";
+import clsx from "clsx";
 
-export default observer(({ user, presence }: { user: IUser, presence: "online" | "offline" }): JSX.Element => {
+export default function User({ user, presence, slim = false }: { user: IUser; presence: "online" | "offline"; slim?: boolean }): JSX.Element {
     const [inject] = useInjex();
     const gravatarService = inject<GravatarService>("gravatarService");
 
     return (
-        <div className={theme.user}>
+        <div className={clsx(theme.user, {
+            [theme.slim]: slim
+        })}>
             <div className={theme.avatar}>
-                <Avatar size={40} url={gravatarService.getImageUrl(user.email)} />
+                <Avatar size={slim ? 30 : 40} url={gravatarService.getImageUrl(user.email)} />
                 <Status status={presence} className={theme.status} />
             </div>
             <div style={{ minWidth: 0 }}>
@@ -23,4 +25,4 @@ export default observer(({ user, presence }: { user: IUser, presence: "online" |
             </div>
         </div>
     );
-});
+}

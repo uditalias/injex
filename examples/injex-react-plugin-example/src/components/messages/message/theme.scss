@@ -1,0 +1,87 @@
+@keyframes in {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+li.message {
+    --color: var(--theme-color-3);
+
+    margin: 2rem 0;
+    padding: 0 5rem;
+    display: flex;
+    justify-content: flex-start;
+    animation: in 300ms var(--animation-function-cubic-in) 1 forwards;
+
+    &.me {
+        --color: var(--color-green);
+        justify-content: flex-end;
+
+        .inner {
+            &:before {
+                content: "";
+                border-left: solid .5rem var(--color);
+                border-right: solid .5rem transparent;
+                left: 100%;
+                right: auto;
+            }
+
+            border-radius: .5rem 0 .5rem .5rem;
+
+            .username {
+                color: var(--theme-color-3);
+            }
+
+            .text {
+                color: #000;
+                word-break: break-all;
+            }
+
+            .time {
+                color: var(--theme-color-3);
+            }
+        }
+    }
+
+    .inner {
+        &:before {
+            content: "";
+            border-top: solid .5rem var(--color);
+            border-right: solid .5rem var(--color);
+            border-bottom: solid .5rem transparent;
+            border-left: solid .5rem transparent;
+            position: absolute;
+            top: 0;
+            right: 100%;
+        }
+
+        position: relative;
+        padding: .5rem 1rem;
+        border-radius: 0 .5rem .5rem;
+        background-color: var(--color);
+        display: inline-block;
+        max-width: 30rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
+
+        .username {
+            color: var(--color-green);
+            font-weight: 500;
+            font-size: 1.4rem;
+            margin: 0 2rem 1rem 0;
+        }
+
+        .text {
+            font-size: 1.6rem;
+            color: var(--theme-color-7);
+            line-height: 1.5;
+        }
+
+        .time {
+            text-align: right;
+            font-size: 1.2rem;
+            margin: 1rem 0 0 2rem;
+            color: var(--theme-color-6);
+        }
+    }
+}

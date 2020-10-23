@@ -1,0 +1,17 @@
+.search {
+    input {
+        border-radius: 2rem;
+        width: 100%;
+        padding: .8rem 1.5rem;
+        background-color: var(--theme-color-2);
+        font-size: 1.6rem;
+        outline: none;
+        border: none;
+        color: var(--theme-color-6);
+        transition: background-color 100ms;
+
+        &:focus {
+            background-color: var(--theme-color-3);
+        }
+    }
+}

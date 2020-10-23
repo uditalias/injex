@@ -1,3 +1,12 @@
 .messages {
-    grid-area: messages;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+
+    ul {
+        grid-area: messages;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
 }

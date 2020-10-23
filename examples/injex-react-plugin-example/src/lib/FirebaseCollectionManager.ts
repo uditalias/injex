@@ -1,4 +1,16 @@
-export default abstract class FirebaseCollectionManager<T extends { id: string; }> {
+export default abstract class FirebaseCollectionManager<T extends { id: string }> {
+
+    private _cache: {
+        [index: string]: { created: number; value: T };
+    };
+
+    constructor() {
+        this._cache = {};
+    }
+
+    protected get cacheTTL(): number {
+        return 1000 * 60 * 10;
+    }
 
     protected abstract get collectionName(): string;
 
@@ -24,16 +36,44 @@ export default abstract class FirebaseCollectionManager<T extends { id: string; 
             ids
         ).get();
 
-        return data.docs.map(doc => doc.data());
+        return data.docs.map(doc => {
+            const item = doc.data();
+            this._setCache(item.id, item);
+            return item;
+        });
     }
 
     public async getById(id: string): Promise<T> {
+        const fromCache = this._getFromCache(id);
+
+        if (fromCache) {
+            return fromCache;
+        }
+
         const data = await this.resolveDoc(id);
 
         if (data) {
             data["id"] = id;
+            this._setCache(id, data);
         }
 
         return data;
+    }
+
+    private _setCache(id: string, value: T) {
+        this._cache[id] = {
+            created: Date.now(),
+            value
+        };
+    }
+
+    private _getFromCache(id: string): T {
+        const fromCache = this._cache[id];
+
+        if (fromCache && Date.now() - fromCache.created < this.cacheTTL) {
+            return fromCache.value;
+        }
+
+        return null;
     }
 }

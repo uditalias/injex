@@ -19,6 +19,8 @@
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
     width: 100%;
     height: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
     transform: scale(1.1);
     animation: in .3s var(--animation-function-cubic-in);
     animation-fill-mode: forwards;
@@ -28,4 +30,27 @@
     grid-template-areas:
         "users messages"
         "users input";
+}
+
+@media (max-width: 940px) {
+    .chat {
+        padding: 0;
+
+        .window {
+            border-radius: 0;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .chat {
+        .window {
+            grid-template-areas:
+                "header"
+                "messages"
+                "input";
+            grid-template-rows: auto 1fr auto;
+            grid-template-columns: 1fr;
+        }
+    }
 }

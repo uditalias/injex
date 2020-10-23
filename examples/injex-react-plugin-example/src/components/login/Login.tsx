@@ -20,7 +20,7 @@ export default function Login(): JSX.Element {
                 <img className={theme.logo} src={logo} />
                 <h1>Injex Framework</h1>
                 <h2>React chat application demo</h2>
-                <p>This application shows the Injex framework in action inside a React application.</p>
+                <p>This application shows the Injex framework in action inside a React application, using the Injex React Plugin.</p>
                 <p>The following services & libraries are used:</p>
                 <div className={theme.stack}>
                     Injex, Injex React Plugin, Injex Env Plugin, React, React DOM, MobX, MobX React, Google Firebase
