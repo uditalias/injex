@@ -26,7 +26,7 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 });
 
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
-    filename: `${shared.baseAssetName}.css`
+    filename: `bundle.css`
 });
 
 const HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
