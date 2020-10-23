@@ -15,7 +15,8 @@
     "url": "git+https://github.com/uditalias/injex.git"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server.js"
+    "start": "cross-env NODE_ENV=development node server.js",
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "bugs": {
     "url": "https://github.com/uditalias/injex/issues"
