@@ -96,6 +96,12 @@ List of plugins to include with the container instance.
 You can go to the [webpack example](/docs/examples#webpack-runtime-example) to see the Webpack runtime in action.
 :::
 
+## Caveats
+
+When optimizing your code using tools like [Terser](https://github.com/terser/terser) to minify/uglify/mangle the code, it's essential to keep the function names as they are. Injex automatically registers modules by their class name. When you change the class name, Injex container won't work correctly.
+
+You can pass the `keep_fnames: true` to Terser options so the function names won't be affected.
+
 ## Code splitting
 
 If you want, you can leverage Webpack's code-splitting feature when using the Injex framework. Refer to the [`@lazy()` decorator](/docs/api/core/decorators/lazy) documentation for more details.
