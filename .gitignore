@@ -7,6 +7,7 @@ coverage
 **/src/**/*.js
 !website/**/*.js
 **/*.d.ts
+!examples/injex-react-plugin-example/**/*.d.ts
 **/*.js.map
 lib/
 out/
