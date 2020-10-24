@@ -1,8 +1,9 @@
 .login {
-    min-height: 100vh;
+    flex: 1;
     line-height: 1.5;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 100%;
     text-align: center;
 
     .img {
@@ -90,6 +91,36 @@
             &:active {
                 transform: translateY(.2rem);
                 box-shadow: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 720px) {
+    .login {
+        grid-template-columns: repeat(1, 1fr);
+
+        .img {
+            display: none;
+        }
+
+        .form {
+            padding: 3rem;
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                width: 8rem;
+            }
+
+            p {
+                max-width: 90%;
             }
         }
     }

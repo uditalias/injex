@@ -4,7 +4,9 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 html * {
@@ -17,10 +19,14 @@ body {
   font-size: 1.6rem;
   margin: 0;
   width: 100%;
-  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 :global #root {
   width: 100%;
-  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
