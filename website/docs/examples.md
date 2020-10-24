@@ -53,3 +53,16 @@ cd examples/injex-express-plugin-example/
 npm run tsc
 npm start
 ```
+
+## React plugin example
+
+A chat application using Injex React Plugin with Injex Webpack runtime.
+
+```bash
+cd examples/injex-react-plugin/example/
+npm start
+```
+
+Then open [http://localhost:3006](http://localhost:3006) in your browser
+
+You can test a live demo of the chat application at [https://chat.injex.dev](https://chat.injex.dev)
