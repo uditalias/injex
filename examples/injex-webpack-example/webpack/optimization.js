@@ -5,6 +5,7 @@ const TerserPluginConfig = new TerserPlugin({
     extractComments: false,
     terserOptions: {
         ecma: 6,
+        keep_classnames: true,
         output: {
             comments: false
         }
