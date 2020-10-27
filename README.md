@@ -104,6 +104,12 @@ Injex is pluggable, so you can use and create your plugins to enrich your applic
 
 Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Discord](https://discord.gg/tqjz7f) server for more help, ideas, and discussions.
 
+## Author
+
+| [![twitter/uditalias](https://gravatar.com/avatar/838347acc4c97bfc938a2dac4043bd2a?s=70)](http://twitter.com/uditalias "Follow @uditalias on Twitter") |
+|---|
+| [Udi Talias](https://github.com/uditalias/) |
+
 ## License
 
 This repository is available under the [MIT License](./LICENSE).
