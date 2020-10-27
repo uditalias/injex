@@ -345,15 +345,20 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return definition.module;
     }
 
-    public getAlias<K extends string = string, V = any>(alias: string, keyBy: string): AliasMap<K, V> | AliasFactory<K, V> {
+    public getAlias<K extends string = string, V = any>(alias: string, keyBy: string): AliasMap<K, V> | AliasFactory<K, V> | V[] {
         const aliasModules = this._aliases.get(alias) || [];
-        const map = {};
+        const useSet = !keyBy;
+        const mapOrSet: any = useSet ? [] : {};
 
         for (const aliasModule of aliasModules) {
-            const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
-            map[keyValue] = aliasModule.module;
+            if (useSet) {
+                mapOrSet.push(aliasModule.module);
+            } else {
+                const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
+                mapOrSet[keyValue] = aliasModule.module;
+            }
         }
 
-        return map as AliasMap<K, V> | AliasFactory<K, V>;
+        return mapOrSet as AliasMap<K, V> | AliasFactory<K, V> | V[];
     }
 }

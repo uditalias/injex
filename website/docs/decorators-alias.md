@@ -21,4 +21,6 @@ import { define, alias } from "@injex/core";
 export class GoogleMailProvider {
 
 }
+
+@
 ```
