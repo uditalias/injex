@@ -12,5 +12,5 @@ export interface IInjexContext {
 }
 
 export type Inject = <T = any>(name: string) => T;
-export type InjectAlias = <K extends string, V = any>(alias: string, keyBy: string) => AliasMap<K, V> | AliasFactory<K, V>
+export type InjectAlias = <K extends string, V = any>(alias: string, keyBy?: string) => AliasMap<K, V> | AliasFactory<K, V> | V[];
 export type RenderInjexProvider = (children: JSX.Element, rootElement?: HTMLElement) => void;

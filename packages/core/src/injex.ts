@@ -345,7 +345,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return definition.module;
     }
 
-    public getAlias<K extends string = string, V = any>(alias: string, keyBy: string): AliasMap<K, V> | AliasFactory<K, V> | V[] {
+    public getAlias<K extends string = string, V = any>(alias: string, keyBy?: string): AliasMap<K, V> | AliasFactory<K, V> | V[] {
         const aliasModules = this._aliases.get(alias) || [];
         const useSet = !keyBy;
         const mapOrSet: any = useSet ? [] : {};
