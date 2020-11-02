@@ -5,7 +5,7 @@ module.exports = {
     "https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap",
     "https://fonts.googleapis.com/icon?family=Material+Icons",
   ],
-  url: 'https://injex.netlify.com',
+  url: 'https://www.injex.dev',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   favicon: 'img/favicon.png',
