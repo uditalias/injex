@@ -122,6 +122,12 @@ module.exports = {
     [
       '@docusaurus/preset-classic',
       {
+        sitemap: {
+          cacheTime: 600 * 1000, // 600 sec - cache purge period
+          changefreq: 'weekly',
+          priority: 0.5,
+          trailingSlash: false,
+        },
         docs: {
           remarkPlugins: [require('./src/plugins/remark-npm2yarn')],
           sidebarPath: require.resolve('./sidebars.js'),
