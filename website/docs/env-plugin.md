@@ -5,7 +5,7 @@ sidebar_label: Env Plugin
 slug: /plugins/env
 ---
 
-<img src="https://img.shields.io/npm/v/@injex/env-plugin" />
+<img src="https://img.shields.io/npm/v/@injex/env-plugin?style=for-the-badge" className="markdown-badge" />
 
 The Env Plugin defines and manages multiple environment variables based on the `process.env.NODE_ENV` variable, with a fallback to default variables option.
 

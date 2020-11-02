@@ -1,9 +1,9 @@
 module.exports = {
   root: {
-    Injex: ['introduction', "getting-started", "basic-example", "examples"],
+    Injex: ['introduction', 'getting-started', 'basic-example', 'examples'],
     Runtimes: ['runtimes-node', 'runtimes-webpack', 'runtimes-create'],
-    Plugins: ['plugins', 'env-plugin', 'express-plugin'],
-    "API Reference": [
+    Plugins: ['plugins', 'env-plugin', 'express-plugin', 'react-plugin'],
+    'API Reference': [
       'container',
       'lifecycle',
       {

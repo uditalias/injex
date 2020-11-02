@@ -5,7 +5,7 @@ sidebar_label: Express Plugin
 slug: /plugins/express
 ---
 
-<img src="https://img.shields.io/npm/v/@injex/express-plugin" />
+<img src="https://img.shields.io/npm/v/@injex/express-plugin?style=for-the-badge" className="markdown-badge" />
 
 The Express Plugin provides tools to work with the [Express Framework](https://expressjs.com/) to create Express applications in a better and organized way.
 
