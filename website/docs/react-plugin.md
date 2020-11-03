@@ -59,7 +59,7 @@ An HTML element or string selector to use with the `RenderInjexProvider` method.
 
 ## Usage
 
-The Injex React plugin is slightly different from the other plugins, although you can use it without creating a plugin instance; here is a basic usage example.
+The Injex React plugin is slightly different from the other plugins in a way you can use it without creating a plugin instance; here is a basic usage example.
 
 ```ts
 import { Injex } from "@injex/webpack";

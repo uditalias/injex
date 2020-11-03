@@ -92,11 +92,11 @@ Since Injex automatically scans all the files and folders inside the `rootDirs`,
 
 Injex is pluggable, so you can use and create your plugins to enrich your applications.
 
-📦 **Env Plugin** - Manage environment variables across your application.
+📦 **Env Plugin** - Manage environment variables across your application. [Docs &#8594;](https://www.injex.dev/docs/plugins/env)
 
-📦 **Express Plugin** - Use Injex to power up your Express application by creating controllers, better route handlers, and middlewares.
+📦 **Express Plugin** - Use Injex to power up your Express application by creating controllers, better route handlers, and middlewares. [Docs &#8594;](https://www.injex.dev/docs/plugins/express)
 
-📦 **React Plugin** - Use React hooks to inject dependencies into components.
+📦 **React Plugin** - Use React hooks to inject dependencies into components. [Docs &#8594;](https://www.injex.dev/docs/plugins/react)
 
 [Learn more](https://www.injex.dev/docs/plugins) about Injex plugins and the plugin anatomy.
 
