@@ -1,4 +1,3 @@
-import { IConstructor } from "@injex/stdlib";
 import { Application, NextFunction } from "express";
 
 export interface IRouteConfig {
