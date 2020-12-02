@@ -62,5 +62,5 @@ export interface ILazyModule<T> {
     import(...args: any[]): Promise<IConstructor<T>>;
 }
 
-export type AliasFactory<K extends string, T> = { [key in K]: () => T };
+export type AliasFactory<K extends string, T> = { [key in K]: (...args: any[]) => T };
 export type AliasMap<K extends string, T> = { [key in K]: T };
