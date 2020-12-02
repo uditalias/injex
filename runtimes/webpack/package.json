@@ -1,6 +1,6 @@
 {
   "name": "@injex/webpack",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "",
   "keywords": [],
   "author": {
@@ -45,7 +45,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@injex/core": "^2.0.6",
+    "@injex/core": "^2.0.7",
     "tslib": "^2.0.1"
   }
 }
