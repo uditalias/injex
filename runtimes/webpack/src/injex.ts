@@ -18,9 +18,13 @@ export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
 
     protected loadContainerFiles(): void {
         const requireContext = this.config.resolveContext();
+        const allContextFiles = requireContext.keys().reduce((files, currentFile) => {
+            // webpack v5 has a breaking change when the 'requireContext.keys()' may have duplications
+            // https://github.com/webpack/webpack/issues/12087
+            currentFile = currentFile.replace(/^.\//, "");
+            return files.includes(currentFile) ? files : files.concat(currentFile);
+        }, []);
 
-        requireContext
-            .keys()
-            .forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
+        allContextFiles.forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
     }
 }
