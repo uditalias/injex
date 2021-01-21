@@ -1,6 +1,6 @@
 {
   "name": "@injex/node",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "",
   "keywords": [],
   "author": {
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/core": "^2.0.8",
+    "@injex/core": "^2.0.9",
     "glob": "^7.1.6",
     "tslib": "^2.0.1"
   },
