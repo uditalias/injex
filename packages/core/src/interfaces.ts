@@ -29,6 +29,7 @@ export interface IDefinitionMetadata {
     initMethod?: string;
     bootstrap?: boolean;
     lazy?: boolean;
+    lazyLoader?: ILazyModule<any>;
 }
 
 export interface IBootstrap {

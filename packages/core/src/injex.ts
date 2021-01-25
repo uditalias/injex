@@ -1,4 +1,5 @@
 import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
+import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
 import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError, ModuleDependencyNotFoundError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
@@ -162,7 +163,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         let module;
         switch (true) {
             case metadata.lazy:
-                module = this._createLazyModuleFactoryMethod(item, metadata);
+                const [loaderFn, loaderInstance] = this._createLazyModuleFactoryMethod(item, metadata);
+                metadata.lazyLoader = loaderInstance;
+                module = loaderFn;
                 break;
             case metadata.singleton:
                 module = this._createInstance(item, EMPTY_ARGS);
@@ -192,13 +195,13 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this.hooks.afterModuleCreation.call(moduleWithMetadata);
     }
 
-    private _createLazyModuleFactoryMethod(construct: IConstructor, metadata: IDefinitionMetadata) {
+    private _createLazyModuleFactoryMethod(construct: IConstructor, metadata: IDefinitionMetadata): [(...args: any[]) => any, ILazyModule<any>] {
         const self = this;
-        const instance = this._createInstance(construct, EMPTY_ARGS);
-        this._injectModuleDependencies(instance, metadata);
+        const loaderInstance = this._createInstance(construct, EMPTY_ARGS);
+        this._injectModuleDependencies(loaderInstance, metadata);
 
-        return async function (...args: any[]) {
-            const Ctor = await instance.import.apply(instance, args);
+        async function loaderFn(...args: any[]) {
+            const Ctor = await loaderInstance.import.apply(loaderInstance, args);
             const lazyMetadata = metadataHandlers.getMetadata(Ctor);
             const lazyInstance = self._createInstance(Ctor, args);
             self._injectModuleDependencies(lazyInstance, lazyMetadata);
@@ -206,6 +209,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
             return lazyInstance;
         }
+
+        return [loaderFn, loaderInstance];
     }
 
     private _createModuleFactoryMethod(construct: IConstructor, metadata: IDefinitionMetadata): (...args) => Promise<void> {
@@ -354,8 +359,19 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             if (useSet) {
                 mapOrSet.push(aliasModule.module);
             } else {
-                const keyValue = aliasModule.metadata.singleton ? aliasModule.module[keyBy] : aliasModule.metadata.item[keyBy];
-                mapOrSet[keyValue] = aliasModule.module;
+                let keyValue: string;
+                switch (true) {
+                    case aliasModule.metadata.lazy:
+                        keyValue = aliasModule.metadata.lazyLoader[keyBy]; break;
+                    case aliasModule.metadata.singleton:
+                        keyValue = aliasModule.module[keyBy]; break;
+                    default:
+                        keyValue = aliasModule.metadata.item[keyBy];
+                }
+
+                if (keyValue) {
+                    mapOrSet[keyValue] = aliasModule.module;
+                }
             }
         }
 
