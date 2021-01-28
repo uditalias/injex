@@ -150,11 +150,11 @@ export class MailService {
     }
 }
 ```
-Like before, let's go over the important lines (3, 4, 6):
+Like before, let's go over the important lines (4, 5, 7):
 
-Lines 3 and 4 should be familiar. We define and register the module and mark it as a singleton module.
+Lines 4 and 5 should be familiar. We define and register the module and mark it as a singleton module.
 
-In line 6, we tell Injex to inject all the modules with the `MailProvider` alias name into a dictionary object called `mailProviders` which is a member of the `MailService` class, the `"Type"` in line 7 tells Injex what will be the key for this dictionary (line 8 in our mail providers from before).
+In line 7, we tell Injex to inject all the modules with the `MailProvider` alias name into a dictionary object called `mailProviders` which is a member of the `MailService` class, the `"Type"` in line 7 tells Injex what will be the key for this dictionary (line 8 in our mail providers from before).
 
 ## Bootstrap
 
@@ -176,7 +176,7 @@ export class Bootstrap {
 }
 ```
 
-Line 1 defines this module as the bootstrap class. You should have only 1 class in your container with the `@bootstrap()` decorator.
+Line 4 defines this module as the bootstrap class. You should have only 1 class in your container with the `@bootstrap()` decorator.
 
 In line 6, we tell Injex that we want to `@inject()` the `mailService` singleton module we created earlier so we can use it to send our so important email 😅.
 
