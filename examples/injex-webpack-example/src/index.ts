@@ -1,19 +1,21 @@
 import { Injex } from "@injex/webpack";
 import { EnvPlugin } from "@injex/env-plugin";
-import { ButtonType } from 'common/enums';
+import { ButtonType, Shape } from 'common/enums';
 
 Injex.create({
     resolveContext: () => {
-        return require.context(__dirname, true, /\.ts$/)
+        return require.context(__dirname, true, /[^.mdl]\.ts$/)
     },
     plugins: [
         new EnvPlugin({
             environments: {
                 development: {
-                    buttonType: ButtonType.Big
+                    buttonType: ButtonType.Big,
+                    shape: Shape.Circle,
                 },
                 production: {
-                    buttonType: ButtonType.Small
+                    buttonType: ButtonType.Small,
+                    shape: Shape.Rectangle,
                 }
             }
         })
