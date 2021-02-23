@@ -198,7 +198,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     private _createLazyModuleFactoryMethod(construct: IConstructor, metadata: IDefinitionMetadata): [(...args: any[]) => any, ILazyModule<any>] {
         const self = this;
         const loaderInstance = this._createInstance(construct, EMPTY_ARGS);
-        this._injectModuleDependencies(loaderInstance, metadata);
 
         async function loaderFn(...args: any[]) {
             const Ctor = await loaderInstance.import.apply(loaderInstance, args);
@@ -235,10 +234,18 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         await Promise.all(
             Array
                 .from(this._modules.values())
+                .map(({ module, metadata }) => {
+                    if (metadata && metadata.singleton) {
+                        this._injectModuleDependencies(metadata.lazyLoader || module, metadata);
+                    }
+
+                    return { module, metadata };
+                })
                 .map(async ({ module, metadata }) => {
                     if (metadata && metadata.singleton) {
-                        this._injectModuleDependencies(module, metadata);
-                        return this._invokeModuleInitMethod(module, metadata);
+                        return this._invokeModuleInitMethod(
+                            metadata.lazyLoader || module, metadata
+                        );
                     }
                 })
         );
