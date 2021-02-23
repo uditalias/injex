@@ -102,7 +102,7 @@ module.exports = {
             },
             {
               label: 'Discord',
-              href: 'https://discord.gg/y5EpGd'
+              href: 'https://discord.gg/JWxbhXd8aX'
             },
             {
               html: `<a href="https://www.netlify.com" target="_blank"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify"></a>`
