@@ -1,5 +1,6 @@
 //@ts-nocheck
-import { define, init, inject, singleton } from "../src";
+import { define, inject, singleton } from "../src";
+import { Factory } from "../src/interfaces";
 import InjexMock from "./__mocks__/InjexMock";
 
 describe("Inject", () => {
@@ -109,5 +110,37 @@ describe("Inject", () => {
         });
 
         expect(container.bootstrap()).rejects.toThrowError("Dependency 'mailService' was not found for module 'mailSender'.");
+    });
+
+    it("should inject dependency in abstract parent", async () => {
+
+        @define()
+        @singleton()
+        class Zoo {
+
+        }
+
+        abstract class Animal {
+            @inject() public zoo: Zoo;
+        }
+
+        @define()
+        class Lion extends Animal {
+
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Zoo, Lion },
+            ]
+        });
+
+        await container.bootstrap();
+
+        const lion = container.get<Factory<Lion>>("lion")();
+
+        expect(lion).toBeInstanceOf(Lion);
+        expect(lion.zoo).toBeDefined();
+        expect(lion.zoo).toBeInstanceOf(Zoo);
     })
 });

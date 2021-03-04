@@ -88,4 +88,36 @@ describe("Init", () => {
 
         expect(instance).toBeInstanceOf(MailMessage);
     });
+
+    it("should run multiple init methods on class inheritance", async () => {
+        const fn = jest.fn();
+        class Animal {
+            @init()
+            public initialize() {
+                fn();
+            }
+        }
+
+        @define()
+        class Dog extends Animal {
+            @init()
+            public initializeDog() {
+                fn();
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Dog }
+            ]
+        });
+
+        await container.bootstrap();
+
+        const createDog = container.get("dog");
+        const dog = createDog();
+
+        expect(dog).toBeInstanceOf(Dog);
+        expect(fn).toHaveBeenCalledTimes(2);
+    });
 });

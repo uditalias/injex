@@ -3,7 +3,7 @@ import metadataHandlers from "../metadataHandlers";
 
 export function lazy() {
     return function (targetConstructor: IConstructor) {
-        metadataHandlers.setMetadata(targetConstructor, "lazy", true);
-        metadataHandlers.setMetadata(targetConstructor, "singleton", true);
+        metadataHandlers.setMetadata(targetConstructor.prototype, "lazy", true);
+        metadataHandlers.setMetadata(targetConstructor.prototype, "singleton", true);
     }
 }
