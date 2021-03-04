@@ -4,27 +4,29 @@ export type MetadataHandlers<T> = {
     getMetadata: (target: any) => T;
     hasMetadata: (target: any) => boolean;
     pushMetadata: (target: any, key: keyof T, value: any) => void;
+    forEachProtoMetadata: (target: any, callback: (proto: object, metadata: T) => void) => void;
 }
 
 export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHandlers<T> {
     function ensureMetadata(target): T {
-        target[metadataKey] = target[metadataKey] || {};
+        if (!hasMetadata(target)) {
+            Reflect.defineMetadata(metadataKey, {}, target);
+        }
 
-        return target[metadataKey];
+        return getMetadata(target);
     }
 
     function setMetadata(target: any, key: keyof T, value: any) {
-        ensureMetadata(target);
-
-        target[metadataKey][key] = value;
+        const metadata = ensureMetadata(target);
+        metadata[key] = value;
     }
 
     function getMetadata(target): T {
-        return target[metadataKey];
+        return Reflect.getOwnMetadata(metadataKey, target);
     }
 
     function hasMetadata(target): boolean {
-        return target && target instanceof Object && metadataKey in target;
+        return Reflect.hasOwnMetadata(metadataKey, target);
     }
 
     function pushMetadata(target: any, key: keyof T, value: any) {
@@ -37,11 +39,25 @@ export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHa
         (metadata[key] as any).push(value);
     }
 
+    function forEachProtoMetadata(target: any, callback: (proto: object, metadata: T) => void) {
+        let __proto__ = target?.__proto__;
+        while (__proto__) {
+            const meta = getMetadata(__proto__);
+
+            if (meta) {
+                callback(__proto__, meta);
+            }
+
+            __proto__ = __proto__.__proto__;
+        }
+    }
+
     return {
         ensureMetadata,
         setMetadata,
         getMetadata,
         hasMetadata,
         pushMetadata,
+        forEachProtoMetadata,
     };
 }

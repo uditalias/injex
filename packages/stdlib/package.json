@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
+    "reflect-metadata": "^0.1.13",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
