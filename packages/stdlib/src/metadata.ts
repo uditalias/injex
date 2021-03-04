@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 export type MetadataHandlers<T> = {
     ensureMetadata: (target: any) => T;
     setMetadata: (target: any, key: keyof T, value: any) => void;

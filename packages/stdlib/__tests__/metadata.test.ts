@@ -54,4 +54,27 @@ describe("Metadata", () => {
 
         expect(metadata.dependencies).toContain("myClass");
     });
+
+    it("should get prototype chain metadata", () => {
+
+        class Animal {
+
+        }
+
+        class Bird extends Animal {
+
+        }
+
+        class Parrot extends Bird {
+
+        }
+
+        metadataHandlers.setMetadata(Animal.prototype, "displayName", "myAnimal");
+        metadataHandlers.setMetadata(Bird.prototype, "displayName", "myBird");
+        metadataHandlers.setMetadata(Parrot.prototype, "displayName", "myParrot");
+
+        metadataHandlers.forEachProtoMetadata(new Parrot, (proto: any, metadata) => {
+            expect(metadata.displayName).toEqual(`my${proto.constructor.name}`);
+        });
+    });
 });
