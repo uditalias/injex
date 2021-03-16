@@ -325,7 +325,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         const metadata = metadataHandlers.getMetadata(item.prototype);
 
-        if (!metadata.name) {
+        if (!metadata || !metadata.name) {
             return;
         }
 
