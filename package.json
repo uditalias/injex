@@ -19,6 +19,9 @@
       "pre-commit": "npm run lint"
     }
   },
+  "repository": {
+    "url": "https://github.com/uditalias/injex"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.13",
     "@types/node": "^14.6.4",
