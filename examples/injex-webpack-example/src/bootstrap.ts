@@ -1,5 +1,4 @@
 import { bootstrap, IBootstrap, inject } from "@injex/core";
-import { Shape } from "common/enums";
 import IShape from "interfaces/IShape";
 import { ButtonManager } from 'managers/buttonManager';
 import { Circle } from "shapes/Circle";
