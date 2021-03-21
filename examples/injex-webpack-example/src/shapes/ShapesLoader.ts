@@ -1,4 +1,4 @@
-import { define, ILazyModule, init, inject, lazy } from "@injex/core";
+import { define, ILazyModule, inject, lazy } from "@injex/core";
 import { Shape } from "common/enums";
 import IEnvironment from "interfaces/IEnvironment";
 
