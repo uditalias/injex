@@ -113,3 +113,10 @@ Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Di
 ## License
 
 This repository is available under the [MIT License](./LICENSE).
+
+
+---
+
+<p align="center">
+    <img src="website/static/img/logo.svg" width="60" height="60" />
+</p>
