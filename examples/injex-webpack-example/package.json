@@ -55,6 +55,6 @@
     "@injex/core": "^3.0.0-alpha.1",
     "@injex/env-plugin": "^3.0.0-alpha.1",
     "@injex/webpack": "^3.0.0-alpha.1",
-    "tslib": "^2.0.1"
+    "tslib": "^2.1.0"
   }
 }

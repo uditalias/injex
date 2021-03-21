@@ -48,6 +48,6 @@
   },
   "dependencies": {
     "@injex/stdlib": "^3.0.0-alpha.1",
-    "tslib": "^2.0.1"
+    "tslib": "^2.1.0"
   }
 }
