@@ -1,4 +1,4 @@
-import { toCamelCase } from "@injex/stdlib";
+import { IConstructor, toCamelCase } from "@injex/stdlib";
 import metadataHandlers from "../metadataHandlers";
 
 function getDependencyName(item: any, name?: string): string {
@@ -6,8 +6,8 @@ function getDependencyName(item: any, name?: string): string {
 }
 
 export function define(name?: string) {
-    return function (targetConstructor) {
-        metadataHandlers.setMetadata(targetConstructor, "item", targetConstructor);
-        metadataHandlers.setMetadata(targetConstructor, "name", getDependencyName(targetConstructor, name));
+    return function (targetConstructor: IConstructor) {
+        metadataHandlers.setMetadata(targetConstructor.prototype, "item", targetConstructor);
+        metadataHandlers.setMetadata(targetConstructor.prototype, "name", getDependencyName(targetConstructor, name));
     }
 }

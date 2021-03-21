@@ -147,7 +147,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _createModules() {
-
         this.hooks.beforeCreateModules.call();
 
         this._moduleRegistry.forEach((item) => this._createModule(item));
@@ -155,8 +154,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this.hooks.afterCreateModules.call();
     }
 
-    private _createModule(item) {
-        const metadata = metadataHandlers.getMetadata(item);
+    private _createModule(item: IConstructor) {
+        const metadata = metadataHandlers.getMetadata(item.prototype);
 
         this._throwIfModuleExists(metadata.name);
 
@@ -200,8 +199,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         const loaderInstance = this._createInstance(construct, EMPTY_ARGS);
 
         async function loaderFn(...args: any[]) {
-            const Ctor = await loaderInstance.import.apply(loaderInstance, args);
-            const lazyMetadata = metadataHandlers.getMetadata(Ctor);
+            const Ctor: IConstructor = await loaderInstance.import.apply(loaderInstance, args);
+            const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
             const lazyInstance = self._createInstance(Ctor, args);
             self._injectModuleDependencies(lazyInstance, lazyMetadata);
             await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
@@ -251,19 +250,34 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         );
     }
 
-    private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<void> | void {
-        if (metadata.initMethod && isFunction(module[metadata.initMethod])) {
-            try {
-                return module[metadata.initMethod]();
-            } catch (e) {
-                this._onInitModuleError(metadata, e);
+    private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        const chain = [];
+        metadataHandlers.forEachProtoMetadata(module, (_, meta: IDefinitionMetadata) => {
+            if (meta?.initMethod && chain.indexOf(meta.initMethod) < 0) {
+                chain.push(meta.initMethod);
             }
+        });
+
+        try {
+            const promises = [];
+            for (let i = chain.length - 1; i >= 0; i--) {
+                const res = module[chain[i]].call(module);
+                if (isPromise(res)) {
+                    promises.push(res);
+                }
+            }
+
+            if (promises.length) {
+                return Promise.all(promises);
+            }
+        } catch (e) {
+            this._onInitModuleError(metadata.name, e);
         }
     }
 
-    private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
+    private _onInitModuleError(moduleName: ModuleName, err: Error) {
         this._logger.error(err);
-        throw new InitializeMuduleError(metadata.name);
+        throw new InitializeMuduleError(moduleName);
     }
 
     private _createInstance(construct: any, args: any[] = []): any {
@@ -276,7 +290,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         if (this._modules.has(moduleNameOrType)) {
             return this._modules.get(moduleNameOrType);
         } else if (moduleNameOrType instanceof Function) {
-            const metadata = metadataHandlers.getMetadata(moduleNameOrType);
+            const metadata = metadataHandlers.getMetadata(moduleNameOrType.prototype);
             return this._modules.get(metadata.name);
         }
 
@@ -284,32 +298,34 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _injectModuleDependencies(module: any, metadata: IDefinitionMetadata) {
-        const dependencies = metadata.dependencies || [];
-        const aliasDependencies = metadata.aliasDependencies || [];
+        metadataHandlers.forEachProtoMetadata(module, (_, meta) => {
+            const dependencies = meta.dependencies || [];
+            const aliasDependencies = meta.aliasDependencies || [];
 
-        for (const { label, value } of dependencies) {
-            const dependency = this.get(value);
+            for (const { label, value } of dependencies) {
+                const dependency = this.get(value);
 
-            if (!dependency) {
-                throw new ModuleDependencyNotFoundError(metadata.name, value);
+                if (!dependency) {
+                    throw new ModuleDependencyNotFoundError(metadata.name, value);
+                }
+
+                module[label] = dependency;
             }
 
-            module[label] = dependency;
-        }
-
-        for (const { label, alias, keyBy } of aliasDependencies) {
-            module[label] = this.getAlias(alias, keyBy);
-        }
+            for (const { label, alias, keyBy } of aliasDependencies) {
+                module[label] = this.getAlias(alias, keyBy);
+            }
+        });
     }
 
-    private _register(item: any) {
-        if (!item || !metadataHandlers.hasMetadata(item)) {
+    private _register(item: IConstructor) {
+        if (!item?.prototype ?? !metadataHandlers.hasMetadata(item.prototype)) {
             return;
         }
 
-        const metadata = metadataHandlers.getMetadata(item);
+        const metadata = metadataHandlers.getMetadata(item.prototype);
 
-        if (item !== metadata.item) {
+        if (!metadata || !metadata.name) {
             return;
         }
 

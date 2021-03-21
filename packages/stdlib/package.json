@@ -1,6 +1,6 @@
 {
   "name": "@injex/stdlib",
-  "version": "2.1.0",
+  "version": "3.0.0-alpha.1",
   "description": "",
   "keywords": [],
   "author": {
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
+    "reflect-metadata": "^0.1.13",
     "tslib": "^2.0.1"
   },
   "devDependencies": {

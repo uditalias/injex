@@ -1,6 +1,8 @@
 import { bootstrap, IBootstrap, inject } from "@injex/core";
 import IShape from "interfaces/IShape";
 import { ButtonManager } from 'managers/buttonManager';
+import { Circle } from "shapes/Circle";
+import { Rectangle } from "shapes/Rectangle";
 import { ClockManager } from "./managers/clockManager";
 
 @bootstrap()
@@ -8,9 +10,10 @@ export class Bootstrap implements IBootstrap {
 
     @inject() private clockManager: ClockManager;
     @inject() private buttonManager: ButtonManager;
-    @inject() private createShape: () => Promise<IShape>;
+    @inject(Rectangle) private createRectangle: () => IShape;
+    @inject(Circle) private createCircle: () => IShape;
 
-    public async run() {
+    public run() {
         const $root = document.getElementById("root");
         const buttonView = this.buttonManager.getButtonView();
 
@@ -18,8 +21,10 @@ export class Bootstrap implements IBootstrap {
             text: this.clockManager.getTime()
         });
 
-        const shape = await this.createShape();
+        const circle = this.createCircle();
+        const rectangle = this.createRectangle();
 
-        $root.appendChild(shape.draw());
+        $root.appendChild(circle.draw());
+        $root.appendChild(rectangle.draw());
     }
 }
