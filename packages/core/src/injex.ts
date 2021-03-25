@@ -307,11 +307,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 Object.defineProperty(module, label, {
                     configurable: true,
                     set(val) {
-                        Object.defineProperty(module, label, {
-                            get() {
-                                return val;
-                            }
-                        })
+                        Object.defineProperty(module, label, { get: () => val });
                     },
                     get() {
                         return self.get(value) || null;
@@ -323,11 +319,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 Object.defineProperty(module, label, {
                     configurable: true,
                     set(val) {
-                        Object.defineProperty(module, label, {
-                            get() {
-                                return val;
-                            }
-                        })
+                        Object.defineProperty(module, label, { get: () => val });
                     },
                     get() {
                         return self.getAlias(alias, keyBy);
