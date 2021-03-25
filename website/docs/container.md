@@ -138,6 +138,52 @@ console.log(definition.metadata);
 // { dependencies: [], aliasDependencies: [], singleton: true, name: "myService", item: [class MyService] }
 ```
 
+### `container.addModule(item)`
+
+Adds a decorated class into the runtime container.
+
+- Returns: The container instance
+- Async: `false`
+- Arguments:
+    - `item` - A decorated module class
+
+For example:
+```ts title="futureService.ts"
+@define()
+@singleton()
+export class FutureService {
+
+}
+```
+
+```ts title="myService.ts"
+@define()
+@singleton()
+export class MyService {
+    @inject() private $injex: Injex;
+
+    public someMethodToAddFutureService() {
+        this.$injex.addModule(FutureService);
+    }
+}
+```
+
+```ts {5} title="myController.ts"
+@define()
+@singleton()
+class MyController {
+    @inject() private myService: MyService;
+    @inject() private futureService: FutureService;
+
+    @init()
+    public initialize() {
+        console.log(this.futureService) // null
+        this.myService.someMethodToAddFutureService();
+        console.log(this.futureService) // FutureService {}
+    }
+}
+```
+
 ### `container.addObject(obj, name)`
 
 Adds an object into the runtime container.
