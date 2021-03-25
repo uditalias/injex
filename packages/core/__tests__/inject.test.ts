@@ -95,23 +95,6 @@ describe("Inject", () => {
         expect(mailSender.service).toBe(mailService);
     });
 
-    it("should throw when dependency module not defined", () => {
-
-        @define()
-        @singleton()
-        class MailSender {
-            @inject() public mailService;
-        }
-
-        const container = InjexMock.create({
-            modules: [
-                { MailSender },
-            ]
-        });
-
-        expect(container.bootstrap()).rejects.toThrowError("Dependency 'mailService' was not found for module 'mailSender'.");
-    });
-
     it("should inject dependency in abstract parent", async () => {
 
         @define()
@@ -142,5 +125,60 @@ describe("Inject", () => {
         expect(lion).toBeInstanceOf(Lion);
         expect(lion.zoo).toBeDefined();
         expect(lion.zoo).toBeInstanceOf(Zoo);
-    })
+    });
+
+    it("should inject lazy module as a singleton dependency", async () => {
+
+        @define()
+        @singleton()
+        class Clock {
+            public getTime(): number {
+                return Date.now();
+            }
+        }
+
+        @define()
+        @singleton()
+        class Certificate {
+            @inject() public clock: Clock;
+
+            public get value(): string {
+                return "--CERTIFICATE--";
+            }
+        }
+
+        @define()
+        @singleton()
+        class Student {
+            @inject() public certificate: Certificate;
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Clock },
+                { Student },
+            ]
+        });
+
+        await container.bootstrap();
+
+        const student = container.get<Student>("student");
+
+        expect(student).toBeDefined();
+        expect(student).toBeInstanceOf(Student);
+        expect(student.certificate).toBeNull();
+
+        container.addModule(Certificate);
+
+        expect(student.certificate).toBeInstanceOf(Certificate);
+        expect(student.certificate.value).toEqual("--CERTIFICATE--");
+
+        const certificate = container.get<Certificate>("certificate");
+
+        expect(certificate).toBeDefined();
+        expect(certificate).toBeInstanceOf(Certificate);
+        expect(certificate.value).toEqual("--CERTIFICATE--");
+
+        expect(typeof certificate.clock.getTime()).toBe("number");
+    });
 });

@@ -1,7 +1,7 @@
 import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
 import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
-import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError, ModuleDependencyNotFoundError } from "./errors";
+import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
 import metadataHandlers from "./metadataHandlers";
 
@@ -202,7 +202,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             const Ctor: IConstructor = await loaderInstance.import.apply(loaderInstance, args);
             const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
             const lazyInstance = self._createInstance(Ctor, args);
-            self._injectModuleDependencies(lazyInstance, lazyMetadata);
+            self._injectModuleDependencies(lazyInstance);
             await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
 
             return lazyInstance;
@@ -216,7 +216,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         return function factory(...args): Promise<any> {
             const instance = self._createInstance(construct, args);
-            self._injectModuleDependencies(instance, metadata);
+            self._injectModuleDependencies(instance);
             const initValue: Promise<void> | void = self._invokeModuleInitMethod(instance, metadata);
 
             if (isPromise(initValue)) {
@@ -235,7 +235,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 .from(this._modules.values())
                 .map(({ module, metadata }) => {
                     if (metadata && metadata.singleton) {
-                        this._injectModuleDependencies(metadata.lazyLoader || module, metadata);
+                        this._injectModuleDependencies(metadata.lazyLoader || module);
                     }
 
                     return { module, metadata };
@@ -297,23 +297,42 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return null;
     }
 
-    private _injectModuleDependencies(module: any, metadata: IDefinitionMetadata) {
+    private _injectModuleDependencies(module: any) {
         metadataHandlers.forEachProtoMetadata(module, (_, meta) => {
             const dependencies = meta.dependencies || [];
             const aliasDependencies = meta.aliasDependencies || [];
+            const self = this;
 
             for (const { label, value } of dependencies) {
-                const dependency = this.get(value);
-
-                if (!dependency) {
-                    throw new ModuleDependencyNotFoundError(metadata.name, value);
-                }
-
-                module[label] = dependency;
+                Object.defineProperty(module, label, {
+                    configurable: true,
+                    set(val) {
+                        Object.defineProperty(module, label, {
+                            get() {
+                                return val;
+                            }
+                        })
+                    },
+                    get() {
+                        return self.get(value) || null;
+                    }
+                });
             }
 
             for (const { label, alias, keyBy } of aliasDependencies) {
-                module[label] = this.getAlias(alias, keyBy);
+                Object.defineProperty(module, label, {
+                    configurable: true,
+                    set(val) {
+                        Object.defineProperty(module, label, {
+                            get() {
+                                return val;
+                            }
+                        })
+                    },
+                    get() {
+                        return self.getAlias(alias, keyBy);
+                    }
+                });
             }
         });
     }
@@ -332,6 +351,31 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this._throwIfAlreadyDefined(metadata.name);
 
         this._moduleRegistry.set(metadata.name, item);
+    }
+
+    /**
+     * Manually add module with metadata
+     *
+     * @param item - Module with metadata to add
+     */
+    public addModule(item: IConstructor): InjexContainer<T> {
+        if (!metadataHandlers.hasMetadata(item.prototype)) {
+            this._logger.debug("You're trying to add module without any metadata.");
+            return this;
+        }
+
+        this._register(item);
+
+        this._createModule(item);
+
+        const { module, metadata } = this.getModuleDefinition(item);
+
+        if (metadata.singleton) {
+            this._injectModuleDependencies(metadata.lazyLoader || module);
+            this._invokeModuleInitMethod(metadata.lazyLoader || module, metadata);
+        }
+
+        return this;
     }
 
     /**

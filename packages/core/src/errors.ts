@@ -2,14 +2,6 @@
 import { ModuleName } from "./interfaces";
 import { getConstructorName } from "@injex/stdlib";
 
-export class ModuleDependencyNotFoundError extends Error {
-    constructor(moduleName: ModuleName, dependencyName: ModuleName) {
-        super(
-            `Dependency '${String(dependencyName)}' was not found for module '${String(moduleName)}'.`
-        );
-    }
-}
-
 export class InitializeMuduleError extends Error {
     constructor(moduleName: ModuleName) {
         super(

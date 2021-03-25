@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { alias, AliasMap, define, init, injectAlias, singleton } from "../src";
+import { alias, AliasFactory, AliasMap, define, init, injectAlias, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 
 describe("Alias", () => {
@@ -177,5 +177,54 @@ describe("Alias", () => {
         expect(mailService.mailProviders).toBeDefined();
         expect(mailService.mailProviders["Microsoft"]).toBeInstanceOf(MicrosoftMailProvider);
         expect(mailService.mailProviders["Google"]).toBeInstanceOf(GoogleMailProvider);
+    });
+
+    it("should update alias factory map after adding alias module", async () => {
+
+        interface IAnimal {
+            makeVoice(): void;
+        }
+
+        @define()
+        @alias("Animal")
+        class Elephant implements IAnimal {
+            public static readonly Name: string = "Elephant";
+            public makeVoice() { }
+        }
+
+        @define()
+        @alias("Animal")
+        class Zebra implements IAnimal {
+            public static readonly Name: string = "Zebra";
+            public makeVoice() { }
+        }
+
+        @define()
+        @singleton()
+        class Zoo {
+            @injectAlias("Animal", "Name") animals: AliasFactory<string, IAnimal>
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Zoo },
+                { Elephant },
+            ]
+        });
+
+        await container.bootstrap();
+
+        const zoo = container.get<Zoo>("zoo");
+
+        expect(zoo).toBeDefined();
+        expect(zoo).toBeInstanceOf(Zoo);
+        expect(zoo.animals["Elephant"]).toBeDefined();
+        expect(typeof zoo.animals["Elephant"]).toBe("function");
+        expect(zoo.animals["Zebra"]).toBeUndefined();
+
+        container.addModule(Zebra);
+
+        expect(zoo.animals["Zebra"]).toBeDefined();
+        expect(typeof zoo.animals["Zebra"]).toBe("function");
     });
 });
