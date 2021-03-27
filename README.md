@@ -102,7 +102,7 @@ Injex is pluggable, so you can use and create your plugins to enrich your applic
 
 ## Follow Us
 
-Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Discord](https://discord.gg/tqjz7f) server for more help, ideas, and discussions.
+Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Discord](https://discord.gg/JWxbhXd8aX) server for more help, ideas, and discussions.
 
 ## Author
 
