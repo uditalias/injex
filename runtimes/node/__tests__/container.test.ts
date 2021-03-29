@@ -47,7 +47,17 @@ describe("InjexNodeContainer", () => {
         const mailService = container.get<MailService>("mailService");
 
         const mailServiceSend = spyOn(mailService, "send");
-        const mailFactory = spyOn(mailManager, "createMail" as any);
+
+        // we can't spy on injectable property since it only
+        // have a getter definition and the `spyOn` will fail.
+        const mailFactory = jest.fn();
+        const originalMailFactory = mailManager.createMail;
+        Object.defineProperty(mailManager, "createMail", {
+            value(...args: any[]) {
+                originalMailFactory.apply(mailManager, args);
+                mailFactory.apply(null, args);
+            }
+        });
 
         mailManager.send("Hello World!");
 

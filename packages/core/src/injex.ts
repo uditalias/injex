@@ -306,9 +306,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             for (const { label, value } of dependencies) {
                 Object.defineProperty(module, label, {
                     configurable: true,
-                    set(val) {
-                        Object.defineProperty(module, label, { get: () => val });
-                    },
                     get() {
                         return self.get(value) || null;
                     }
@@ -318,9 +315,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             for (const { label, alias, keyBy } of aliasDependencies) {
                 Object.defineProperty(module, label, {
                     configurable: true,
-                    set(val) {
-                        Object.defineProperty(module, label, { get: () => val });
-                    },
                     get() {
                         return self.getAlias(alias, keyBy);
                     }

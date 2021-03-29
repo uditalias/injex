@@ -7,8 +7,8 @@ import { Mail } from "./mail";
 @singleton()
 export class MailManager {
 
-	@inject() private mailService: MailService;
-	@inject(Mail) private createMail: (message: string) => Mail;
+	@inject() public mailService: MailService;
+	@inject(Mail) public createMail: (message: string) => Mail;
 	public initialized: boolean;
 
 	constructor() {
