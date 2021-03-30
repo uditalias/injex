@@ -301,23 +301,18 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         metadataHandlers.forEachProtoMetadata(module, (_, meta) => {
             const dependencies = meta.dependencies || [];
             const aliasDependencies = meta.aliasDependencies || [];
-            const self = this;
 
             for (const { label, value } of dependencies) {
                 Object.defineProperty(module, label, {
                     configurable: true,
-                    get() {
-                        return self.get(value) || null;
-                    }
+                    get: () => this.get(value) || null
                 });
             }
 
             for (const { label, alias, keyBy } of aliasDependencies) {
                 Object.defineProperty(module, label, {
                     configurable: true,
-                    get() {
-                        return self.getAlias(alias, keyBy);
-                    }
+                    get: () => this.getAlias(alias, keyBy)
                 });
             }
         });
