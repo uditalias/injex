@@ -21,7 +21,15 @@ export class DuplicateDefinitionError extends Error {
 export class InvalidPluginError extends Error {
     constructor(plugin: any) {
         super(
-            `Plugin ${getConstructorName(plugin)} is not valid. Make sure the 'apply' method exist.`
+            `Plugin ${getConstructorName(plugin)} is not valid. Make sure the 'apply' method exists.`
+        );
+    }
+}
+
+export class FactoryModuleNotExistsError extends Error {
+    constructor(factory: any) {
+        super(
+            `${typeof factory === "string" ? factory : factory.name} is not a factory module.`
         );
     }
 }

@@ -1,5 +1,6 @@
 export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
+export { injectFactory } from "./decorators/injectFactory";
 export { injectAlias } from "./decorators/injectAlias";
 export { singleton } from "./decorators/singleton";
 export { init } from "./decorators/init";

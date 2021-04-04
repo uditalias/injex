@@ -1,7 +1,7 @@
 import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
 import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
-import { DuplicateDefinitionError, InitializeMuduleError, InvalidPluginError } from "./errors";
+import { DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
 import metadataHandlers from "./metadataHandlers";
 
@@ -289,7 +289,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     public getModuleDefinition(moduleNameOrType: ModuleName | IConstructor): IModule {
         if (this._modules.has(moduleNameOrType)) {
             return this._modules.get(moduleNameOrType);
-        } else if (moduleNameOrType instanceof Function) {
+        } else if (moduleNameOrType instanceof Function && metadataHandlers.hasMetadata(moduleNameOrType.prototype)) {
             const metadata = metadataHandlers.getMetadata(moduleNameOrType.prototype);
             return this._modules.get(metadata.name);
         }
@@ -301,6 +301,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         metadataHandlers.forEachProtoMetadata(module, (_, meta) => {
             const dependencies = meta.dependencies || [];
             const aliasDependencies = meta.aliasDependencies || [];
+            const factoryDependencies = meta.factoryDependencies || [];
 
             for (const { label, value } of dependencies) {
                 Object.defineProperty(module, label, {
@@ -313,6 +314,19 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 Object.defineProperty(module, label, {
                     configurable: true,
                     get: () => this.getAlias(alias, keyBy)
+                });
+            }
+
+            for (const { label, value } of factoryDependencies) {
+                const factory = this.get(value);
+                if (!factory) {
+                    throw new FactoryModuleNotExistsError(value);
+                }
+
+                const item = factory();
+                Object.defineProperty(module, label, {
+                    configurable: true,
+                    get: () => isPromise(item) ? item.then((instance) => instance) : item
                 });
             }
         });

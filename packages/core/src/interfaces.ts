@@ -25,6 +25,7 @@ export interface IDefinitionMetadata {
     singleton?: boolean;
     dependencies?: IDependency[];
     aliasDependencies?: IAliasDependency[];
+    factoryDependencies?: IDependency[];
     aliases?: string[];
     initMethod?: string;
     bootstrap?: boolean;
