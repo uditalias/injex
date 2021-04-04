@@ -114,7 +114,3 @@ export class Zoo {
 ```
 
 The factory method calls the constructor, so it accepts arguments.
-
-:::info Important
-Injex's factory methods always return a Promise, which resolves to the factory type.
-:::
