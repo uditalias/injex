@@ -29,7 +29,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     /**
      * Load all project files and call `registerModuleExports` for each module
      */
-    protected abstract loadContainerFiles(): void;
+    protected abstract loadContainerFiles(): void | Promise<void>;
 
     public static create(config: IContainerConfig): InjexContainer<IContainerConfig> {
         throw new Error("Static method create not implemented.");
@@ -56,7 +56,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this.hooks.beforeRegistration.call();
 
-        this.loadContainerFiles();
+        await this.loadContainerFiles();
 
         this.hooks.afterRegistration.call();
 
