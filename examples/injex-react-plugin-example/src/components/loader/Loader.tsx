@@ -2,7 +2,7 @@ import * as React from "react";
 import clsx from "clsx";
 import theme from "./theme.scss";
 
-export default function Loader({ size = 60, color = "#fff", className = "" }: { size?: number; color?: string; className?: string; }): JSX.Element {
+export default function Loader({ size = 60, color = "#fff", className = "" }: { size?: number; color?: string; className?: string }): JSX.Element {
     return (
         <div style={{ width: size }} className={clsx(theme.showbox, className)}>
             <div className={theme.loader}>
