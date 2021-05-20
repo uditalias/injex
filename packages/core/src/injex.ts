@@ -298,10 +298,13 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _injectModuleDependencies(module: any) {
+        const self = this;
+
         metadataHandlers.forEachProtoMetadata(module, (_, meta) => {
             const dependencies = meta.dependencies || [];
             const aliasDependencies = meta.aliasDependencies || [];
             const factoryDependencies = meta.factoryDependencies || [];
+            const paramDependencies = meta.paramDependencies || [];
 
             for (const { label, value } of dependencies) {
                 Object.defineProperty(module, label, {
@@ -328,6 +331,14 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                     configurable: true,
                     get: () => isPromise(item) ? item.then((instance) => instance) : item
                 });
+            }
+
+            for (const { methodName, index, value } of paramDependencies) {
+                const org = module[methodName];
+                module[methodName] = function (...args: any[]) {
+                    args[index] = self.get(value);
+                    return org.apply(module, args);
+                }
             }
         });
     }

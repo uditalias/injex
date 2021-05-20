@@ -2,6 +2,7 @@ export { define } from "./decorators/define";
 export { inject } from "./decorators/inject";
 export { injectFactory } from "./decorators/injectFactory";
 export { injectAlias } from "./decorators/injectAlias";
+export { injectParam } from "./decorators/injectParam";
 export { singleton } from "./decorators/singleton";
 export { init } from "./decorators/init";
 export { bootstrap } from "./decorators/bootstrap";

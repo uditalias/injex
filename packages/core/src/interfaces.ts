@@ -19,6 +19,13 @@ export interface IAliasDependency {
     keyBy: string;
 }
 
+export interface IParamDependency {
+    methodName: string;
+    index: number;
+    label: any;
+    value: any;
+}
+
 export interface IDefinitionMetadata {
     item: any;
     name?: ModuleName;
@@ -26,6 +33,7 @@ export interface IDefinitionMetadata {
     dependencies?: IDependency[];
     aliasDependencies?: IAliasDependency[];
     factoryDependencies?: IDependency[];
+    paramDependencies?: IParamDependency[];
     aliases?: string[];
     initMethod?: string;
     bootstrap?: boolean;
