@@ -338,7 +338,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 module[methodName] = function (...args: any[]) {
                     args[index] = self.get(value);
                     return org.apply(module, args);
-                }
+                };
             }
         });
     }
