@@ -100,6 +100,17 @@ Injex is pluggable, so you can use and create your plugins to enrich your applic
 
 [Learn more](https://www.injex.dev/docs/plugins) about Injex plugins and the plugin anatomy.
 
+## Live Example
+
+Checkout this live chat application built with Injex & Injex Plugins using React and Mobx
+
+- **[https://chat.injex.dev](https://chat.injex.dev)** ([source](examples/injex-react-plugin-example/))
+
+<p align="center">
+    <img src="website/static/img/injex_react_chat.png" />
+</p>
+
+
 ## Follow Us
 
 Follow us on [Twitter](https://twitter.com/injex_framework) or join our live [Discord](https://discord.gg/JWxbhXd8aX) server for more help, ideas, and discussions.
