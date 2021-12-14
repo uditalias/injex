@@ -185,8 +185,8 @@ save state. (Note that in this example we use MobX)
 ```ts
 @define()
 export class Todo {
-    @observer public description: string;
-    @observer public done: boolean;
+    @observable public description: string;
+    @observable public done: boolean;
 
     constructor(description: string, isDone: boolean) {
         makeObservable(this);
