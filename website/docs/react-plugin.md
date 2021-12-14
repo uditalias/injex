@@ -129,6 +129,8 @@ export class Bootstrap implements IBootstrap {
 }
 ```
 
+## Hooks
+
 ### Using the `useInjex()` hook
 
 The `useInjex()` hook is the core of the Injex React plugin, making it possible to inject dependencies from your runtime container directly into your application components inside the `InjexProvider`.
@@ -172,5 +174,51 @@ export default function App() {
 ```
 
 Note that `useInjex()` exposes two functions inside an array. The first is `inject`, which works the same as the `@inject()` decorator, and the second is the `injectAlias` that works the same as the `@injectAlias()` decorator.
+
+### Using the `useModuleFactory(moduleName, ...args)` hook
+
+Some of your application modules will not be singletons. you would like to create them on the fly when you need them.
+
+For example, lets say you have a `Todo` module and you want to create an instance of it inside your react component to
+save state. (Note that in this example we use MobX)
+
+```ts
+@define()
+export class Todo {
+    @observer public description: string;
+    @observer public done: boolean;
+
+    constructor(description: string, isDone: boolean) {
+        makeObservable(this);
+        this.description = description;
+        this.done = isDone;
+    }
+}
+```
+
+From inside your component, you can use the `useModuleFactory()` hook to create an instance of the Todo module.
+
+```tsx {2}
+function Todo() {
+    const todo = useModuleFactory<Todo>("todo", "What you want to do?", false);
+
+    const onChangeDescription = (e) => {
+        todo.description = e.target.value;
+    }
+
+    const onToggle = () => {
+        todo.done = !todo.done;
+    }
+
+    return (
+        <div className="todo">
+            <input type="text" value={todo.description} onChange={onChangeDescription} />
+            <input type="checkbox" checked={todo.done} onChange={onToggle} />
+        </div>
+    );
+}
+
+export default observer(Todo);
+```
 
 If you want a quick demo to play with, check out the [react example](/docs/examples#react-plugin-example) in the examples section.

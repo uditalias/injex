@@ -28,7 +28,7 @@
         [
             "@babel/plugin-proposal-class-properties",
             {
-                "loose": true
+                "loose": false
             }
         ],
         "@babel/plugin-syntax-dynamic-import",

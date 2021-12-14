@@ -1,19 +1,14 @@
-import * as React from "react";
-import { useInjex } from "@injex/react-plugin";
+import { useModuleFactory } from "@injex/react-plugin";
+import Header from "components/header";
 import Input from "components/input";
 import Messages from "components/messages";
 import Users from "components/users";
 import { Channel } from "models/channel";
+import * as React from "react";
 import theme from "./theme.scss";
-import Header from "components/header";
 
 export default function Chat({ channelName }: { channelName: string }): JSX.Element {
-    const [inject] = useInjex();
-
-    const channel = React.useMemo<Channel>(() => {
-        const createChannel = inject<(name: string) => Channel>("createChannel");
-        return createChannel(channelName);
-    }, []);
+    const channel = useModuleFactory<Channel>('channel', channelName);
 
     const onInputSubmit = React.useCallback((message) => {
         channel.sendMessage(message);

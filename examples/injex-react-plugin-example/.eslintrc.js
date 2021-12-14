@@ -6,6 +6,11 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended"
     ],
+    settings: {
+        react: {
+            version: "detect"
+        }
+    },
     parserOptions: {
         project: path.resolve(__dirname, "./tsconfig.json"),
         tsconfigRootDir: __dirname,

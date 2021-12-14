@@ -5,7 +5,7 @@ import { UsersManager } from "managers/usersManager";
 import { IObservableArray, observable } from "mobx";
 import { FirebaseService } from "services/firebaseService";
 
-@define("createChannel")
+@define()
 export class Channel {
 
     @inject() private firebaseService: FirebaseService;
