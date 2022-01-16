@@ -8,7 +8,7 @@ import * as React from "react";
 import theme from "./theme.scss";
 
 export default function Chat({ channelName }: { channelName: string }): JSX.Element {
-    const channel = useModuleFactory<Channel>('channel', channelName);
+    const channel = useModuleFactory<Channel>('channel', [channelName]);
 
     const onInputSubmit = React.useCallback((message) => {
         channel.sendMessage(message);
