@@ -7,8 +7,8 @@ import { useInjex } from "./useInjex";
  *
  * @returns Instance of module<T>
  */
-export function useModuleFactory<T>(moduleName: string, ...args: any[]): T {
+export function useModuleFactory<T>(moduleName: string, args: any[] = [], memoDependencies: any[] = []): T {
     const [inject] = useInjex();
     const factoryMethod = inject<Factory<T>>(moduleName);
-    return React.useMemo(() => factoryMethod(...args), []);
+    return React.useMemo(() => factoryMethod(...args), memoDependencies);
 }
