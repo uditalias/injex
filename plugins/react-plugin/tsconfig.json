@@ -3,7 +3,7 @@
     "compilerOptions": {
         "rootDir": "./src",
         "outDir": "./lib",
-        "sourceRoot": "/lib",
+        "sourceRoot": "./",
         "jsx": "react"
     },
     "include": [
