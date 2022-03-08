@@ -1,6 +1,6 @@
 {
   "name": "@injex/react-plugin",
-  "version": "3.0.3-sourcemaps.1",
+  "version": "3.0.3-sourcemaps.2",
   "description": "",
   "keywords": [],
   "author": {
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@injex/core": "^3.0.3-sourcemaps.1",
+    "@injex/core": "^3.0.3-sourcemaps.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@types/react": "^16.9.51",

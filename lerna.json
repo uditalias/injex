@@ -5,5 +5,5 @@
     "runtimes/*",
     "plugins/*"
   ],
-  "version": "3.0.3-sourcemaps.1"
+  "version": "3.0.3-sourcemaps.2"
 }
