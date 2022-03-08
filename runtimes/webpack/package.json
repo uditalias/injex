@@ -27,7 +27,7 @@
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
     "clean": "rimraf lib/",
-    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
+    "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov && cp -r src/ lib/",
     "test": "exit 0; jest",
     "test:cov": "exit 0; jest --coverage",
     "test:watch": "exit 0; npm t -- --watch --color"
