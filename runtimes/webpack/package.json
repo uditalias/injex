@@ -1,6 +1,6 @@
 {
   "name": "@injex/webpack",
-  "version": "3.0.2",
+  "version": "3.0.3-sourcemaps.3",
   "description": "",
   "keywords": [],
   "author": {
@@ -12,7 +12,8 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "publishConfig": {
     "access": "public"
@@ -46,6 +47,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@injex/core": "^3.0.2"
+    "@injex/core": "^3.0.3-sourcemaps.3"
   }
 }
