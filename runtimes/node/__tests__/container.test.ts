@@ -151,7 +151,10 @@ describe("InjexNodeContainer", () => {
         );
     });
 
-    it("should throw error when module dependency not found", async () => {
+    // THIS TEST IS DEPRECATED SINCE WE'RE NOT THROWING ERRORS
+    // WHEN USING @inject() TO INJECT MODULE THAT DOES NOT EXIST
+    // SINCE WE INJECT THE DEPENDENCIES ON DEMAND.
+    xit("should throw error when module dependency not found", async () => {
         const container = Injex.create({
             rootDirs: [
                 path.resolve(__dirname, "__mocks__/willThrow")
