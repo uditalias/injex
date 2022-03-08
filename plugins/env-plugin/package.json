@@ -1,6 +1,6 @@
 {
   "name": "@injex/env-plugin",
-  "version": "3.0.3-sourcemaps.3",
+  "version": "3.0.3",
   "description": "",
   "keywords": [],
   "author": {
@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@injex/core": "^3.0.3-sourcemaps.3",
-    "@injex/node": "^3.0.3-sourcemaps.3",
+    "@injex/core": "^3.0.3",
+    "@injex/node": "^3.0.3",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0",
     "tslib": "^2.2.0",
@@ -47,6 +47,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@injex/stdlib": "^3.0.3-sourcemaps.3"
+    "@injex/stdlib": "^3.0.3"
   }
 }
