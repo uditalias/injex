@@ -7,7 +7,7 @@ module.exports = {
       'container',
       'lifecycle',
       {
-        'Core Decorators': ['define', 'singleton', 'bootstrap', 'alias', 'lazy', 'inject', 'injectFactory', 'injectAlias', 'injectParam', 'init']
+        'Core Decorators': ['define', 'singleton', 'bootstrap', 'alias', 'lazy', 'inject', 'injectFactory', 'injectAlias', 'injectParam', 'init', 'ready']
       },
       'enums',
     ]

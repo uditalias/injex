@@ -72,6 +72,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             await bootstrapModule?.run();
 
             this.hooks.bootstrapComplete.call();
+
+            this._modulesReady();
         } catch (e) {
 
             this.hooks.bootstrapError.call(e);
@@ -201,9 +203,16 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         async function loaderFn(...args: any[]) {
             const Ctor: IConstructor = await loaderInstance.import.apply(loaderInstance, args);
             const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
-            const lazyInstance = self._createInstance(Ctor, args);
-            self._injectModuleDependencies(lazyInstance);
-            await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
+
+            let lazyInstance;
+            if (lazyMetadata.singleton && self.get(Ctor)) {
+                lazyInstance = self.get(Ctor);
+            } else {
+                lazyInstance = self._createInstance(Ctor, args);
+                self._injectModuleDependencies(lazyInstance);
+                await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
+                self._lazyInvokeModuleReadyMethod(lazyInstance, lazyMetadata);
+            }
 
             return lazyInstance;
         }
@@ -219,11 +228,20 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             self._injectModuleDependencies(instance);
             const initValue: Promise<void> | void = self._invokeModuleInitMethod(instance, metadata);
 
+            const _invokeReadyMethod = () => {
+                self._lazyInvokeModuleReadyMethod(instance, metadata);
+            }
+
             if (isPromise(initValue)) {
                 return (initValue as Promise<void>)
-                    .then(() => instance)
-                    .catch((err) => this._onInitModuleError(metadata, err));
+                    .then(() => {
+                        _invokeReadyMethod();
+                        return instance;
+                    })
+                    .catch((err) => self._onInitModuleError(metadata, err));
             }
+
+            _invokeReadyMethod();
 
             return instance;
         }
@@ -250,11 +268,23 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         );
     }
 
-    private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+    private _modulesReady() {
+        Array
+            .from(this._modules.values())
+            .map(({ module, metadata }) => {
+                if (metadata && metadata.singleton) {
+                    this._invokeModuleReadyMethod(
+                        metadata.lazyLoader || module, metadata
+                    );
+                }
+            })
+    }
+
+    private _invokeMetadataModuleMethod(module: any, metadata: IDefinitionMetadata, method: 'initMethod' | 'readyMethod', onError?: (metadata: IDefinitionMetadata, e: Error) => void): Promise<any> | any {
         const chain = [];
         metadataHandlers.forEachProtoMetadata(module, (_, meta: IDefinitionMetadata) => {
-            if (meta?.initMethod && chain.indexOf(meta.initMethod) < 0) {
-                chain.push(meta.initMethod);
+            if (meta?.[method] && chain.indexOf(meta[method]) < 0) {
+                chain.push(meta[method]);
             }
         });
 
@@ -271,13 +301,27 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 return Promise.all(promises);
             }
         } catch (e) {
-            this._onInitModuleError(metadata.name, e);
+            onError?.(metadata, e);
         }
     }
 
-    private _onInitModuleError(moduleName: ModuleName, err: Error) {
+    private _lazyInvokeModuleReadyMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        if (this.hooks.bootstrapComplete.calledOnce) {
+            this._invokeModuleReadyMethod(metadata.lazyLoader || module, metadata);
+        }
+    }
+
+    private _invokeModuleReadyMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        return this._invokeMetadataModuleMethod(module, metadata, 'readyMethod');
+    }
+
+    private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        return this._invokeMetadataModuleMethod(module, metadata, 'initMethod', this._onInitModuleError);
+    }
+
+    private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
         this._logger.error(err);
-        throw new InitializeMuduleError(moduleName);
+        throw new InitializeMuduleError(metadata.name);
     }
 
     private _createInstance(construct: any, args: any[] = []): any {
@@ -364,10 +408,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
      *
      * @param item - Module with metadata to add
      */
-    public addModule(item: IConstructor): InjexContainer<T> {
+    public addModule(item: IConstructor): Promise<InjexContainer<T>> {
         if (!metadataHandlers.hasMetadata(item.prototype)) {
             this._logger.debug("You're trying to add module without any metadata.");
-            return this;
+            return Promise.resolve(this);
         }
 
         this._register(item);
@@ -376,12 +420,17 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         const { module, metadata } = this.getModuleDefinition(item);
 
+        let optionalPromise: Promise<any> = null;
         if (metadata.singleton) {
             this._injectModuleDependencies(metadata.lazyLoader || module);
-            this._invokeModuleInitMethod(metadata.lazyLoader || module, metadata);
+            optionalPromise = this._invokeModuleInitMethod(metadata.lazyLoader || module, metadata);
         }
 
-        return this;
+        return (isPromise(optionalPromise) ? optionalPromise : Promise.resolve()).then(() => {
+            this._lazyInvokeModuleReadyMethod(metadata.lazyLoader || module, metadata);
+
+            return this;
+        });
     }
 
     /**

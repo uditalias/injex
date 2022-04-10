@@ -36,6 +36,7 @@ export interface IDefinitionMetadata {
     paramDependencies?: IParamDependency[];
     aliases?: string[];
     initMethod?: string;
+    readyMethod?: string;
     bootstrap?: boolean;
     lazy?: boolean;
     lazyLoader?: ILazyModule<any>;
