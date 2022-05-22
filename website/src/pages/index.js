@@ -41,9 +41,10 @@ function Home() {
               <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
             </div>
             <div className={clsx(styles.image, "col col-6")}>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6j_ojtNB0iI?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               {/* <img src="img/undraw_developer_activity_bv83.svg" /> */}
               {/* <img src="img/undraw_Freelancer_re_irh4.svg" /> */}
-              <img src="img/undraw_coding_6mjf.svg" />
+              {/* <img src="img/undraw_coding_6mjf.svg" /> */}
               {/* <img src="img/undraw_programming_2svr.svg" /> */}
             </div>
           </div>
