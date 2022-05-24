@@ -28,7 +28,9 @@ describe("Plugin", () => {
                 { Bootstrap }
             ],
             plugins: [
-                new ReactPlugin({ render })
+                new ReactPlugin({
+                    render: (provider) => render(provider)
+                })
             ]
         }).bootstrap();
 
@@ -71,7 +73,9 @@ describe("Plugin", () => {
                 { Bootstrap }, { UserService }
             ],
             plugins: [
-                new ReactPlugin({ render })
+                new ReactPlugin({
+                    render: (provider) => render(provider)
+                })
             ]
         }).bootstrap();
 
@@ -118,7 +122,9 @@ describe("Plugin", () => {
                 { Bootstrap }, { Dog }
             ],
             plugins: [
-                new ReactPlugin({ render })
+                new ReactPlugin({
+                    render: (provider) => render(provider)
+                })
             ]
         }).bootstrap();
 

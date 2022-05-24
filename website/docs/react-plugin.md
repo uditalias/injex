@@ -42,11 +42,21 @@ Injex.create({
 
 ### `render`
 
-The render function from React. The default is the render function from `react-dom`.
-This configuration is pretty rare and it used where you have more than one react version in your application.
+A render function. This function is used when you want to render the Injex provider manually.
+
+For example:
+
+```typescript
+Injex.create({
+    plugins: [
+        new ReactPlugin({
+            render: (provider) => ReactDOM.render(provider, document.querySelector('#root'))
+        })
+    ]
+})
+```
 
 - Type: `function`
-- Default: `render` from `react-dom`
 - Required: `false`
 
 ### `rootElementOrSelector`

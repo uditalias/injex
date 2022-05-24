@@ -15,17 +15,19 @@ describe("Context Provider", () => {
         const container = await InjexMock.create({
             modules: [],
             plugins: [
-                new ReactPlugin()
+                new ReactPlugin({
+                    rootElementOrSelector: '#root'
+                })
             ]
         }).bootstrap();
 
         const dom = render(
             <InjexProvider container={container}>
-                <div id="root">Injex Provider</div>
+                <div id="title">Injex Provider</div>
             </InjexProvider>
         );
 
-        expect(dom.container.querySelector("#root")).toHaveTextContent("Injex Provider");
+        expect(dom.container.querySelector("#title")).toHaveTextContent("Injex Provider");
     });
 
     it("should access module using standalone provider", async () => {
@@ -55,7 +57,9 @@ describe("Context Provider", () => {
                 { UserService }
             ],
             plugins: [
-                new ReactPlugin()
+                new ReactPlugin({
+                    rootElementOrSelector: '#root'
+                })
             ]
         }).bootstrap();
 

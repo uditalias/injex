@@ -3,6 +3,7 @@ import * as React from "react";
 import createConfig from "./createConfig";
 import InjexProvider from "./InjexProvider";
 import { IReactPluginConfig } from "./interfaces";
+import { createRoot } from "react-dom/client";
 
 export class ReactPlugin implements IInjexPlugin {
 
@@ -38,10 +39,10 @@ export class ReactPlugin implements IInjexPlugin {
             </InjexProvider>
         );
 
-        if (root) {
+        if (this.config.render) {
             this.config.render(provider, root);
         } else {
-            this.config.render(provider);
+            createRoot(root).render(provider);
         }
     }
 }
