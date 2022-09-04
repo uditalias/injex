@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { define, injectFactory, singleton } from "../src";
+import { define, Factory, inject, injectFactory, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 
 describe("Inject Factory", () => {
@@ -51,5 +51,37 @@ describe("Inject Factory", () => {
         });
 
         expect(container.bootstrap()).rejects.toThrow("MailMessage is not a factory module.");
+    });
+
+    it("should create module using factory method", async () => {
+
+        @define()
+        @singleton()
+        class MailSender {
+
+        }
+
+        @define('createMailMessage')
+        class MailMessage {
+            @inject() private mailSender: MailSender;
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { MailSender, MailMessage },
+            ]
+        });
+
+        await container.bootstrap();
+
+        const factoryMethod = container.get<Factory<MailMessage>>('createMailMessage');
+        const factoryMethod2 = container.get<Factory<MailMessage>>('createMailMessage');
+
+        const message = factoryMethod();
+        const message2 = factoryMethod2();
+
+        expect(message).toBeInstanceOf(MailMessage);
+        expect(message === message2).toBeFalsy();
+
     });
 });
