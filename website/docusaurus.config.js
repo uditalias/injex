@@ -115,7 +115,7 @@ module.exports = {
         src: 'img/logo.svg',
         href: 'https://www.injex.dev',
       },
-      copyright: `Copyright © ${new Date().getFullYear()} Injex`,
+      copyright: `Copyright © ${new Date().getFullYear()} Injex<br/>Released under the MIT License.`,
     }
   },
   presets: [
