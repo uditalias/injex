@@ -41,7 +41,7 @@ npm install --save @injex/node
 
 #### Webpack Runtime
 
-Create a dependency-injection container inside a Webpack bundled client-side application.
+Create a dependency-injection container inside a Webpack client-side application.
 
 ```bash
 npm install --save @injex/webpack
@@ -49,7 +49,7 @@ npm install --save @injex/webpack
 
 #### Vite Runtime
 
-Create a dependency-injection container inside a Vite bundled client-side application.
+Create a dependency-injection container inside a Vite client-side application.
 
 ```bash
 npm install --save @injex/vite
