@@ -3,7 +3,7 @@ import { EnvPlugin } from "@injex/env-plugin";
 import { ButtonType, Shape } from './common/enums';
 
 Injex.create({
-    glob: () => import.meta.glob('./**/*.ts', { eager: true }),
+    glob: () => import.meta.glob('./**/*[!.lazy].ts', { eager: true }),
     plugins: [
         new EnvPlugin({
             environments: {
