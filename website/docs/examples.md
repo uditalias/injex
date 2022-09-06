@@ -44,6 +44,17 @@ npm start
 
 Then open [http://localhost:3005](http://localhost:3005) in your browser
 
+## Vite runtime example
+
+Example of how to create and use the Vite runtime.
+
+```bash
+cd examples/injex-vite-example/
+npm start
+```
+
+Then open [http://localhost:5173](http://localhost:5173) in your browser
+
 ## Express plugin example
 
 Example of how to create and use the Node runtime with the Express Plugin.

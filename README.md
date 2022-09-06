@@ -29,7 +29,7 @@ npm install --save @injex/core
 
 After the core is installed and based on your project, you need to install a runtime container. The runtime container enables modules definition and registration across your application.
 
-You can currently choose between the Node or Webpack runtimes for the server or the client, respectively.
+You can currently choose between the Node, Webpack or Vite runtimes for the server or the client.
 
 #### Node Runtime
 
@@ -45,6 +45,14 @@ Create a dependency-injection container inside a Webpack bundled client-side app
 
 ```bash
 npm install --save @injex/webpack
+```
+
+#### Vite Runtime
+
+Create a dependency-injection container inside a Vite bundled client-side application.
+
+```bash
+npm install --save @injex/vite
 ```
 
 <img src="website/static/img/poster_twitter.png" />
