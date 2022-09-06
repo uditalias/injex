@@ -70,3 +70,34 @@ export class PageRenderer {
 ```
 
 ## Prevent lazy modules from beeing bundled
+
+When using the `@lazy()` feature, we tell Injex that some modules will be loaded later in our application lifecycle. These modules are excluded when Injex loads and initializes our container.  
+To do so, when creating the container using `Injex.create()`, we can decide which files should be loaded into the container upon initialization and which be avoided.
+
+We can create files with a specific extension to be avoided, for example:
+
+```bash
+myModule.lazy.ts
+```
+
+To skip the files with the `*.lazy.ts` extension, we can create the Injex container like so:
+
+Using **Webpack** runtime:
+
+```typescript
+import { Injex } from "@injex/webpack";
+
+Injex.create({
+    resolveContext: () => require.context(__dirname, true, /^.*[^\.lazy]\.ts$/)
+});
+```
+
+Using **Vite** runtime:
+
+```typescript
+import { Injex } from "@injex/vite";
+
+Injex.create({
+    glob: () => import.meta.glob('./**/*[!.lazy].ts', { eager: true })
+});
+```
