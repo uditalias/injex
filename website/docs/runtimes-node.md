@@ -21,7 +21,7 @@ npm install --save @injex/core @injex/node
 
 #### `Injex.create({ ... })`
 
-Creates a new Injex Node container.
+Creates a new Injex container.
 
 ```typescript
 import { Injex } from "@injex/node";
@@ -39,7 +39,7 @@ An Injex container instance is the same on all runtimes. Check out the [Containe
 
 ### Configurations
 
-You can config the Node container with the following configurations.
+You can config the Node runtime using the following configurations.
 
 #### `rootDirs`
 
