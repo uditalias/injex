@@ -1,4 +1,4 @@
-import { define, ILazyModule, lazy, singleton } from "@injex/core";
+import { define, ILazyModule, lazy } from "@injex/core";
 import { MyModule } from "./myModule.lazy";
 
 /**
@@ -9,7 +9,6 @@ import { MyModule } from "./myModule.lazy";
  */
 @lazy()
 @define()
-@singleton()
 export class MyModuleLoader implements ILazyModule<MyModule> {
     public async import() {
         return (await import('./myModule.lazy')).MyModule;
