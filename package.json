@@ -9,6 +9,7 @@
     "build": "lerna run build --stream",
     "website:build": "./scripts/build_docs.sh",
     "chat:build": "./scripts/build_chat.sh",
+    "todomvc:build": "./scripts/build_todomvc.sh",
     "release": "npm run build && lerna publish --force-publish",
     "test": "lerna run test -- -- --passWithNoTests",
     "test:cov": "lerna run test:cov -- -- --passWithNoTests",
