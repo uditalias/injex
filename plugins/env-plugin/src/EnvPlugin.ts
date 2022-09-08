@@ -2,11 +2,11 @@ import { IInjexPlugin, Injex } from "@injex/core";
 import createConfig from "./createConfig";
 import { IEnvPluginConfig } from "./interfaces";
 
-export class EnvPlugin implements IInjexPlugin {
+export class EnvPlugin<T = any> implements IInjexPlugin {
 
-    private config: IEnvPluginConfig;
+    private config: IEnvPluginConfig<T>;
 
-    constructor(config?: IEnvPluginConfig) {
+    constructor(config?: IEnvPluginConfig<T>) {
         this.config = createConfig(config);
     }
 

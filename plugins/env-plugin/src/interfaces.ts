@@ -1,8 +1,8 @@
-export interface IEnvPluginConfig {
+export interface IEnvPluginConfig<T = any> {
     name?: string;
     current?: string;
-    defaults?: any;
+    defaults?: Partial<T>;
     environments?: {
-        [index: string]: any;
+        [index: string]: T;
     };
 }
