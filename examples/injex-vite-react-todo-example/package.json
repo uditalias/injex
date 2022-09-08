@@ -1,7 +1,7 @@
 {
   "name": "injex-vite-react-todo-example",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,9 +18,9 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@injex/core": "^3.1.1",
-    "@injex/react-plugin": "^3.1.1",
-    "@injex/vite": "^3.1.1",
+    "@injex/core": "^3.2.0",
+    "@injex/react-plugin": "^3.2.0",
+    "@injex/vite": "^3.2.0",
     "clsx": "^1.2.1",
     "mobx": "^6.6.1",
     "mobx-react": "^7.5.2",
