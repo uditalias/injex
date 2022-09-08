@@ -1,13 +1,13 @@
 import { define, init, inject, singleton } from "@injex/core";
 import { InjexProvider } from "@injex/react-plugin";
-import InjexVite from "@injex/vite/lib/injex";
+import { Injex } from "@injex/vite";
 import { createRoot, Root } from "react-dom/client";
 import App from "../App";
 
 @define("viewManager")
 @singleton()
 export class ViewManager {
-    @inject() private $injex: InjexVite;
+    @inject() private $injex: Injex;
 
     private _root: Root;
 
