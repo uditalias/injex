@@ -21,7 +21,7 @@ function Feature({ title, description, icon, image }) {
   );
 }
 
-const tabs = [{ value: "node", label: "Node" }, { value: "webpack", label: "Webpack" }];
+const tabs = [{ value: "node", label: "Node" }, { value: "webpack", label: "Webpack" }, { value: "vite", label: "Vite" }];
 
 function Home() {
   const context = useDocusaurusContext();
@@ -41,10 +41,10 @@ function Home() {
               <a href="https://github.com/uditalias/injex" className={clsx(styles.button, styles.outline)}>View Source</a>
             </div>
             <div className={clsx(styles.image, "col col-6")}>
-              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6j_ojtNB0iI?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/6j_ojtNB0iI?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
               {/* <img src="img/undraw_developer_activity_bv83.svg" /> */}
               {/* <img src="img/undraw_Freelancer_re_irh4.svg" /> */}
-              {/* <img src="img/undraw_coding_6mjf.svg" /> */}
+              <img src="img/undraw_coding_6mjf.svg" />
               {/* <img src="img/undraw_programming_2svr.svg" /> */}
             </div>
           </div>
@@ -68,7 +68,7 @@ function Home() {
         </main>
         <main className="container">
           <h2>The fastest way to get started</h2>
-          <p>Quick installation of Injex core and Node.JS/Webpack runtime.</p>
+          <p>Quick installation of Injex core and Node.JS/Webpack/Vite runtime.</p>
           <div className="row">
             <div className={clsx(styles.desc, "col col-6")}>
               <p>Injex runtimes are consistent so that you wouldn't notice any change. Full Stack TypeScript development (server/client) at its best.</p>
@@ -81,7 +81,7 @@ function Home() {
               </ul>
               <p>
                 Checkout the <Link to="/docs/examples/">examples</Link> page for full examples and use cases.
-            </p>
+              </p>
             </div>
             <div className={clsx(styles.code, "col col-6")}>
               <Tabs values={tabs} defaultValue="node">
@@ -89,7 +89,7 @@ function Home() {
                   <p>Install using npm or yarn</p>
                   <CodeBlock className="bash">
                     npm install --save @injex/core @injex/node
-                </CodeBlock>
+                  </CodeBlock>
                   <h2></h2>
                   <p>Import and create Injex container.</p>
                   <CodeBlock>
@@ -106,7 +106,7 @@ Injex.create({
                   <p>Install using npm or yarn</p>
                   <CodeBlock className="bash">
                     npm install --save @injex/core @injex/webpack
-              </CodeBlock>
+                  </CodeBlock>
                   <h2></h2>
                   <p>Import and create Injex container.</p>
                   <CodeBlock>
@@ -115,6 +115,23 @@ Injex.create({
 Injex.create({
   resolveContext: () => {
     return require.context(__dirname, true, /\.ts$/);
+  }
+}).bootstrap();`}
+                  </CodeBlock>
+                </TabItem>
+                <TabItem value="vite">
+                  <p>Install using npm or yarn</p>
+                  <CodeBlock className="bash">
+                    npm install --save @injex/core @injex/vite
+                  </CodeBlock>
+                  <h2></h2>
+                  <p>Import and create Injex container.</p>
+                  <CodeBlock>
+                    {`import { Injex } from "@injex/vite";
+
+Injex.create({
+  glob: () => {
+    return import.meta.glob('./**/*.ts', { eager: true });
   }
 }).bootstrap();`}
                   </CodeBlock>

@@ -113,11 +113,11 @@ export interface IContainerConfig {
 
 For consistency, export the runtime container you created in the `injex.ts` file under the name `Injex`.
 
-As an example, this is how the Node and Webpack runtimes are imported:
+As an example, this is how the Node, Webpack and Vite runtimes are imported:
 
 import CodeBlock from '@theme/CodeBlock';
 
-<Tabs values={[{label: "Node", value: "node"}, {label: "Webpack", value: "webpack"}, {label: "Yours", value: "yours"}]} defaultValue="node">
+<Tabs values={[{label: "Node", value: "node"}, {label: "Webpack", value: "webpack"}, {label: "Vite", value: "vite"}, {label: "Yours", value: "yours"}]} defaultValue="node">
     <TabItem value="node">
         <CodeBlock className="ts">
             {`import { Injex } from "@injex/node";\n\nInjex.create({ ... });`}
@@ -126,6 +126,11 @@ import CodeBlock from '@theme/CodeBlock';
     <TabItem value="webpack">
         <CodeBlock className="ts">
             {`import { Injex } from "@injex/webpack";\n\nInjex.create({ ... });`}
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="vite">
+        <CodeBlock className="ts">
+            {`import { Injex } from "@injex/vite";\n\nInjex.create({ ... });`}
         </CodeBlock>
     </TabItem>
     <TabItem value="yours">

@@ -1,0 +1,20 @@
+{
+  "name": "injex-vite-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "@injex/core": "^3.1.1",
+    "@injex/env-plugin": "^3.1.1",
+    "@injex/vite": "^3.1.1"
+  }
+}

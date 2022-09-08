@@ -1,0 +1,32 @@
+{
+  "name": "injex-vite-react-todo-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.19.0",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "@injex/core": "^3.1.1",
+    "@injex/react-plugin": "^3.1.1",
+    "@injex/vite": "^3.1.1",
+    "clsx": "^1.2.1",
+    "mobx": "^6.6.1",
+    "mobx-react": "^7.5.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "todomvc-app-css": "^2.4.2",
+    "todomvc-common": "^1.0.5"
+  }
+}
