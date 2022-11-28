@@ -61,6 +61,7 @@ export interface IInjexHooks {
     bootstrapRun: Hook;
     bootstrapError: Hook<[Error]>;
     bootstrapComplete: Hook;
+    addObject: Hook<[IModule]>;
 }
 
 export interface IContainerConfig {

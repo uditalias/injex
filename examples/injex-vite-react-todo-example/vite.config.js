@@ -10,8 +10,11 @@ export default defineConfig({
             ]
         }
     })],
+    define: {
+        'process.env': {}
+    },
     optimizeDeps: {
-        include: ["@injex/core", "@injex/react-plugin"]
+        include: ["@injex/core", "@injex/react-plugin", "@injex/graph-plugin"]
     },
     esbuild: {
         keepNames: true

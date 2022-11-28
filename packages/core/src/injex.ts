@@ -43,9 +43,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this._modules = new Map<ModuleName | IConstructor, IModule>();
         this._aliases = new Map<string, IModule[]>();
 
-        this.addObject(this, "$injex");
-
         this._createHooks();
+
+        this.addObject(this, "$injex");
 
         this._logger.debug("Container created with config", this.config);
     }
@@ -145,6 +145,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             bootstrapRun: new Hook(),
             bootstrapError: new Hook(),
             bootstrapComplete: new Hook(),
+            addObject: new Hook(),
         };
     }
 
@@ -403,6 +404,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this._moduleRegistry.set(metadata.name, item);
     }
 
+    public getCurrentModules(): IModule[] {
+        return Array.from(this._modules.values());
+    }
+
     /**
      * Manually add module with metadata
      *
@@ -445,7 +450,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         const metadata = { singleton: true, item: obj, name };
 
-        this._modules.set(name, { module: obj, metadata });
+        const theModule = { module: obj, metadata };
+
+        this._modules.set(name, theModule);
+
+        this.hooks.addObject.call(theModule);
 
         return this;
     }
