@@ -67,10 +67,15 @@ describe("Plugin", () => {
     });
 
     it("should use default values", async () => {
+        interface IEnv {
+            appleId?: string;
+            googleId?: string;
+        }
+
         const container = Injex.create({
             rootDirs: [],
             plugins: [
-                new EnvPlugin({
+                new EnvPlugin<IEnv>({
                     defaults: {
                         appleId: "11111",
                         googleId: "22222"
