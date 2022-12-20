@@ -120,4 +120,37 @@ describe("Init", () => {
         expect(dog).toBeInstanceOf(Dog);
         expect(fn).toHaveBeenCalledTimes(2);
     });
+
+    it("should init modules on separate tasks using the `asyncModuleInit` config", async () => {
+        const fn = jest.fn();
+        class Animal {
+            @init()
+            public initialize() {
+                fn();
+            }
+        }
+
+        @define()
+        class Dog extends Animal {
+            @init()
+            public initializeDog() {
+                fn();
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Dog }
+            ],
+            asyncModuleInit: true
+        });
+
+        await container.bootstrap();
+
+        const createDog = container.get("dog");
+        const dog = await createDog();
+
+        expect(dog).toBeInstanceOf(Dog);
+        expect(fn).toHaveBeenCalledTimes(2);
+    });
 });

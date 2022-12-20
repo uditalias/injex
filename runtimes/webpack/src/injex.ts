@@ -11,6 +11,7 @@ export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
         return {
             logLevel: LogLevel.Error,
             logNamespace: "Injex",
+            asyncModuleRequire: false,
             plugins: [],
             ...config
         };
@@ -35,9 +36,24 @@ export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
                 return files.concat(currentFile);
             }, []);
 
-            allContextFiles.forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
+            if (this.config.asyncModuleRequire) {
+                const registrationPromises: Promise<void>[] = [];
+                allContextFiles.forEach((filePath) => {
+                    registrationPromises.push(
+                        new Promise((r) => {
+                            setTimeout(() => {
+                                this.registerModuleExports(requireContext(filePath));
+                                r();
+                            })
+                        })
+                    );
+                });
 
-            resolve();
+                Promise.all(registrationPromises).then(() => resolve());
+            } else {
+                allContextFiles.forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
+                resolve();
+            }
         }, 0));
     }
 }

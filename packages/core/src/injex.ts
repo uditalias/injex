@@ -312,10 +312,28 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _invokeModuleReadyMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        if (this.config.asyncModuleInit) {
+            return new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    const promise = this._invokeMetadataModuleMethod(module, metadata, 'readyMethod');
+                    isPromise(promise) ? promise.then(resolve) : resolve();
+                });
+            });
+        }
+
         return this._invokeMetadataModuleMethod(module, metadata, 'readyMethod');
     }
 
     private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
+        if (this.config.asyncModuleInit) {
+            return new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    const promise = this._invokeMetadataModuleMethod(module, metadata, 'initMethod', this._onInitModuleError);
+                    isPromise(promise) ? promise.then(resolve) : resolve();
+                });
+            });
+        }
+
         return this._invokeMetadataModuleMethod(module, metadata, 'initMethod', this._onInitModuleError);
     }
 
