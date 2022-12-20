@@ -1,6 +1,6 @@
 {
   "name": "@injex/vite",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "",
   "keywords": [],
   "author": {
@@ -48,6 +48,6 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@injex/core": "^3.2.1"
+    "@injex/core": "^3.3.0"
   }
 }
