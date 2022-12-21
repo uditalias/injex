@@ -67,15 +67,6 @@ export interface IContainerConfig {
     logLevel?: LogLevel;
     logNamespace?: string;
     plugins?: IInjexPlugin[];
-
-    /**
-     * Separate each module @init() to a separate task to prevent
-     * long task while initializing container modules.
-     *
-     * @type Boolean
-     * @default false
-     */
-    asyncModuleInit?: boolean;
 }
 
 export interface ILazyModule<T> {

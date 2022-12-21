@@ -13,3 +13,7 @@ export function isPromise(predicate: any): boolean {
 export function getConstructorName(instance: any): string {
     return (instance && instance.constructor && instance.constructor.name);
 }
+
+export function yieldToMain(): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, 0));
+}

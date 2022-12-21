@@ -1,4 +1,4 @@
-import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
+import { Hook, IConstructor, isFunction, isPromise, Logger, yieldToMain } from "@injex/stdlib";
 import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
 import { DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
@@ -38,6 +38,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     protected constructor(config: T) {
         this.config = this.createConfig(config);
         this._logger = new Logger(this.config.logLevel, this.config.logNamespace);
+        this._onInitModuleError = this._onInitModuleError.bind(this);
 
         this._moduleRegistry = new Map<ModuleName, any>();
         this._modules = new Map<ModuleName | IConstructor, IModule>();
@@ -60,7 +61,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this.hooks.afterRegistration.call();
 
-        this._createModules();
+        await this._createModules();
 
         const bootstrapModule = this.get<IBootstrap>(bootstrapSymbol);
 
@@ -75,7 +76,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
             this._modulesReady();
         } catch (e) {
-
             this.hooks.bootstrapError.call(e);
 
             if (bootstrapModule?.didCatch) {
@@ -148,10 +148,18 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         };
     }
 
-    private _createModules() {
+    private async _createModules() {
         this.hooks.beforeCreateModules.call();
 
-        this._moduleRegistry.forEach((item) => this._createModule(item));
+        const modules = Array.from(this._moduleRegistry.values());
+
+        while (modules.length) {
+            const item = modules.shift();
+
+            this._createModule(item);
+
+            await yieldToMain();
+        }
 
         this.hooks.afterCreateModules.call();
     }
@@ -260,6 +268,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 })
                 .map(async ({ module, metadata }) => {
                     if (metadata && metadata.singleton) {
+                        await yieldToMain();
                         return this._invokeModuleInitMethod(
                             metadata.lazyLoader || module, metadata
                         );
@@ -298,7 +307,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             }
 
             if (promises.length) {
-                return Promise.all(promises);
+                return Promise.all(promises).catch((e) => {
+                    onError?.(metadata, e);
+                });
             }
         } catch (e) {
             onError?.(metadata, e);
@@ -312,28 +323,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _invokeModuleReadyMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
-        if (this.config.asyncModuleInit) {
-            return new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    const promise = this._invokeMetadataModuleMethod(module, metadata, 'readyMethod');
-                    isPromise(promise) ? promise.then(resolve) : resolve();
-                });
-            });
-        }
-
         return this._invokeMetadataModuleMethod(module, metadata, 'readyMethod');
     }
 
     private _invokeModuleInitMethod(module: any, metadata: IDefinitionMetadata): Promise<any> | any {
-        if (this.config.asyncModuleInit) {
-            return new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    const promise = this._invokeMetadataModuleMethod(module, metadata, 'initMethod', this._onInitModuleError);
-                    isPromise(promise) ? promise.then(resolve) : resolve();
-                });
-            });
-        }
-
         return this._invokeMetadataModuleMethod(module, metadata, 'initMethod', this._onInitModuleError);
     }
 

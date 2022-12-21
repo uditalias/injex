@@ -6,7 +6,6 @@ Injex.create({
     resolveContext: () => {
         return require.context(__dirname, true, /[^.mdl]\.ts$/)
     },
-    asyncModuleRequire: true,
     plugins: [
         new EnvPlugin({
             environments: {

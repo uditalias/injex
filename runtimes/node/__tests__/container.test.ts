@@ -151,29 +151,12 @@ describe("InjexNodeContainer", () => {
         );
     });
 
-    // THIS TEST IS DEPRECATED SINCE WE'RE NOT THROWING ERRORS
-    // WHEN USING @inject() TO INJECT MODULE THAT DOES NOT EXIST
-    // SINCE WE INJECT THE DEPENDENCIES ON DEMAND.
-    xit("should throw error when module dependency not found", async () => {
-        const container = Injex.create({
-            rootDirs: [
-                path.resolve(__dirname, "__mocks__/willThrow")
-            ],
-            globPattern: "/**/unknownService.ts"
-        });
-
-        expect(container.bootstrap()).rejects.toThrowError(
-            "Dependency 'atlantisLocation' was not found for module 'unknownService'."
-        );
-    });
-
     it("should return undefined when module is not found in the module registry", async () => {
         const container = await createContainer();
 
         const service = container.get("maybeExistService");
 
         expect(service).toBeUndefined();
-
     });
 
     it("should throw when two modules defined with the same name", async () => {
