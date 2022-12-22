@@ -1,7 +1,7 @@
 import { Hook, IConstructor, isFunction, isPromise, Logger, yieldToMain } from "@injex/stdlib";
 import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
-import { DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
+import { BootstrapError, DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
 import metadataHandlers from "./metadataHandlers";
 
@@ -10,6 +10,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     private _modules: Map<ModuleName | IConstructor, IModule>;
     private _aliases: Map<string, IModule[]>;
     private _logger: Logger;
+    private _didBootstrapCalled: boolean;
 
     protected config: T;
 
@@ -39,6 +40,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         this.config = this.createConfig(config);
         this._logger = new Logger(this.config.logLevel, this.config.logNamespace);
         this._onInitModuleError = this._onInitModuleError.bind(this);
+        this._didBootstrapCalled = false;
 
         this._moduleRegistry = new Map<ModuleName, any>();
         this._modules = new Map<ModuleName | IConstructor, IModule>();
@@ -52,6 +54,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     public async bootstrap(): Promise<InjexContainer<T>> {
+        if (this._didBootstrapCalled) {
+            throw new BootstrapError('container bootstrap should run only once.');
+        }
+
+        this._didBootstrapCalled = true;
 
         await this._initPlugins();
 
@@ -426,6 +433,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         }
 
         this._register(item);
+
+        if (!this._didBootstrapCalled) {
+            return Promise.resolve(this);
+        }
 
         this._createModule(item);
 

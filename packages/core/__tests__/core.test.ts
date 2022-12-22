@@ -133,4 +133,17 @@ describe("Core", () => {
 
         expect(fn).toHaveBeenCalledTimes(1);
     });
+
+    it("should throw error if bootstrap called more than once", async () => {
+        const container = InjexMock.create({
+            modules: []
+        });
+
+        await container.bootstrap();
+
+
+        await expect(container.bootstrap()).rejects.toThrowError(
+            'Bootstrap failed: container bootstrap should run only once.'
+        )
+    }); 
 });
