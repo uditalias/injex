@@ -484,8 +484,24 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return this;
     }
 
-    public get<K = any>(itemNameOrType: ModuleName | IConstructor): K {
-        const definition = this.getModuleDefinition(itemNameOrType);
+    private _getMany(...itemNameOrType: (ModuleName | IConstructor)[]): any[] {
+        const results = [];
+
+        while (itemNameOrType.length) {
+            results.push(this.get(itemNameOrType.shift()));
+        }
+
+        return results;
+    }
+
+    public get<K = any>(itemNameOrType: ModuleName | IConstructor): K;
+    public get(...itemNameOrType: (ModuleName | IConstructor)[]): any[];
+    public get<K = any>(...itemNameOrType: (ModuleName | IConstructor)[]): K | any[] {
+        if (itemNameOrType.length > 1) {
+            return this._getMany(...itemNameOrType);
+        }
+
+        const definition = this.getModuleDefinition(itemNameOrType[0]);
 
         if (!definition) {
             return UNDEFINED;

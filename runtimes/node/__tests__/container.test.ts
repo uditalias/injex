@@ -1,10 +1,10 @@
-import { LogLevel, errors } from "@injex/core";
-import { RootDirectoryNotExistError } from "../src/errors";
+//@ts-nocheck
+import { LogLevel } from "@injex/core";
 import * as path from "path";
+import { Injex } from "../src";
+import { Mail } from "./__mocks__/general/mail";
 import { MailManager } from "./__mocks__/general/mailManager";
 import { MailService } from "./__mocks__/general/mailService";
-import { Mail } from "./__mocks__/general/mail";
-import { Injex } from "../src";
 
 describe("InjexNodeContainer", () => {
 

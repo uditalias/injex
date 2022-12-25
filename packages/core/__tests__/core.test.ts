@@ -61,6 +61,34 @@ describe("Core", () => {
         expect(mailService).toBeInstanceOf(MailService);
     });
 
+    it("should get multiple modules", async () => {
+        @define()
+        @singleton()
+        class MailService {
+        }
+
+        @define()
+        @singleton()
+        class ReportService {
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { MailService, ReportService }
+            ]
+        });
+
+        await container.bootstrap();
+
+        const [mailService, reportService] = container.get('mailService', 'reportService');
+
+        expect(mailService).toBeDefined();
+        expect(mailService).toBeInstanceOf(MailService);
+
+        expect(reportService).toBeDefined();
+        expect(reportService).toBeInstanceOf(ReportService);
+    });
+
     it("should get alias map", async () => {
 
         interface IAnimal {
@@ -145,5 +173,5 @@ describe("Core", () => {
         await expect(container.bootstrap()).rejects.toThrowError(
             'Bootstrap failed: container bootstrap should run only once.'
         )
-    }); 
+    });
 });
