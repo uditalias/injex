@@ -1,7 +1,6 @@
 //@ts-nocheck
 import { define, init, singleton } from "@injex/core";
 import { join } from "path";
-import { RemoteModulesError } from "../src/errors";
 import { Injex } from "../src/index";
 import { ManagerA } from "./__mocks__/remote/managers/ManagerA";
 import { ManagerB } from "./__mocks__/remote/managers/ManagerB";
@@ -77,7 +76,7 @@ describe("loadRemoteModules", () => {
 
         await container.bootstrap();
 
-        const [managerA, managerB, serviceA, serviceB] = container.get('managerA', 'managerB', 'serviceA', 'serviceB');
+        const [managerA, managerB, serviceA, serviceB] = container.get<ManagerA, ManagerB, ServiceA, ServiceB>('managerA', 'managerB', 'serviceA', 'serviceB');
 
         expect(managerA).toBeDefined();
         expect(managerB).toBeDefined();

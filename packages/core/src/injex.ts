@@ -495,7 +495,16 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     public get<K = any>(itemNameOrType: ModuleName | IConstructor): K;
-    public get(...itemNameOrType: (ModuleName | IConstructor)[]): any[];
+    public get<T1>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1];
+    public get<T1, T2>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2];
+    public get<T1, T2, T3>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3];
+    public get<T1, T2, T3, T4>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4];
+    public get<T1, T2, T3, T4, T5>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5];
+    public get<T1, T2, T3, T4, T5, T6>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6];
+    public get<T1, T2, T3, T4, T5, T6, T7>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8, T9>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8, T9];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10];
     public get<K = any>(...itemNameOrType: (ModuleName | IConstructor)[]): K | any[] {
         if (itemNameOrType.length > 1) {
             return this._getMany(...itemNameOrType);

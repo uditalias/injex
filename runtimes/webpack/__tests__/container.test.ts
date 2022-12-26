@@ -1,6 +1,7 @@
 import { join } from "path";
 import { Injex } from "../src";
 import { MailService } from "./__mocks__/project/mailService";
+import { Store } from "./__mocks__/project/store";
 import makeRequireWithContext, { RequireWithContext } from "./__mocks__/requireWithContext";
 
 describe('InjexWebpackContainer', () => {
@@ -17,7 +18,7 @@ describe('InjexWebpackContainer', () => {
 
         await container.bootstrap();
 
-        const [mailService, store] = container.get('mailService', 'store');
+        const [mailService, store] = container.get<MailService, Store>('mailService', 'store');
 
         expect(mailService).toBeDefined();
         expect(mailService).toBeInstanceOf(MailService);

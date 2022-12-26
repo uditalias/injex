@@ -80,7 +80,7 @@ describe("Core", () => {
 
         await container.bootstrap();
 
-        const [mailService, reportService] = container.get('mailService', 'reportService');
+        const [mailService, reportService] = container.get<MailService, ReportService>('mailService', 'reportService');
 
         expect(mailService).toBeDefined();
         expect(mailService).toBeInstanceOf(MailService);
