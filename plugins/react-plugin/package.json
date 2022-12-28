@@ -1,6 +1,6 @@
 {
   "name": "@injex/react-plugin",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "",
   "keywords": [],
   "author": {
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@injex/core": "^3.3.3",
+    "@injex/core": "^3.3.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@types/react": "^18.0.9",
