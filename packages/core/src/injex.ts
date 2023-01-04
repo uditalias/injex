@@ -220,7 +220,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
 
             let lazyInstance;
-            if (lazyMetadata.singleton && self.get(Ctor)) {
+            if (lazyMetadata && lazyMetadata.singleton && self.get(Ctor)) {
                 lazyInstance = self.get(Ctor);
             } else {
                 lazyInstance = self._createInstance(Ctor, args);
@@ -443,7 +443,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         const { module, metadata } = this.getModuleDefinition(item);
 
         let optionalPromise: Promise<any> = null;
-        if (metadata.singleton) {
+        if (metadata && metadata.singleton) {
             this._injectModuleDependencies(metadata.lazyLoader || module);
             optionalPromise = this._invokeModuleInitMethod(metadata.lazyLoader || module, metadata);
         }
