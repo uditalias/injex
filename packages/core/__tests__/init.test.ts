@@ -89,7 +89,7 @@ describe("Init", () => {
         expect(instance).toBeInstanceOf(MailMessage);
     });
 
-    it.only("should run multiple init methods on class inheritance", async () => {
+    it("should run multiple init methods on class inheritance", async () => {
         const fn = jest.fn();
         class Animal {
             @init()
