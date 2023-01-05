@@ -68,7 +68,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this.hooks.afterRegistration.call();
 
-        await this._createModules();
+        this._createModules();
 
         const bootstrapModule = this.get<IBootstrap>(bootstrapSymbol);
 
@@ -155,18 +155,10 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         };
     }
 
-    private async _createModules() {
+    private _createModules() {
         this.hooks.beforeCreateModules.call();
 
-        const modules = Array.from(this._moduleRegistry.values());
-
-        while (modules.length) {
-            const item = modules.shift();
-
-            this._createModule(item);
-
-            await yieldToMain();
-        }
+        this._moduleRegistry.forEach((item) => this._createModule(item));
 
         this.hooks.afterCreateModules.call();
     }
