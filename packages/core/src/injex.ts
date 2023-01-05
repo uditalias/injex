@@ -339,7 +339,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
         this._logger.error(err);
-        throw new InitializeMuduleError(metadata.name);
+        const error =  new InitializeMuduleError(metadata.name);
+        error.stack = err?.stack ?? error.stack;
+        throw error;
     }
 
     private _createInstance(construct: any, args: any[] = []): any {
