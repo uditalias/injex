@@ -1,6 +1,6 @@
 {
   "name": "injex-webpack-example",
-  "version": "3.3.8",
+  "version": "3.3.9",
   "private": true,
   "description": "",
   "keywords": [],
@@ -52,9 +52,9 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
-    "@injex/core": "^3.3.8",
-    "@injex/env-plugin": "^3.3.8",
-    "@injex/webpack": "^3.3.8",
+    "@injex/core": "^3.3.9",
+    "@injex/env-plugin": "^3.3.9",
+    "@injex/webpack": "^3.3.9",
     "tslib": "^2.1.0"
   }
 }

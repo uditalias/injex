@@ -1,7 +1,7 @@
 {
   "name": "injex-vite-example",
   "private": true,
-  "version": "3.3.8",
+  "version": "3.3.9",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,8 +13,8 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@injex/core": "^3.3.8",
-    "@injex/env-plugin": "^3.3.8",
-    "@injex/vite": "^3.3.8"
+    "@injex/core": "^3.3.9",
+    "@injex/env-plugin": "^3.3.9",
+    "@injex/vite": "^3.3.9"
   }
 }
