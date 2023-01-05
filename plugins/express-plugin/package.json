@@ -1,6 +1,6 @@
 {
   "name": "@injex/express-plugin",
-  "version": "3.3.5",
+  "version": "3.3.6",
   "description": "",
   "keywords": [],
   "author": {
@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@injex/core": "^3.3.5",
-    "@injex/node": "^3.3.5",
+    "@injex/core": "^3.3.6",
+    "@injex/node": "^3.3.6",
     "@types/express": "^4.17.8",
     "express": "^4.17.1",
     "jest": "^26.4.2",
@@ -49,6 +49,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@injex/stdlib": "^3.3.5"
+    "@injex/stdlib": "^3.3.6"
   }
 }

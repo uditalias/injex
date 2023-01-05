@@ -1,6 +1,6 @@
 {
   "name": "@injex/core",
-  "version": "3.3.5",
+  "version": "3.3.6",
   "description": "Simple, Decorated, Pluggable dependency-injection framework for TypeScript apps",
   "keywords": [
     "dependency-injection-container",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/stdlib": "^3.3.5"
+    "@injex/stdlib": "^3.3.6"
   },
   "devDependencies": {
     "jest": "^26.4.2",
