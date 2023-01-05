@@ -275,7 +275,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 })
                 .map(async ({ module, metadata }) => {
                     if (metadata && metadata.singleton) {
-                        await yieldToMain();
                         return this._invokeModuleInitMethod(
                             metadata.lazyLoader || module, metadata
                         );
