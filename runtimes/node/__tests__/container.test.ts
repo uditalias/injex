@@ -146,7 +146,7 @@ describe("InjexNodeContainer", () => {
             globPattern: "/**/badService.ts"
         });
 
-        expect(container.bootstrap()).rejects.toThrowError(
+        await expect(container.bootstrap()).rejects.toThrowError(
             "Failed to initialize module 'badService'."
         );
     });
