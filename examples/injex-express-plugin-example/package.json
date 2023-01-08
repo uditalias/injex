@@ -28,7 +28,7 @@
     "@injex/env-plugin": "^3.4.0",
     "@injex/express-plugin": "^3.4.0",
     "@injex/node": "^3.4.0",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "express": "^4.17.3"
   },
   "devDependencies": {
