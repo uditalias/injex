@@ -56,28 +56,36 @@ export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
         return Promise.all(promises);
     }
 
-    protected loadContainerFiles(): Promise<void> {
-        // using a timeout to allow the loading process start
-        // fresh on a new javascript task in order to prevent
-        // long task.
-        return new Promise((resolve) => setTimeout(() => {
-            const requireContext = this.config.resolveContext();
-            const loadedModules = {};
-            const allContextFiles = requireContext.keys().reduce((files, currentFile) => {
-                // webpack v5 has a breaking change when the 'requireContext.keys()' may have duplications
-                // https://github.com/webpack/webpack/issues/12087
-                if (loadedModules[currentFile]) {
-                    return files;
+    protected async loadContainerFiles(): Promise<void> {
+        await yieldToMain();
+
+        const requireContext = this.config.resolveContext();
+        const loadedModules = {};
+        const allContextFiles = requireContext.keys().reduce((files, currentFile) => {
+            // webpack v5 has a breaking change when the 'requireContext.keys()' may have duplications
+            // https://github.com/webpack/webpack/issues/12087
+            if (loadedModules[currentFile]) {
+                return files;
+            }
+
+            loadedModules[currentFile] = true;
+            loadedModules[currentFile.replace(/^\.\//, '')] = true;
+            return files.concat(currentFile);
+        }, []);
+
+        if (this.config.perfMode) {
+            let start = performance.now() + 50;
+            while (allContextFiles.length) {
+                const filePath = allContextFiles.shift();
+                this.registerModuleExports(requireContext(filePath));
+
+                if (performance.now() >= start) {
+                    await yieldToMain();
+                    start = performance.now() + 50;
                 }
-
-                loadedModules[currentFile] = true;
-                loadedModules[currentFile.replace(/^\.\//, '')] = true;
-                return files.concat(currentFile);
-            }, []);
-
+            }
+        } else {
             allContextFiles.forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
-
-            resolve();
-        }, 0));
+        }
     }
 }

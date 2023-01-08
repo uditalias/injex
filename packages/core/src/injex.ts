@@ -68,7 +68,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this.hooks.afterRegistration.call();
 
-        this._createModules();
+        if (this.config.perfMode) {
+            await this._createModulesAsync();
+        } else {
+            this._createModules();
+        }
 
         const bootstrapModule = this.get<IBootstrap>(bootstrapSymbol);
 
@@ -153,6 +157,20 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             bootstrapError: new Hook(),
             bootstrapComplete: new Hook(),
         };
+    }
+
+    private async _createModulesAsync() {
+        this.hooks.beforeCreateModules.call();
+
+        const modules = Array.from(this._moduleRegistry.values());
+
+        while (modules.length) {
+            const item = modules.shift();
+            this._createModule(item);
+            await yieldToMain();
+        }
+
+        this.hooks.afterCreateModules.call();
     }
 
     private _createModules() {
@@ -331,7 +349,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
         this._logger.error(err);
-        const error =  new InitializeMuduleError(metadata.name);
+        const error = new InitializeMuduleError(metadata.name);
         error.stack = err?.stack ?? error.stack;
         throw error;
     }
