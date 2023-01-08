@@ -174,4 +174,38 @@ describe("Core", () => {
             'Bootstrap failed: container bootstrap should run only once.'
         )
     });
+
+    it("should create injex container using `perfMode`", async () => {
+
+        let mailServiceInitTime: number;
+        let analyticsServiceInitTime: number;
+        @define()
+        @singleton()
+        class MailService {
+            constructor() {
+                mailServiceInitTime = Date.now();
+            }
+        }
+
+        @define()
+        @singleton()
+        class AnalyticsService {
+            constructor() {
+                analyticsServiceInitTime = Date.now();
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [{ MailService }, { AnalyticsService }],
+            perfMode: true
+        });
+
+        await container.bootstrap();
+
+        const [mailService, analyticsService] = container.get<MailService, AnalyticsService>('mailService', 'analyticsService');
+
+        expect(mailService).toBeInstanceOf(MailService);
+        expect(analyticsService).toBeInstanceOf(AnalyticsService);
+        expect(analyticsServiceInitTime - mailServiceInitTime).toBeGreaterThan(0);
+    });
 });
