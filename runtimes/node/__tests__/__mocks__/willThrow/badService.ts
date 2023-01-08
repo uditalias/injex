@@ -6,6 +6,6 @@ export class BadService {
 
 	@init()
 	public async initialize() {
-		await new Promise((_, reject) => setTimeout(() => reject()));
+		await new Promise((_, reject) => setTimeout(() => reject("I'm a bad service!")));
 	}
 }

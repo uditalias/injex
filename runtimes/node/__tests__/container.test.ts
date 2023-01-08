@@ -1,10 +1,10 @@
-import { LogLevel, errors } from "@injex/core";
-import { RootDirectoryNotExistError } from "../src/errors";
+//@ts-nocheck
+import { LogLevel } from "@injex/core";
 import * as path from "path";
+import { Injex } from "../src";
+import { Mail } from "./__mocks__/general/mail";
 import { MailManager } from "./__mocks__/general/mailManager";
 import { MailService } from "./__mocks__/general/mailService";
-import { Mail } from "./__mocks__/general/mail";
-import { Injex } from "../src";
 
 describe("InjexNodeContainer", () => {
 
@@ -146,24 +146,8 @@ describe("InjexNodeContainer", () => {
             globPattern: "/**/badService.ts"
         });
 
-        expect(container.bootstrap()).rejects.toThrowError(
+        await expect(container.bootstrap()).rejects.toThrowError(
             "Failed to initialize module 'badService'."
-        );
-    });
-
-    // THIS TEST IS DEPRECATED SINCE WE'RE NOT THROWING ERRORS
-    // WHEN USING @inject() TO INJECT MODULE THAT DOES NOT EXIST
-    // SINCE WE INJECT THE DEPENDENCIES ON DEMAND.
-    xit("should throw error when module dependency not found", async () => {
-        const container = Injex.create({
-            rootDirs: [
-                path.resolve(__dirname, "__mocks__/willThrow")
-            ],
-            globPattern: "/**/unknownService.ts"
-        });
-
-        expect(container.bootstrap()).rejects.toThrowError(
-            "Dependency 'atlantisLocation' was not found for module 'unknownService'."
         );
     });
 
@@ -173,7 +157,6 @@ describe("InjexNodeContainer", () => {
         const service = container.get("maybeExistService");
 
         expect(service).toBeUndefined();
-
     });
 
     it("should throw when two modules defined with the same name", async () => {

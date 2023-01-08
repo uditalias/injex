@@ -1,7 +1,7 @@
-import { Hook, IConstructor, isFunction, isPromise, Logger } from "@injex/stdlib";
+import { Hook, IConstructor, isFunction, isPromise, Logger, yieldToMain } from "@injex/stdlib";
 import { ILazyModule } from "./interfaces";
 import { bootstrapSymbol, EMPTY_ARGS, UNDEFINED } from "./constants";
-import { DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
+import { BootstrapError, DuplicateDefinitionError, FactoryModuleNotExistsError, InitializeMuduleError, InvalidPluginError } from "./errors";
 import { IModule, ModuleName, IInjexHooks, IContainerConfig, IBootstrap, IInjexPlugin, IDefinitionMetadata, AliasMap, AliasFactory } from "./interfaces";
 import metadataHandlers from "./metadataHandlers";
 
@@ -10,6 +10,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     private _modules: Map<ModuleName | IConstructor, IModule>;
     private _aliases: Map<string, IModule[]>;
     private _logger: Logger;
+    private _didBootstrapCalled: boolean;
 
     protected config: T;
 
@@ -38,6 +39,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     protected constructor(config: T) {
         this.config = this.createConfig(config);
         this._logger = new Logger(this.config.logLevel, this.config.logNamespace);
+        this._onInitModuleError = this._onInitModuleError.bind(this);
+        this._didBootstrapCalled = false;
 
         this._moduleRegistry = new Map<ModuleName, any>();
         this._modules = new Map<ModuleName | IConstructor, IModule>();
@@ -51,6 +54,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     public async bootstrap(): Promise<InjexContainer<T>> {
+        if (this._didBootstrapCalled) {
+            throw new BootstrapError('container bootstrap should run only once.');
+        }
+
+        this._didBootstrapCalled = true;
 
         await this._initPlugins();
 
@@ -60,7 +68,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this.hooks.afterRegistration.call();
 
-        this._createModules();
+        if (this.config.perfMode) {
+            await this._createModulesAsync();
+        } else {
+            this._createModules();
+        }
 
         const bootstrapModule = this.get<IBootstrap>(bootstrapSymbol);
 
@@ -75,7 +87,6 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
             this._modulesReady();
         } catch (e) {
-
             this.hooks.bootstrapError.call(e);
 
             if (bootstrapModule?.didCatch) {
@@ -148,6 +159,20 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         };
     }
 
+    private async _createModulesAsync() {
+        this.hooks.beforeCreateModules.call();
+
+        const modules = Array.from(this._moduleRegistry.values());
+
+        while (modules.length) {
+            const item = modules.shift();
+            this._createModule(item);
+            await yieldToMain();
+        }
+
+        this.hooks.afterCreateModules.call();
+    }
+
     private _createModules() {
         this.hooks.beforeCreateModules.call();
 
@@ -205,7 +230,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
 
             let lazyInstance;
-            if (lazyMetadata.singleton && self.get(Ctor)) {
+            if (lazyMetadata && lazyMetadata.singleton && self.get(Ctor)) {
                 lazyInstance = self.get(Ctor);
             } else {
                 lazyInstance = self._createInstance(Ctor, args);
@@ -260,6 +285,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 })
                 .map(async ({ module, metadata }) => {
                     if (metadata && metadata.singleton) {
+                        await yieldToMain();
                         return this._invokeModuleInitMethod(
                             metadata.lazyLoader || module, metadata
                         );
@@ -298,7 +324,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
             }
 
             if (promises.length) {
-                return Promise.all(promises);
+                return Promise.all(promises).catch((e) => {
+                    onError?.(metadata, e);
+                });
             }
         } catch (e) {
             onError?.(metadata, e);
@@ -321,7 +349,9 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
     private _onInitModuleError(metadata: IDefinitionMetadata, err: Error) {
         this._logger.error(err);
-        throw new InitializeMuduleError(metadata.name);
+        const error = new InitializeMuduleError(metadata.name);
+        error.stack = err?.stack ?? error.stack;
+        throw error;
     }
 
     private _createInstance(construct: any, args: any[] = []): any {
@@ -416,12 +446,16 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         this._register(item);
 
+        if (!this._didBootstrapCalled) {
+            return Promise.resolve(this);
+        }
+
         this._createModule(item);
 
         const { module, metadata } = this.getModuleDefinition(item);
 
         let optionalPromise: Promise<any> = null;
-        if (metadata.singleton) {
+        if (metadata && metadata.singleton) {
             this._injectModuleDependencies(metadata.lazyLoader || module);
             optionalPromise = this._invokeModuleInitMethod(metadata.lazyLoader || module, metadata);
         }
@@ -462,8 +496,33 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
         return this;
     }
 
-    public get<K = any>(itemNameOrType: ModuleName | IConstructor): K {
-        const definition = this.getModuleDefinition(itemNameOrType);
+    private _getMany(...itemNameOrType: (ModuleName | IConstructor)[]): any[] {
+        const results = [];
+
+        while (itemNameOrType.length) {
+            results.push(this.get(itemNameOrType.shift()));
+        }
+
+        return results;
+    }
+
+    public get<K = any>(itemNameOrType: ModuleName | IConstructor): K;
+    public get<T1>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1];
+    public get<T1, T2>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2];
+    public get<T1, T2, T3>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3];
+    public get<T1, T2, T3, T4>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4];
+    public get<T1, T2, T3, T4, T5>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5];
+    public get<T1, T2, T3, T4, T5, T6>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6];
+    public get<T1, T2, T3, T4, T5, T6, T7>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8, T9>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8, T9];
+    public get<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(...itemNameOrType: (ModuleName | IConstructor)[]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10];
+    public get<K = any>(...itemNameOrType: (ModuleName | IConstructor)[]): K | any[] {
+        if (itemNameOrType.length > 1) {
+            return this._getMany(...itemNameOrType);
+        }
+
+        const definition = this.getModuleDefinition(itemNameOrType[0]);
 
         if (!definition) {
             return UNDEFINED;

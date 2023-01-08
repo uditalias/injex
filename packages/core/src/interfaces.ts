@@ -67,6 +67,7 @@ export interface IContainerConfig {
     logLevel?: LogLevel;
     logNamespace?: string;
     plugins?: IInjexPlugin[];
+    perfMode?: boolean;
 }
 
 export interface ILazyModule<T> {

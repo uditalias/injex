@@ -1,4 +1,6 @@
 import { Injex, LogLevel } from "@injex/core";
+import { yieldToMain } from "@injex/stdlib";
+import { RemoteModulesError } from "./errors";
 import { IWebpackContainerConfig } from "./interfaces";
 
 export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
@@ -16,28 +18,74 @@ export default class InjexWebpack extends Injex<IWebpackContainerConfig> {
         };
     }
 
-    protected loadContainerFiles(): Promise<void> {
-        // using a timeout to allow the loading process start
-        // fresh on a new javascript task in order to prevent
-        // long task.
-        return new Promise((resolve) => setTimeout(() => {
-            const requireContext = this.config.resolveContext();
-            const loadedModules = {};
-            const allContextFiles = requireContext.keys().reduce((files, currentFile) => {
-                // webpack v5 has a breaking change when the 'requireContext.keys()' may have duplications
-                // https://github.com/webpack/webpack/issues/12087
-                if (loadedModules[currentFile]) {
-                    return files;
+    private async _handleRemoteLoader(loader: () => Promise<any[]>): Promise<void> {
+        let modules: any[];
+        try {
+            modules = await loader();
+        } catch (e) {
+            this.logger.error(e);
+            throw new RemoteModulesError();
+        }
+
+        if (modules?.length) {
+            let start = performance.now() + 50;
+
+            while (modules.length) {
+                const remoteModule = modules.shift();
+                this.addModule(remoteModule);
+
+                if (performance.now() >= start) {
+                    await yieldToMain();
+                    start = performance.now() + 50;
                 }
+            }
+        }
+    }
 
-                loadedModules[currentFile] = true;
-                loadedModules[currentFile.replace(/^\.\//, '')] = true;
-                return files.concat(currentFile);
-            }, []);
+    public async loadRemoteModules(...loaders: (() => Promise<any[]>)[]): Promise<void | void[]> {
+        const promises = [];
+        loaders = Array.prototype.slice.call(loaders);
+        while (loaders.length) {
+            const loader = loaders.shift();
 
+            promises.push(
+                this._handleRemoteLoader(loader)
+            );
+        }
+
+        return Promise.all(promises);
+    }
+
+    protected async loadContainerFiles(): Promise<void> {
+        await yieldToMain();
+
+        const requireContext = this.config.resolveContext();
+        const loadedModules = {};
+        const allContextFiles = requireContext.keys().reduce((files, currentFile) => {
+            // webpack v5 has a breaking change when the 'requireContext.keys()' may have duplications
+            // https://github.com/webpack/webpack/issues/12087
+            if (loadedModules[currentFile]) {
+                return files;
+            }
+
+            loadedModules[currentFile] = true;
+            loadedModules[currentFile.replace(/^\.\//, '')] = true;
+            return files.concat(currentFile);
+        }, []);
+
+        if (this.config.perfMode) {
+            let start = performance.now() + 50;
+            while (allContextFiles.length) {
+                const filePath = allContextFiles.shift();
+                this.registerModuleExports(requireContext(filePath));
+
+                if (performance.now() >= start) {
+                    await yieldToMain();
+                    start = performance.now() + 50;
+                }
+            }
+        } else {
             allContextFiles.forEach((filePath) => this.registerModuleExports(requireContext(filePath)));
-
-            resolve();
-        }, 0));
+        }
     }
 }

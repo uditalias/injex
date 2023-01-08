@@ -2,6 +2,14 @@
 import { ModuleName } from "./interfaces";
 import { getConstructorName } from "@injex/stdlib";
 
+export class BootstrapError extends Error {
+    constructor(message: string) {
+        super(
+            `Bootstrap failed: ${message}`
+        )
+    }
+}
+
 export class InitializeMuduleError extends Error {
     constructor(moduleName: ModuleName) {
         super(

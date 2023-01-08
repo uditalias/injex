@@ -53,4 +53,44 @@ describe("addModule", () => {
         expect(university.theStudent.whoAmI()).toEqual("I'm the student!");
 
     });
+
+    it("should add module before bootstrap and inject it", async () => {
+        @define()
+        @singleton()
+        class TheStudent {
+            public whoAmI(): string {
+                return "I'm the student!";
+            }
+        }
+
+        @define()
+        @singleton()
+        class University {
+            @inject() public theStudent: TheStudent;
+
+            @ready()
+            private _afterBootstrap() {
+                // this will throw an error in case we have an issue
+                // in the `addModule` process.
+                this.theStudent.whoAmI();
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { University },
+            ]
+        });
+
+        container.addModule(TheStudent);
+
+        await container.bootstrap();
+
+        const university = container.get<University>('university');
+
+        expect(university.theStudent).toBeDefined();
+        expect(university.theStudent).toBeInstanceOf(TheStudent);
+
+        expect(university.theStudent.whoAmI()).toEqual("I'm the student!");
+    });
 });
