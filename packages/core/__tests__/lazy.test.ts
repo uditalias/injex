@@ -1,5 +1,6 @@
 //@ts-nocheck
-import { inject, bootstrap, define, Factory, lazy, singleton } from "../src";
+import exp from "constants";
+import { Factory, alias, bootstrap, define, inject, injectAlias, lazy, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 import { LazyModule } from "./__mocks__/LazyModule";
 
@@ -17,6 +18,10 @@ describe("Lazy", () => {
             constructor() {
                 this.id = ++ID_GENERATOR;
             }
+
+            public makeNoise() {
+                return "Zebra noise...";
+            }
         }
 
         @define()
@@ -31,12 +36,7 @@ describe("Lazy", () => {
         @define()
         @singleton()
         class Zoo {
-            @inject() private animalLoader: Factory<Promise<Zebra>>;
             @inject() public zebra: Zebra;
-
-            public craeteAnotherAnimal() {
-                return this.animalLoader();
-            }
         }
 
         @bootstrap()
@@ -46,9 +46,7 @@ describe("Lazy", () => {
             @inject() private $injex: InjexMock;
 
             public async run() {
-                const zebra = await this.animalLoader();
-
-                this.$injex.addObject(zebra, "zebra");
+                await this.animalLoader();
             }
         }
 
@@ -61,15 +59,65 @@ describe("Lazy", () => {
         await container.bootstrap();
 
         const zoo = container.get<Zoo>("zoo");
+        const zebraFromContainer = container.get<Zebra>("zebra");
 
         expect(zoo).toBeDefined();
         expect(zoo.zebra).toBeInstanceOf(Zebra);
         expect(zoo.zebra.id).toEqual(1);
 
-        const zebraFromZoo = await zoo.craeteAnotherAnimal();
-        expect(zoo.zebra).toBeInstanceOf(Zebra);
-        expect(zebraFromZoo.id).toEqual(1);
-        expect(zebraFromZoo).toEqual(zoo.zebra);
+        expect(zebraFromContainer).toBeInstanceOf(Zebra);
+        expect(zebraFromContainer.id).toEqual(1);
+        expect(zebraFromContainer).toEqual(zoo.zebra);
+    });
+
+    it("should dynamically inject a lazy module as an alias of another module", async () => {
+        @define()
+        @singleton()
+        @alias('Disposable')
+        class Zebra {
+            public id: number;
+
+            constructor() {
+                this.id = ++ID_GENERATOR;
+            }
+
+            public makeNoise() {
+                return "Zebra noise...";
+            }
+        }
+
+        @define()
+        @singleton()
+        @lazy()
+        class AnimalLoader {
+            public async import() {
+                return Promise.resolve(Zebra);
+            }
+        }
+
+        @bootstrap()
+        class Bootstrap {
+            @inject() private animalLoader: Factory<Promise<Zebra>>;
+            @injectAlias("Disposable") private disposables: any[];
+
+            public async run() {
+                expect(this.disposables).toBeDefined();
+
+                expect(this.disposables.length).toEqual(0);
+
+                await this.animalLoader();
+
+                expect(this.disposables.length).toEqual(1);
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { Bootstrap, AnimalLoader },
+            ]
+        });
+
+        await container.bootstrap();
     });
 
     it("should dynamically import module and ad it as a module", async () => {

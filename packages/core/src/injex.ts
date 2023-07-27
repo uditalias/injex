@@ -237,6 +237,24 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
                 self._injectModuleDependencies(lazyInstance);
                 await self._invokeModuleInitMethod(lazyInstance, lazyMetadata);
                 self._lazyInvokeModuleReadyMethod(lazyInstance, lazyMetadata);
+
+                const moduleWithMetadata: IModule = {
+                    module: lazyInstance, metadata: lazyMetadata
+                };
+
+                self._modules.set(lazyMetadata.name, moduleWithMetadata);
+
+                if (lazyMetadata.aliases) {
+                    let alias: string;
+                    for (let i = 0, len = lazyMetadata.aliases.length; i < len; i++) {
+                        alias = lazyMetadata.aliases[i];
+                        if (!self._aliases.has(alias)) {
+                            self._aliases.set(alias, []);
+                        }
+
+                        self._aliases.get(alias).push(moduleWithMetadata);
+                    }
+                }
             }
 
             return lazyInstance;
