@@ -1,5 +1,5 @@
 {
-  "name": "@injex/vite",
+  "name": "@injex/inline",
   "version": "3.5.0",
   "description": "",
   "keywords": [],
@@ -29,9 +29,9 @@
     "lint:fix": "npm run lint -- --fix",
     "clean": "rimraf lib/",
     "build": "npm run lint && npm run clean && npm run tsc && npm run test:cov",
-    "test": "exit 0; jest",
-    "test:cov": "exit 0; jest --coverage",
-    "test:watch": "exit 0; npm t -- --watch --color"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "npm t -- --watch --color"
   },
   "bugs": {
     "url": "https://github.com/uditalias/injex/issues"
@@ -39,7 +39,6 @@
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
     "@types/jest": "^26.0.13",
-    "@types/node": "20.9.0",
     "jest": "^26.4.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.3.0",
