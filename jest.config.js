@@ -3,7 +3,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.json',
+      tsconfig: 'tsconfig.json',
     },
   },
   moduleFileExtensions: [
