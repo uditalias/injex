@@ -4,7 +4,7 @@
         "outDir": "./out",
         "module": "commonjs",
         "alwaysStrict": true,
-        "importHelpers": true,
+        "importHelpers": false,
         "target": "es6",
         "noImplicitAny": false,
         "sourceMap": true,

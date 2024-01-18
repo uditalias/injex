@@ -3,7 +3,7 @@
         "module": "commonjs",
         "declaration": true,
         "alwaysStrict": true,
-        "importHelpers": true,
+        "importHelpers": false,
         "target": "ES2020",
         "noImplicitAny": false,
         "sourceMap": true,
