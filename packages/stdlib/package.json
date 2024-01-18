@@ -37,9 +37,6 @@
     "url": "https://github.com/uditalias/injex/issues"
   },
   "homepage": "https://github.com/uditalias/injex#readme",
-  "dependencies": {
-    "reflect-metadata": "^0.1.13"
-  },
   "devDependencies": {
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0",

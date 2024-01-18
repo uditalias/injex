@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 export type MetadataHandlers<T> = {
     ensureMetadata: (target: any) => T;
     setMetadata: (target: any, key: keyof T, value: any) => void;
@@ -9,10 +7,14 @@ export type MetadataHandlers<T> = {
     forEachProtoMetadata: (target: any, callback: (proto: object, metadata: T) => void) => void;
 }
 
+const _metadata = new WeakMap();
+
 export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHandlers<T> {
     function ensureMetadata(target): T {
         if (!hasMetadata(target)) {
-            Reflect.defineMetadata(metadataKey, {}, target);
+            _metadata.set(target, {
+                [metadataKey]: {}
+            });
         }
 
         return getMetadata(target);
@@ -24,11 +26,11 @@ export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHa
     }
 
     function getMetadata(target): T {
-        return Reflect.getOwnMetadata(metadataKey, target);
+        return _metadata.get(target)?.[metadataKey];
     }
 
     function hasMetadata(target): boolean {
-        return Reflect.hasOwnMetadata(metadataKey, target);
+        return _metadata.has(target);
     }
 
     function pushMetadata(target: any, key: keyof T, value: any) {
