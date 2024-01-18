@@ -80,5 +80,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-optional-chaining": "^7.23.4"
   }
 }
