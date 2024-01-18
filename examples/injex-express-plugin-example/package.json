@@ -1,6 +1,6 @@
 {
   "name": "injex-express-plugin-example",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0-alpha.1",
   "private": true,
   "description": "",
   "keywords": [],
@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/core": "^4.0.0-alpha.0",
-    "@injex/env-plugin": "^4.0.0-alpha.0",
-    "@injex/express-plugin": "^4.0.0-alpha.0",
-    "@injex/node": "^4.0.0-alpha.0",
+    "@injex/core": "^4.0.0-alpha.1",
+    "@injex/env-plugin": "^4.0.0-alpha.1",
+    "@injex/express-plugin": "^4.0.0-alpha.1",
+    "@injex/node": "^4.0.0-alpha.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.3"
   },

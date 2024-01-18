@@ -1,6 +1,6 @@
 {
   "name": "@injex/env-plugin",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0-alpha.1",
   "description": "",
   "keywords": [],
   "author": {
@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "devDependencies": {
-    "@injex/core": "^4.0.0-alpha.0",
-    "@injex/node": "^4.0.0-alpha.0",
+    "@injex/core": "^4.0.0-alpha.1",
+    "@injex/node": "^4.0.0-alpha.1",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0",
     "tslib": "^2.2.0",
@@ -47,6 +47,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@injex/stdlib": "^4.0.0-alpha.0"
+    "@injex/stdlib": "^4.0.0-alpha.1"
   }
 }

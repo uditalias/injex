@@ -1,6 +1,6 @@
 {
   "name": "@injex/inline",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0-alpha.1",
   "description": "",
   "keywords": [],
   "author": {
@@ -48,6 +48,6 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@injex/core": "^4.0.0-alpha.0"
+    "@injex/core": "^4.0.0-alpha.1"
   }
 }
