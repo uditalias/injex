@@ -1,6 +1,6 @@
 {
   "name": "@injex/core",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "description": "Simple, Decorated, Pluggable dependency-injection framework for TypeScript apps",
   "keywords": [
     "dependency-injection-container",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/stdlib": "^4.0.0-alpha.1"
+    "@injex/stdlib": "^4.0.0-alpha.2"
   },
   "devDependencies": {
     "jest": "^26.4.2",

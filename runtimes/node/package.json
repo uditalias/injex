@@ -1,6 +1,6 @@
 {
   "name": "@injex/node",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "description": "",
   "keywords": [],
   "author": {
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/uditalias/injex#readme",
   "dependencies": {
-    "@injex/core": "^4.0.0-alpha.1",
+    "@injex/core": "^4.0.0-alpha.2",
     "glob": "^7.1.6"
   },
   "devDependencies": {
