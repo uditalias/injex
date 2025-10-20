@@ -86,11 +86,18 @@ export function createMetadataHandlers<T = any>(metadataKey: symbol): MetadataHa
      *
      * This is crucial for inheritance support - child classes need to access
      * metadata from parent classes.
+     *
+     * TC39 Note: Metadata is stored on constructors via Symbol.metadata, not on prototypes.
+     * When iterating through an instance's prototype chain, we need to access the constructor
+     * of each prototype to get its metadata.
      */
     function forEachProtoMetadata(target: any, callback: (proto: object, metadata: T) => void) {
         let __proto__ = target?.__proto__;
         while (__proto__) {
-            const meta = getMetadata(__proto__);
+            // TC39: Get metadata from the prototype's constructor
+            // Metadata is on Class[Symbol.metadata], not on Class.prototype
+            const constructor = __proto__.constructor;
+            const meta = constructor ? getMetadata(constructor) : undefined;
 
             if (meta) {
                 callback(__proto__, meta);

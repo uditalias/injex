@@ -10,16 +10,16 @@ export enum LogLevel {
  * check if it allowed and invoke it.
  *
  * @param level - The highest log level to allow
+ *
+ * TC39 Decorator - Compatible with TypeScript 5.0+
  */
 function filterLogLevel(level: LogLevel) {
-	return function (target, name, propertyDescriptor) {
-		const originalFn = propertyDescriptor.value;
-
-		propertyDescriptor.value = function () {
+	return function (originalMethod: any, context: ClassMethodDecoratorContext) {
+		return function (this: Logger, ...args: any[]) {
 			if (this.logLevel >= level) {
-				originalFn.apply(this, arguments);
+				return originalMethod.apply(this, args);
 			}
-		}
+		};
 	}
 }
 
@@ -27,7 +27,7 @@ type LogMethod = "info" | "warn" | "error" | "debug";
 
 export class Logger {
 
-	constructor(private logLevel: LogLevel, private namespace: string) { }
+	constructor(protected logLevel: LogLevel, private namespace: string) { }
 
 	public setLogLevel(logLevel: LogLevel): Logger {
 		this.logLevel = logLevel;

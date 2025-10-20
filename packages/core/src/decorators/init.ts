@@ -38,12 +38,12 @@ export function init() {
         const methodName = String(context.name);
 
         // TC39: Store in context.metadata
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
 
         // Store the init method name
-        context.metadata[metadataSymbol].initMethod = methodName;
+        (context.metadata as any)[metadataSymbol].initMethod = methodName;
 
         // Return the method unchanged
         return target;

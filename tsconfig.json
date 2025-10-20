@@ -14,7 +14,8 @@
         "preserveConstEnums": true,
         "lib": [
 			"ES2020",
-			"dom"
+			"dom",
+			"esnext.decorators"
         ]
     },
     "compileOnSave": false

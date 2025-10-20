@@ -49,16 +49,16 @@ export function injectParams(params: InjectParamConfig[]) {
         const methodName = String(context.name);
 
         // TC39: Store in context.metadata
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
-        if (!context.metadata[metadataSymbol].paramDependencies) {
-            context.metadata[metadataSymbol].paramDependencies = [];
+        if (!(context.metadata as any)[metadataSymbol].paramDependencies) {
+            (context.metadata as any)[metadataSymbol].paramDependencies = [];
         }
 
         // Store parameter dependency information for each parameter
         for (const param of params) {
-            context.metadata[metadataSymbol].paramDependencies.push({
+            (context.metadata as any)[metadataSymbol].paramDependencies.push({
                 methodName,
                 index: param.index,
                 label: `param_${param.index}`,  // Label for debugging

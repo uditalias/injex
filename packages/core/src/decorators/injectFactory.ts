@@ -38,15 +38,15 @@ export function injectFactory(dependencyNameOrType?: any) {
         const fieldName = String(context.name);
 
         // TC39: Store in context.metadata
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
-        if (!context.metadata[metadataSymbol].factoryDependencies) {
-            context.metadata[metadataSymbol].factoryDependencies = [];
+        if (!(context.metadata as any)[metadataSymbol].factoryDependencies) {
+            (context.metadata as any)[metadataSymbol].factoryDependencies = [];
         }
 
         // Store factory dependency information
-        context.metadata[metadataSymbol].factoryDependencies.push({
+        (context.metadata as any)[metadataSymbol].factoryDependencies.push({
             label: fieldName,
             value: dependencyNameOrType || fieldName
         });

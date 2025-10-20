@@ -39,12 +39,12 @@ export function ready() {
         const methodName = String(context.name);
 
         // TC39: Store in context.metadata
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
 
         // Store the ready method name
-        context.metadata[metadataSymbol].readyMethod = methodName;
+        (context.metadata as any)[metadataSymbol].readyMethod = methodName;
 
         // Return the method unchanged
         return target;

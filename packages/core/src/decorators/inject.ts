@@ -35,15 +35,15 @@ export function inject(dependencyNameOrType?: any) {
 
         // TC39: Store in context.metadata, which becomes Class[Symbol.metadata]
         // Initialize metadata structure if needed
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
-        if (!context.metadata[metadataSymbol].dependencies) {
-            context.metadata[metadataSymbol].dependencies = [];
+        if (!(context.metadata as any)[metadataSymbol].dependencies) {
+            (context.metadata as any)[metadataSymbol].dependencies = [];
         }
 
         // Store dependency information
-        context.metadata[metadataSymbol].dependencies.push({
+        (context.metadata as any)[metadataSymbol].dependencies.push({
             label: fieldName,
             value: dependencyNameOrType || fieldName
         });

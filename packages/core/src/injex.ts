@@ -182,7 +182,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _createModule(item: IConstructor) {
-        const metadata = metadataHandlers.getMetadata(item.prototype);
+        const metadata = metadataHandlers.getMetadata(item);
 
         this._throwIfModuleExists(metadata.name);
 
@@ -227,7 +227,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
 
         async function loaderFn(...args: any[]) {
             const Ctor: IConstructor = await loaderInstance.import.apply(loaderInstance, args);
-            const lazyMetadata = metadataHandlers.getMetadata(Ctor.prototype);
+            const lazyMetadata = metadataHandlers.getMetadata(Ctor);
 
             let lazyInstance;
             if (lazyMetadata && lazyMetadata.singleton && self.get(Ctor)) {
@@ -381,8 +381,8 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     public getModuleDefinition(moduleNameOrType: ModuleName | IConstructor): IModule {
         if (this._modules.has(moduleNameOrType)) {
             return this._modules.get(moduleNameOrType);
-        } else if (moduleNameOrType instanceof Function && metadataHandlers.hasMetadata(moduleNameOrType.prototype)) {
-            const metadata = metadataHandlers.getMetadata(moduleNameOrType.prototype);
+        } else if (moduleNameOrType instanceof Function && metadataHandlers.hasMetadata(moduleNameOrType)) {
+            const metadata = metadataHandlers.getMetadata(moduleNameOrType);
             return this._modules.get(metadata.name);
         }
 
@@ -436,11 +436,11 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
     }
 
     private _register(item: IConstructor) {
-        if (!item?.prototype ?? !metadataHandlers.hasMetadata(item.prototype)) {
+        if (!item?.prototype || !metadataHandlers.hasMetadata(item)) {
             return;
         }
 
-        const metadata = metadataHandlers.getMetadata(item.prototype);
+        const metadata = metadataHandlers.getMetadata(item);
 
         if (!metadata || !metadata.name) {
             return;
@@ -457,7 +457,7 @@ export default abstract class InjexContainer<T extends IContainerConfig> {
      * @param item - Module with metadata to add
      */
     public addModule(item: IConstructor): Promise<InjexContainer<T>> {
-        if (!metadataHandlers.hasMetadata(item.prototype)) {
+        if (!metadataHandlers.hasMetadata(item)) {
             this._logger.debug("You're trying to add module without any metadata.");
             return Promise.resolve(this);
         }

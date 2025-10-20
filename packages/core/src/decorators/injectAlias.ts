@@ -49,15 +49,15 @@ export function injectAlias(alias: string, keyBy?: string) {
         const fieldName = String(context.name);
 
         // TC39: Store in context.metadata
-        if (!context.metadata[metadataSymbol]) {
-            context.metadata[metadataSymbol] = {};
+        if (!(context.metadata as any)[metadataSymbol]) {
+            (context.metadata as any)[metadataSymbol] = {};
         }
-        if (!context.metadata[metadataSymbol].aliasDependencies) {
-            context.metadata[metadataSymbol].aliasDependencies = [];
+        if (!(context.metadata as any)[metadataSymbol].aliasDependencies) {
+            (context.metadata as any)[metadataSymbol].aliasDependencies = [];
         }
 
         // Store alias dependency information
-        context.metadata[metadataSymbol].aliasDependencies.push({
+        (context.metadata as any)[metadataSymbol].aliasDependencies.push({
             label: fieldName,
             alias,
             keyBy
