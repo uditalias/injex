@@ -1,6 +1,6 @@
 import { createMetadataHandlers } from "@injex/stdlib";
 import { IDefinitionMetadata } from "./interfaces";
 
-const metadataSymbol = Symbol("metadata");
+export const metadataSymbol = Symbol("injex:metadata");
 
 export default createMetadataHandlers<IDefinitionMetadata>(metadataSymbol);

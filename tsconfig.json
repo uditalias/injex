@@ -7,14 +7,13 @@
         "target": "ES2020",
         "noImplicitAny": false,
         "sourceMap": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "experimentalDecorators": false,
+        "emitDecoratorMetadata": false,
         "moduleResolution": "node",
         "allowJs": false,
         "preserveConstEnums": true,
         "lib": [
-			"es6",
-			"es7",
+			"ES2020",
 			"dom"
         ]
     },
