@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { alias, define, init, inject, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 

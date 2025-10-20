@@ -1,8 +1,7 @@
-//@ts-nocheck
-import { define, init, injectParam, singleton } from "../src";
+import { define, injectParams, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 
-describe("Inject Param", () => {
+describe("Inject Params (TC39)", () => {
     it("should inject param into module method", async () => {
 
         @define()
@@ -16,8 +15,9 @@ describe("Inject Param", () => {
         @define()
         @singleton()
         class MailSender {
-            public send(message: string, @injectParam() mailService: MailService) {
-                return mailService.send(message);
+            @injectParams([{ index: 1, value: MailService }])
+            public send(message: string, mailService?: MailService) {
+                return mailService!.send(message);
             }
         }
 
@@ -63,7 +63,11 @@ describe("Inject Param", () => {
         @define()
         @singleton()
         class MailSender {
-            public send(@injectParam() mailService: MailService, @injectParam() dummyCacheService: DummyCacheService) {
+            @injectParams([
+                { index: 0, value: MailService },
+                { index: 1, value: DummyCacheService }
+            ])
+            public send(mailService?: MailService, dummyCacheService?: DummyCacheService) {
                 return [
                     mailService,
                     dummyCacheService
@@ -97,16 +101,19 @@ describe("Inject Param", () => {
         @define()
         @singleton()
         class ServiceProvider {
-            public getServiceByType(@injectParam(SomeService) service: SomeService) {
-                return service;
+            @injectParams([{ index: 0, value: SomeService }])
+            public getServiceByType(service?: SomeService) {
+                return service!;
             }
 
-            public getServiceByName(@injectParam("someService") service: SomeService) {
-                return service;
+            @injectParams([{ index: 0, value: "someService" }])
+            public getServiceByName(service?: SomeService) {
+                return service!;
             }
 
-            public getServiceByDiscovery(@injectParam() someService: SomeService) {
-                return someService;
+            @injectParams([{ index: 0, value: "someService" }])
+            public getServiceByDiscovery(someService?: SomeService) {
+                return someService!;
             }
         }
 
@@ -131,7 +138,7 @@ describe("Inject Param", () => {
         expect(serviceProvider.getServiceByDiscovery()).toBeInstanceOf(SomeService);
     });
 
-    it("should keep method scope when using inject param", async () => {
+    it("should keep method scope when using inject params", async () => {
         @define()
         @singleton()
         class SomeService { }
@@ -139,7 +146,8 @@ describe("Inject Param", () => {
         @define()
         @singleton()
         class ServiceProvider {
-            public echoInstance(@injectParam(SomeService) service: SomeService) {
+            @injectParams([{ index: 0, value: SomeService }])
+            public echoInstance(service?: SomeService) {
                 return this;
             }
         }
@@ -157,5 +165,39 @@ describe("Inject Param", () => {
 
         expect(serviceProvider.echoInstance()).toBeInstanceOf(ServiceProvider);
         expect(serviceProvider.echoInstance()).toStrictEqual(serviceProvider);
+    });
+
+    it("should inject params with mixed user args and injected args", async () => {
+        @define()
+        @singleton()
+        class MailService {
+            public send(message: string) {
+                return `Sent: ${message}`;
+            }
+        }
+
+        @define()
+        @singleton()
+        class MailSender {
+            @injectParams([{ index: 1, value: MailService }])
+            public sendWithPrefix(prefix: string, mailService?: MailService) {
+                return mailService!.send(`${prefix} - message`);
+            }
+        }
+
+        const container = InjexMock.create({
+            modules: [
+                { MailSender },
+                { MailService },
+            ]
+        });
+
+        await container.bootstrap();
+
+        const mailSender = container.get<MailSender>("mailSender");
+
+        const response = mailSender.sendWithPrefix("Important");
+
+        expect(response).toBe("Sent: Important - message");
     });
 });

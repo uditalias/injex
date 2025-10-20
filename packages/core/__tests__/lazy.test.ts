@@ -1,4 +1,3 @@
-//@ts-nocheck
 import exp from "constants";
 import { Factory, alias, bootstrap, define, inject, injectAlias, lazy, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";

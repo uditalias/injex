@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { define, inject, singleton } from "../src";
 import { Factory } from "../src/interfaces";
 import InjexMock from "./__mocks__/InjexMock";

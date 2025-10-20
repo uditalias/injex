@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { alias, AliasFactory, AliasMap, define, init, injectAlias, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 

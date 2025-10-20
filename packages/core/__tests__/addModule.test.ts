@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { bootstrap, define, inject, ready, singleton } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 

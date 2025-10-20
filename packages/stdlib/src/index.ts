@@ -1,3 +1,6 @@
+// Import Symbol.metadata polyfill first
+import "./symbol-metadata-polyfill";
+
 export * from "./interfaces";
 export * from "./utils";
 export * from "./logger";
