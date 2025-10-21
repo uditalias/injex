@@ -1,4 +1,4 @@
-import { metadataSymbol } from "../metadataHandlers";
+import metadataHandlers from "../metadataHandlers";
 
 export interface InjectParamConfig {
     /**
@@ -15,7 +15,7 @@ export interface InjectParamConfig {
 /**
  * @injectParams decorator - Injects dependencies into method parameters
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
  *
  * Since TC39 decorators don't support parameter decorators, this method decorator
  * provides an alternative by specifying which parameters to inject via configuration.
@@ -48,23 +48,22 @@ export function injectParams(params: InjectParamConfig[]) {
         // TC39: Get the method name from context
         const methodName = String(context.name);
 
-        // TC39: Store in context.metadata
-        if (!(context.metadata as any)[metadataSymbol]) {
-            (context.metadata as any)[metadataSymbol] = {};
-        }
-        if (!(context.metadata as any)[metadataSymbol].paramDependencies) {
-            (context.metadata as any)[metadataSymbol].paramDependencies = [];
-        }
+        // Use addInitializer to store metadata when the class is defined
+        context.addInitializer(function(this: any) {
+            // For method decorators, initializers run per-instance
+            // 'this' is the instance, so we need to get the constructor
+            const targetClass = this.constructor;
 
-        // Store parameter dependency information for each parameter
-        for (const param of params) {
-            (context.metadata as any)[metadataSymbol].paramDependencies.push({
-                methodName,
-                index: param.index,
-                label: `param_${param.index}`,  // Label for debugging
-                value: param.value
-            });
-        }
+            // Store parameter dependency information for each parameter
+            for (const param of params) {
+                metadataHandlers.pushMetadata(targetClass, "paramDependencies", {
+                    methodName,
+                    index: param.index,
+                    label: `param_${param.index}`,  // Label for debugging
+                    value: param.value
+                });
+            }
+        });
 
         // Return the method unchanged
         return target;

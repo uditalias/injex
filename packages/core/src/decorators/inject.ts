@@ -1,9 +1,9 @@
-import { metadataSymbol } from "../metadataHandlers";
+import metadataHandlers from "../metadataHandlers";
 
 /**
  * @inject decorator - Injects a dependency into a class field
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
  *
  * Automatically injects the specified dependency. Can inject by:
  * - Type inference (when no parameter provided)
@@ -33,24 +33,17 @@ export function inject(dependencyNameOrType?: any) {
         // TC39: Get the field name from context
         const fieldName = String(context.name);
 
-        // TC39: Store in context.metadata, which becomes Class[Symbol.metadata]
-        // Initialize metadata structure if needed
-        if (!(context.metadata as any)[metadataSymbol]) {
-            (context.metadata as any)[metadataSymbol] = {};
-        }
-        if (!(context.metadata as any)[metadataSymbol].dependencies) {
-            (context.metadata as any)[metadataSymbol].dependencies = [];
-        }
-
-        // Store dependency information
-        (context.metadata as any)[metadataSymbol].dependencies.push({
-            label: fieldName,
-            value: dependencyNameOrType || fieldName
+        // Use addInitializer to store metadata when the class is defined
+        context.addInitializer(function(this: any) {
+            // For field decorators, initializers run per-instance
+            // 'this' is the instance, so we need to get the constructor
+            const targetClass = this.constructor;
+            metadataHandlers.pushMetadata(targetClass, "dependencies", {
+                label: fieldName,
+                value: dependencyNameOrType || fieldName
+            });
         });
 
         // Don't return an initializer - injection happens via property descriptors later
     }
 }
-
-// Re-export the metadata symbol so it can be accessed by the metadata handlers
-export { metadataSymbol };

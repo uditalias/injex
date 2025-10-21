@@ -41,7 +41,7 @@ describe("Alias", () => {
         @define()
         @singleton()
         class MailService {
-            @injectAlias("IMailProvider", "Type") public providers: AliasMap;
+            @injectAlias("IMailProvider", "Type") public providers: AliasMap<string, any>;
         }
 
         const container = InjexMock.create({
@@ -138,7 +138,7 @@ describe("Alias", () => {
         @singleton()
         class MailService {
 
-            @injectAlias("MailProvider", "Type") public mailProviders: AliasMap;
+            @injectAlias("MailProvider", "Type") public mailProviders: AliasMap<string, any>;
             @injectAlias("Disposable") public disposables: IDisposable[];
 
             @init()

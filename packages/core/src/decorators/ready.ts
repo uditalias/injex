@@ -1,9 +1,9 @@
-import { metadataSymbol } from "../metadataHandlers";
+import metadataHandlers from "../metadataHandlers";
 
 /**
  * @ready decorator - Marks a method to be called after bootstrap is complete
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
  *
  * The ready method is called after all modules have been initialized and the
  * application bootstrap is complete. Multiple ready methods can exist (including in parent classes),
@@ -38,13 +38,13 @@ export function ready() {
         // TC39: Get the method name from context
         const methodName = String(context.name);
 
-        // TC39: Store in context.metadata
-        if (!(context.metadata as any)[metadataSymbol]) {
-            (context.metadata as any)[metadataSymbol] = {};
-        }
-
-        // Store the ready method name
-        (context.metadata as any)[metadataSymbol].readyMethod = methodName;
+        // Use addInitializer to store metadata when the class is defined
+        context.addInitializer(function(this: any) {
+            // For method decorators, initializers run per-instance
+            // 'this' is the instance, so we need to get the constructor
+            const targetClass = this.constructor;
+            metadataHandlers.setMetadata(targetClass, "readyMethod", methodName);
+        });
 
         // Return the method unchanged
         return target;

@@ -1,9 +1,9 @@
-import { metadataSymbol } from "../metadataHandlers";
+import metadataHandlers from "../metadataHandlers";
 
 /**
  * @injectAlias decorator - Injects all modules registered under a specific alias
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
  *
  * Injects a collection of all modules that share the same alias.
  * The injected value is an AliasMap that can be iterated or accessed by key.
@@ -48,19 +48,16 @@ export function injectAlias(alias: string, keyBy?: string) {
         // TC39: Get the field name from context
         const fieldName = String(context.name);
 
-        // TC39: Store in context.metadata
-        if (!(context.metadata as any)[metadataSymbol]) {
-            (context.metadata as any)[metadataSymbol] = {};
-        }
-        if (!(context.metadata as any)[metadataSymbol].aliasDependencies) {
-            (context.metadata as any)[metadataSymbol].aliasDependencies = [];
-        }
-
-        // Store alias dependency information
-        (context.metadata as any)[metadataSymbol].aliasDependencies.push({
-            label: fieldName,
-            alias,
-            keyBy
+        // Use addInitializer to store metadata when the class is defined
+        context.addInitializer(function(this: any) {
+            // For field decorators, initializers run per-instance
+            // 'this' is the instance, so we need to get the constructor
+            const targetClass = this.constructor;
+            metadataHandlers.pushMetadata(targetClass, "aliasDependencies", {
+                label: fieldName,
+                alias,
+                keyBy
+            });
         });
 
         // Don't return an initializer - injection happens via property descriptors later

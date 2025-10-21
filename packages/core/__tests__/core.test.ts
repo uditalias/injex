@@ -1,4 +1,4 @@
-import { alias, define, init, inject, singleton } from "../src";
+import { alias, define, init, inject, singleton, AliasMap } from "../src";
 import InjexMock from "./__mocks__/InjexMock";
 
 describe("Core", () => {
@@ -116,7 +116,7 @@ describe("Core", () => {
 
         await container.bootstrap();
 
-        const animals = container.getAlias<string, IAnimal>("Animal", "name");
+        const animals = container.getAlias<string, IAnimal>("Animal", "name") as AliasMap<string, IAnimal>;
 
         expect(animals).toBeDefined();
         expect(animals.dog).toBeDefined();

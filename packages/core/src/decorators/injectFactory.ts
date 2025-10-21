@@ -1,9 +1,9 @@
-import { metadataSymbol } from "../metadataHandlers";
+import metadataHandlers from "../metadataHandlers";
 
 /**
  * @injectFactory decorator - Injects a factory function for creating instances
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
  *
  * Injects a factory function that creates new instances each time it's called.
  * Useful for creating multiple instances of a non-singleton class.
@@ -37,18 +37,15 @@ export function injectFactory(dependencyNameOrType?: any) {
         // TC39: Get the field name from context
         const fieldName = String(context.name);
 
-        // TC39: Store in context.metadata
-        if (!(context.metadata as any)[metadataSymbol]) {
-            (context.metadata as any)[metadataSymbol] = {};
-        }
-        if (!(context.metadata as any)[metadataSymbol].factoryDependencies) {
-            (context.metadata as any)[metadataSymbol].factoryDependencies = [];
-        }
-
-        // Store factory dependency information
-        (context.metadata as any)[metadataSymbol].factoryDependencies.push({
-            label: fieldName,
-            value: dependencyNameOrType || fieldName
+        // Use addInitializer to store metadata when the class is defined
+        context.addInitializer(function(this: any) {
+            // For field decorators, initializers run per-instance
+            // 'this' is the instance, so we need to get the constructor
+            const targetClass = this.constructor;
+            metadataHandlers.pushMetadata(targetClass, "factoryDependencies", {
+                label: fieldName,
+                value: dependencyNameOrType || fieldName
+            });
         });
 
         // Don't return an initializer - injection happens via property descriptors later
