@@ -1,4 +1,4 @@
-import metadataHandlers from "../metadataHandlers";
+import { registerFieldMetadata } from "./fieldRegistry";
 
 /**
  * @injectFactory decorator - Injects a factory function for creating instances
@@ -37,15 +37,10 @@ export function injectFactory(dependencyNameOrType?: any) {
         // TC39: Get the field name from context
         const fieldName = String(context.name);
 
-        // Use addInitializer to store metadata when the class is defined
-        context.addInitializer(function(this: any) {
-            // For field decorators, initializers run per-instance
-            // 'this' is the instance, so we need to get the constructor
-            const targetClass = this.constructor;
-            metadataHandlers.pushMetadata(targetClass, "factoryDependencies", {
-                label: fieldName,
-                value: dependencyNameOrType || fieldName
-            });
+        // Store field metadata in context.metadata for later collection
+        registerFieldMetadata(context.metadata, 'factoryDependency', {
+            label: fieldName,
+            value: dependencyNameOrType || fieldName
         });
 
         // Don't return an initializer - injection happens via property descriptors later

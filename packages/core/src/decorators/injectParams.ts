@@ -1,4 +1,4 @@
-import metadataHandlers from "../metadataHandlers";
+import { addMarker } from "./markers";
 
 export interface InjectParamConfig {
     /**
@@ -15,7 +15,7 @@ export interface InjectParamConfig {
 /**
  * @injectParams decorator - Injects dependencies into method parameters
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Marker-based approach)
  *
  * Since TC39 decorators don't support parameter decorators, this method decorator
  * provides an alternative by specifying which parameters to inject via configuration.
@@ -48,22 +48,15 @@ export function injectParams(params: InjectParamConfig[]) {
         // TC39: Get the method name from context
         const methodName = String(context.name);
 
-        // Use addInitializer to store metadata when the class is defined
-        context.addInitializer(function(this: any) {
-            // For method decorators, initializers run per-instance
-            // 'this' is the instance, so we need to get the constructor
-            const targetClass = this.constructor;
-
-            // Store parameter dependency information for each parameter
-            for (const param of params) {
-                metadataHandlers.pushMetadata(targetClass, "paramDependencies", {
-                    methodName,
-                    index: param.index,
-                    label: `param_${param.index}`,  // Label for debugging
-                    value: param.value
-                });
-            }
-        });
+        // Add markers for each parameter
+        for (const param of params) {
+            addMarker(target, 'paramDependency', {
+                methodName,
+                index: param.index,
+                label: `param_${param.index}`,
+                value: param.value
+            });
+        }
 
         // Return the method unchanged
         return target;

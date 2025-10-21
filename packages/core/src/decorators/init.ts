@@ -1,9 +1,9 @@
-import metadataHandlers from "../metadataHandlers";
+import { addMarker } from "./markers";
 
 /**
  * @init decorator - Marks a method to be called during module initialization
  *
- * TC39 Decorator - Compatible with TypeScript 5.0+ (Hybrid approach)
+ * TC39 Decorator - Compatible with TypeScript 5.0+ (Marker-based approach)
  *
  * The init method is called after the module is instantiated and dependencies are injected,
  * but before the module is marked as ready. Multiple init methods can exist (including in parent classes),
@@ -37,13 +37,9 @@ export function init() {
         // TC39: Get the method name from context
         const methodName = String(context.name);
 
-        // Use addInitializer to store metadata when the class is defined
-        context.addInitializer(function(this: any) {
-            // For method decorators, initializers run per-instance
-            // 'this' is the instance, so we need to get the constructor
-            const targetClass = this.constructor;
-            metadataHandlers.setMetadata(targetClass, "initMethod", methodName);
-        });
+        // Add marker to the method function itself
+        // Class decorators will collect these markers
+        addMarker(target, 'initMethod', methodName);
 
         // Return the method unchanged
         return target;
